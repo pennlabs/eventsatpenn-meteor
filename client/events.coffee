@@ -1,11 +1,12 @@
-Template.events.greeting = -> "Welcome to vents."
-
 Template.events.events
-  'click input': ->
-      console.log("You pressed the button")
+  'submit .search-form': (e) ->
+    e.preventDefault()
+    q = $('#search-term').val()
+    console.log q
 
 Template.new.events
-  'submit': (e) ->
+  'submit .create-event': (e) ->
+    e.preventDefault()
     console.log "form submitted"
 
 Meteor.pages

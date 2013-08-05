@@ -6,16 +6,23 @@
 </body>
 
 <template name='layout'>
+  {{loginButtons}}
   {{{yield}}}
 </template>
 
 <template name="events">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
-  <a href='/new'>Create an event</a>
+  <form class='search-form'>
+    <input type='search' placeholder='Search' id='search-term'>
+    <input type='submit' value='Search'>
+  </form>
+  {{#if currentUser}}
+  <a href='/new'>Create a Event</a>
+  {{/if}}
 </template>
 
 <template name='new'>
-  about to create an event
+  <form class='create-event'>
+    <input type='text' placeholder='Name of Event'>
+    <input type='submit' value='Submit'>
+  </form>
 </template>
