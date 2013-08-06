@@ -7,8 +7,15 @@ Template.events.events
 Template.new.events
   'submit .create-event': (e) ->
     e.preventDefault()
+    # event = $('.create-event').serializeObject()
     console.log "form submitted"
 
-Meteor.pages
-  '/': {to: 'events', as: 'root'}
-  '/new': {to: 'new', as: 'new_event'}
+Meteor.Router.add
+  '/': 'events'
+  '/new': 'new'
+  '/event/:id': (event_id) ->
+    console.log event_id
+    return 'event'
+  '/user/:id': (user_id) ->
+    console.log user_id
+    return 'user'
