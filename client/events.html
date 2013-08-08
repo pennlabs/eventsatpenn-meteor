@@ -1,23 +1,80 @@
 <head>
   <title>events@penn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 
 <body>
+  {{> topbar }}
+  {{renderPage}}
 </body>
 
-<template name='layout'>
-  {{loginButtons}}
-  {{{yield}}}
+<template name='topbar'>
+  <div class="contain-to-grid">
+    <nav class="top-bar">
+      <ul class="title-area">
+        <li class="name">
+          <h1><a class="home" href="/">events@penn</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+      </ul>
+       <section class="top-bar-section">
+          <ul class="left">
+             <li class="has-form">
+          <form class="search">
+            <div class="row collapse">
+              <div class="small-10 columns">
+                <input id="searchbox" type="text" placeholder='Search'>
+              </div>
+              <div class="small-2 columns">
+                <a id="search" href="#" class="alert button"><span class="icon icon-search"></span></a>
+              </div>
+            </div>
+          </form>
+        </li>
+      </ul>
+       </section>
+      <section class="top-bar-section">
+        <ul class="right">
+          <li><a href="/all">All</a></li>
+          <li class="divider"></li>
+          {{#if currentUser }}
+          <li><a href="/new" class="create"><span class="icon icon-plus"></span>Create Event</a></li>
+          <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">CURRENTUSER.NAME</a>
+            <ul class="dropdown">
+              <li><a href="#" class="logout">Logout</a><li>
+            </ul>
+          </li>
+          {{else}}
+          {{loginButtons}}
+          {{/if}}
+        </ul>
+      </section>
+    </nav>
+  </div>
 </template>
 
 <template name="events">
-  <form class='search-form'>
-    <input type='search' placeholder='Search' id='search-term'>
-    <input type='submit' value='Search'>
-  </form>
-  {{#if currentUser}}
-  <a href='/new'>Create a Event</a>
-  {{/if}}
+{{#if currentUser}}
+  {{#each user_event_queue}}
+  {{ . }}
+  {{else}}
+  No upcoming events.
+  {{/each}}
+{{else}}
+  {{#each general_event_queue}}
+  {{ . }}
+  {{else}}
+  No upcoming events.
+  {{/each}}
+{{/if}}
+</template>
+
+<template name='all'>
+{{#each all_events}}
+{{ . }}
+{{else}}
+There are no events to display.
+{{/each}}
 </template>
 
 <template name='new'>
@@ -31,4 +88,21 @@
 </template>
 
 <template name='user'>
+{{#with info}}
+
+<div><a class='follow' href='#'>{{ _id }}</a></div>
+<div>
+  {{#each emails }}
+  {{ address }}
+  {{/each}}
+  {{/with}}
+</div>
+
+<div>
+  {{#each user_events}}
+  {{ . }}
+  {{else}}
+  This user has not created any events.
+  {{/each}}
+</div>
 </template>
