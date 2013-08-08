@@ -35,12 +35,12 @@ Template.user.events
 Template.all.all_events = -> Events.find().fetch()
 
 # events template
-Template.events.user_event_queue = ->
-  event_ids = Meteor.user().event_queue or []
-  Events.find(_id: {$in: event_ids}).fetch()
-
-Template.events.general_event_queue = ->
-  Events.find().fetch()
+Template.events.event_queue = ->
+  if Meteor.user()
+    event_ids = Meteor.user().event_queue or []
+    return Events.find(_id: {$in: event_ids}).fetch()
+  else
+    return []
 
 # user template
 Template.user.info = ->

@@ -54,28 +54,18 @@
 </template>
 
 <template name="events">
-{{#if currentUser}}
-  {{#each user_event_queue}}
-  <div>
-    {{ name }}
-  </div>
-  {{else}}
-  No upcoming events.
-  {{/each}}
+{{#each event_queue}}
+{{> event }}
 {{else}}
-  {{#each general_event_queue}}
-  {{ name }}
-  {{else}}
-  No upcoming events.
-  {{/each}}
-{{/if}}
+No upcoming events.
+{{/each}}
 </template>
 
 <template name='all'>
 {{#each all_events}}
-{{ . }}
+{{> event }}
 {{else}}
-There are no events to display.
+No upcoming events.
 {{/each}}
 </template>
 
@@ -87,6 +77,9 @@ There are no events to display.
 </template>
 
 <template name='event'>
+<div>
+  {{ name }}
+</div>
 </template>
 
 <template name='user'>
