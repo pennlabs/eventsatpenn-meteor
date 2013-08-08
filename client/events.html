@@ -56,13 +56,15 @@
 <template name="events">
 {{#if currentUser}}
   {{#each user_event_queue}}
-  {{ . }}
+  <div>
+    {{ name }}
+  </div>
   {{else}}
   No upcoming events.
   {{/each}}
 {{else}}
   {{#each general_event_queue}}
-  {{ . }}
+  {{ name }}
   {{else}}
   No upcoming events.
   {{/each}}
@@ -79,7 +81,7 @@ There are no events to display.
 
 <template name='new'>
   <form class='create-event'>
-    <input type='text' placeholder='Name of Event'>
+    <input name='name' type='text' placeholder='Name of Event'>
     <input type='submit' value='Submit'>
   </form>
 </template>
@@ -100,7 +102,7 @@ There are no events to display.
 
 <div>
   {{#each user_events}}
-  {{ . }}
+  {{ name }}
   {{else}}
   This user has not created any events.
   {{/each}}
