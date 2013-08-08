@@ -44,13 +44,13 @@ Template.events.event_queue = ->
 
 # user template
 Template.user.info = ->
-  Meteor.users.findOne(Session.get("user_id"))
+  Meteor.users.findOne(Session.get("user_id")) or {}
 
 Template.user.user_events = ->
-  Events.find(created_by: Session.get("user_id")).fetch()
+  Events.find(created_by: Session.get("user_id")).fetch() or []
 
-Template.event.info = ->
-  Events.findOne(Session.get("event_id"))
+Template.event_info.info = ->
+  Events.findOne(Session.get("event_id")) or {}
 
 Meteor.Router.add
   '/': 'events'
@@ -58,7 +58,7 @@ Meteor.Router.add
   '/new': 'new'
   '/event/:event_id': (event_id) ->
     Session.set("event_id", event_id)
-    return 'event'
+    return 'event_info'
   '/user/:user_id': (user_id) ->
     Session.set("user_id", user_id)
     return 'user'

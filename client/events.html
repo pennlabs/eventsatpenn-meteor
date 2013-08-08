@@ -76,9 +76,13 @@ No upcoming events.
   </form>
 </template>
 
+<template name='event_info'>
+  {{> event info }}
+</template>
+
 <template name='event'>
 <div>
-  {{ name }}
+  <a href='/event/{{ _id }}'>{{ name }}</a>
 </div>
 </template>
 
@@ -95,7 +99,7 @@ No upcoming events.
 
 <div>
   {{#each user_events}}
-  {{ name }}
+  {{> event }}
   {{else}}
   This user has not created any events.
   {{/each}}
