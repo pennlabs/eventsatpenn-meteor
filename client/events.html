@@ -41,33 +41,13 @@
           <li class="divider"></li>
           {{#if currentUser }}
           <li><a href="/new" class="create"><span class="icon icon-plus"></span>Create Event</a></li>
-          <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">CURRENTUSER.NAME</a>
+          <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.first_name }}</a>
             <ul class="dropdown">
               <li><a href="#" class="logout">Logout</a><li>
             </ul>
           </li>
           {{else}}
-          <li class="has-dropdown"><a class='login' href='#'>Login/Register</a>
-            <ul class='dropdown'>
-              {{#if login}}
-              <form class='login-form'>
-                <li><a href='#' class='register'>Register</a></li>
-                <li><input type='text' name='email' placeholder='Email'></li>
-                <li><input type='password' name='password' placeholder='Password'></li>
-                <li><input type='submit' value='Login'></li>
-              </form>
-              {{else}}
-              <form class='register-form'>
-                <li><a href='#' class='login'>Login</a></li>
-                <li><input type='text' name='name' placeholder='Name'></li>
-                <li><input type='email' name='email' placeholder='Email'></li>
-                <li><input type='password' name='password' placeholder='Password'></li>
-                <li><input type='password' name='confirm' placeholder='Confirm Password'></li>
-                <li><input type='submit' value='Register'></li>
-              </form>
-              {{/if}}
-            </ul>
-          </li>
+          <li><a href='/login'>Login / Register</a></li>
           {{/if}}
         </ul>
       </section>
@@ -130,5 +110,56 @@ No upcoming events.
   {{else}}
   This user has not created any events.
   {{/each}}
+</div>
+</template>
+
+<template name='login'>
+<div class="view-login">
+  <div class="row">
+    <div class="large-4 columns">
+      <div class="large-12 prompt">
+        <p>already have an account?</p>
+      </div>
+      <form id="login-form" class="login large-12" method="post" action="login">
+        <h3>Login</h3>
+        <input name="email" type="text" placeholder="Email" />
+        <input name="password" type="password" placeholder="Password" />
+        <input class="button" type="submit" id="login-button" value="Login">
+      </form>
+    </div>
+    
+    <div class="large-8 columns">
+      <div class="large-12 prompt">
+        <p>need a new account?</p>
+      </div>
+      <form id="register-form" class="signup large-12" method="post" action="api/users/">
+        <h3>Sign Up</h3>
+        <label>Name</label>
+        <div class="row">
+          <div class="large-6 columns">
+            <input name="first_name" type="text" placeholder="First Name" />
+          </div>
+          <div class="large-6 columns">
+            <input name="last_name" type="text" placeholder="Last Name" />
+          </div>
+        </div>
+        <label>UPenn Email</label>
+        <input name="email" type="text" placeholder="" />
+        <label>Password</label>
+        <div class="row">
+          <div class="large-6 columns">
+            <input name="password" type="password" placeholder="Enter Password" />
+          </div>
+          <div class="large-6 columns">
+            <input name="confirm" type="password" placeholder="Confirm Password" />
+          </div>
+        </div>
+        <label>Description</label>
+        <textarea name="description" placeholder=""></textarea>
+        
+        <input class="button" type="submit" id="register-button" value="Register">
+      </form>
+    </div>
+  </div>
 </div>
 </template>

@@ -13,19 +13,31 @@ $.fn.serializeObject = ->
 
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
-  'click .register': (e) ->
+
+Template.login.events
+  'submit #login-form': (e) ->
     e.preventDefault()
-    Session.set('login', false)
-  'click .login': (e) ->
-    e.preventDefault()
-    Session.set('login', true)
-  'submit .login-form': (e) ->
-    e.preventDefault()
-    creds = $('.login-form').serializeObject()
+    creds = $('#login-form').serializeObject()
     Meteor.loginWithPassword(creds.email, creds.password)
-  'submit .register-form': (e) ->
+  'submit #register-form': (e) ->
     e.preventDefault()
-    console.log 'registering'
+    user = $('#register-form').serializeObject()
+    if user.password == user.confirm
+      Accounts.createUser(
+        email: user.email
+        password: user.password
+        profile:
+          first_name: user.first_name
+          last_name: user.last_name
+          description: user.description
+          events: []
+          event_queue: []
+          followers: []
+          following: []
+      , (err) ->
+        if not err
+          Meteor.Router.to '/'
+      )
 
 Template.events.events
   'submit .search-form': (e) ->
@@ -47,14 +59,12 @@ Template.user.events
     e.preventDefault()
     Meteor.call("follow_user", Session.get("user_id"))
 
-Template.topbar.login = -> Session.get('login')
-
 Template.all.all_events = -> Events.find().fetch()
 
 # events template
 Template.events.event_queue = ->
   if Meteor.user()
-    event_ids = Meteor.user().event_queue or []
+    event_ids = Meteor.user().profile.event_queue or []
     return Events.find(_id: {$in: event_ids}).fetch()
   else
     return []
@@ -73,6 +83,7 @@ Meteor.Router.add
   '/': 'events'
   '/all': 'all'
   '/new': 'new'
+  '/login': 'login'
   '/event/:event_id': (event_id) ->
     Session.set("event_id", event_id)
     return 'event_info'
