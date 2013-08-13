@@ -85,7 +85,7 @@ Template.user.user_events = ->
   Events.find(creator: Session.get("user_id")).fetch() or []
 
 Template.user.following = ->
-  Meteor.user().profile.following.indexOf(Session.get("user_id")) > -1
+  Meteor.user()?.profile?.following.indexOf(Session.get("user_id")) > -1
 
 Template.event_info.info = ->
   Events.findOne(Session.get("event_id")) or {}
