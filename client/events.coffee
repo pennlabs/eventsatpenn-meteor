@@ -29,6 +29,9 @@ Template.login.events
     e.preventDefault()
     user = $('#register-form').serializeObject()
     if user.password == user.confirm
+      admin_ids = Meteor.users.find("profile.admin": true).map (admin) -> admin._id
+      admin_event_ids = Events.find(creator: {$in: admin_ids}).map (event) -> event._id
+
       Accounts.createUser(
         email: user.email
         password: user.password
@@ -37,9 +40,9 @@ Template.login.events
           last_name: user.last_name
           description: user.description
           events: []
-          event_queue: []
+          event_queue: admin_event_ids
           followers: []
-          following: []
+          following: admin_ids
       , (err) ->
         if not err
           Meteor.call "follow_user", Meteor.userId()
