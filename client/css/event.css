@@ -1,0 +1,6 @@
+.view-event .card {
+  margin-top: 15px; }
+
+@media only screen and (max-width: 767px) {
+  .view-event .card .image {
+    display: block; } }

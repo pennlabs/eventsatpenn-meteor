@@ -1,0 +1,55 @@
+.sidebar {
+  margin-bottom: 15px;
+  z-index: 100; }
+  .sidebar .sidebar-content {
+    background-color: #8596ab;
+    color: white; }
+  .sidebar .sidebar-fold {
+    background-color: #526378;
+    cursor: pointer; }
+    .sidebar .sidebar-fold:hover {
+      background-color: #3e4a59; }
+    .sidebar .sidebar-fold .arrow {
+      position: absolute;
+      border: solid 8px;
+      border-color: transparent transparent white transparent;
+      top: auto;
+      right: 22.5px;
+      bottom: 50%;
+      margin-bottom: -4px; }
+  .sidebar.folded .sidebar-content {
+    display: none; }
+  .sidebar.folded .sidebar-fold {
+    background-color: #8596ab; }
+    .sidebar.folded .sidebar-fold:hover {
+      background-color: #677c96; }
+    .sidebar.folded .sidebar-fold .arrow {
+      top: 50%;
+      margin-top: -4px;
+      border-color: white transparent transparent transparent; }
+  .sidebar hr {
+    border: none;
+    border-bottom: 1px dotted #f0f2f2;
+    margin: 10px 0 10px 0; }
+  .sidebar h1, .sidebar h2, .sidebar h3, .sidebar h4, .sidebar h5, .sidebar h6 {
+    color: white;
+    font-family: "News Cycle", sans-serif;
+    font-weight: normal;
+    margin: 10px 0 10px 0; }
+  .sidebar label {
+    color: white; }
+  .sidebar .label {
+    color: #8596ab;
+    background-color: #d4d9db; }
+  .sidebar input[type=checkbox] {
+    margin: 3px 3px 3px 0px; }
+
+@media only screen and (min-width: 940px) {
+  .sidebar.stick {
+    position: fixed;
+    top: 0;
+    width: 220px; } }
+@media only screen and (min-width: 768px) {
+  .sidebar.stick {
+    position: fixed;
+    top: 0; } }

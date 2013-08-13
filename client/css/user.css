@@ -1,0 +1,35 @@
+.view-user .profile {
+  margin-top: 30px;
+  margin-bottom: 15px; }
+  .view-user .profile :last-child {
+    margin-bottom: 0px; }
+  .view-user .profile h1, .view-user .profile h2, .view-user .profile h3, .view-user .profile h4, .view-user .profile h5, .view-user .profile h6 {
+    color: #8596ab;
+    font-weight: normal; }
+  .view-user .profile .title {
+    margin-top: 5px;
+    margin-bottom: 5px; }
+  .view-user .profile .subtitle {
+    display: inline-block;
+    margin-bottom: 15px; }
+  .view-user .profile hr {
+    margin: 5px 0px 5px 0px;
+    border: none;
+    border-bottom: #8596ab 1px solid; }
+  .view-user .profile .image {
+    padding: 15px; }
+    .view-user .profile .image img {
+      width: 100%; }
+  .view-user .profile .actions .item {
+    display: block;
+    border-top: #8596ab 1px solid;
+    padding: 10px; }
+    .view-user .profile .actions .item:last-child {
+      border-bottom: #8596ab 1px solid; }
+    .view-user .profile .actions .item .icon {
+      margin-right: 5px;
+      color: #8596ab; }
+
+@media only screen and (max-width: 767px) {
+  .view-user .profile .info {
+    margin-bottom: 30px; } }
