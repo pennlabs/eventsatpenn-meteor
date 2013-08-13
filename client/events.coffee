@@ -65,6 +65,9 @@ Template.user.events
   'click .follow': (e) ->
     e.preventDefault()
     Meteor.call("follow_user", Session.get("user_id"))
+  'click .unfollow': (e) ->
+    e.preventDefault()
+    console.log "unfollowed"
 
 Template.all.all_events = -> Events.find().fetch()
 
@@ -82,6 +85,9 @@ Template.user.info = ->
 
 Template.user.user_events = ->
   Events.find(creator: Session.get("user_id")).fetch() or []
+
+Template.user.following = ->
+  Meteor.user().profile.following.indexOf(Session.get("user_id")) > -1
 
 Template.event_info.info = ->
   Events.findOne(Session.get("event_id")) or {}

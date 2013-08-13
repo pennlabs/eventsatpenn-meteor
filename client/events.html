@@ -89,7 +89,7 @@ No upcoming events.
       </div>
     </div>
     <div class="large-8 columns">
-      <form id="create-form" class="left box large-12 small-12 create-event" method="post" action="/new">
+      <form class="left box large-12 small-12 create-event" method="post" action="/new">
         <label>Name</label>
         <input name="name" type="text" placeholder="Event Name" />
         <div class="row">
@@ -148,18 +148,31 @@ No upcoming events.
 </template>
 
 <template name='user'>
-{{#with info}}
-
-<div><a class='follow' href='#'>{{ _id }}</a></div>
-<div>
-  {{#each emails }}
-  {{ address }}
-  {{/each}}
-  {{/with}}
-</div>
-
-<div>
-  {{#each user_events}}
+<div class="view-user">
+  <!-- Profile -->
+  <div class="profile row">
+    <div class="large-9 columns info">
+      {{#with info}}
+      <h2 class="title">{{ profile.first_name }} {{ profile.last_name }}</h2>
+      <hr/>
+      <p>{{ profile.description }}</p>
+      {{/with}}
+    </div>
+    <div class="large-3 columns actions">
+      {{#if following }}
+      <a class="unfollow item" href="#"><span class="icon icon-mail-2"></span>Unfollow</a>
+      {{else}}
+      <a class="follow item" href="#"><span class="icon icon-mail-2"></span>Follow</a>
+      {{/if}}
+      <a class="item" href="#">
+        <span class="icon icon-facebook-2"></span>Facebook Page
+      </a>
+      <a class="item" href="#">
+        <span class="icon icon-calendar-2"></span>Google Calendar
+      </a>
+    </div>
+  </div>
+  {{#each user_events }}
   {{> event }}
   {{else}}
   This user has not created any events.
