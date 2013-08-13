@@ -75,15 +75,47 @@ No upcoming events.
 </template>
 
 <template name='new'>
-  <form class='create-event'>
-    <input name='name' type='text' placeholder='Name of Event'>
-    <input name='date' type='text' placeholder='Date'>
-    <input name='start_time' type='text' placeholder='Start'>
-    <input name='end_time' type='text' placeholder='End'>
-    <input name='location' type='text' placeholder='Location'>
-    <input name='description' type='text' placeholder='Description'>
-    <input type='submit' value='Submit'>
-  </form>
+<div class="view-create">
+  <div class="row">
+    <div class="large-4 columns">
+      <div class="right box large-12 small-12">
+        <h3>Create New Event</h3>
+        <p>Your event will be publicly available. Please respect the following rules. Any posts that violate these rules will be moderated and removed.</p>
+        <ol>
+          <li>No obscene pictures or languages.</li>
+          <li>Shirts and shoes required.</li>
+          <li>Don't be an asshole.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="large-8 columns">
+      <form id="create-form" class="left box large-12 small-12 create-event" method="post" action="/new">
+        <label>Name</label>
+        <input name="name" type="text" placeholder="Event Name" />
+        <div class="row">
+          <div class="large-6 columns">
+            <label>Date</label>
+            <input name="date" type="text" placeholder="mm/dd/yyyy" />
+          </div>
+          <div class="large-3 small-6 columns">
+            <label>Start Time</label>
+            <input name="time_start" type="text" placeholder="hh:mm" />
+          </div>
+          <div class="large-3 small-6 columns">
+            <label>End Time</label>
+            <input name="time_end" type="text" placeholder="hh:mm" />
+          </div>
+        </div>
+        <label>Location</label>
+        <input name="location" type="text" placeholder="Location" />
+        <label>Description</label>
+        <textarea name="description" placeholder="Describe your event to make it more easily searchable"></textarea>
+
+        <input class="button" type="submit" id="submit-button" value="Submit">
+      </form>
+    </div>
+  </div>
+</div>
 </template>
 
 <template name='event_info'>
