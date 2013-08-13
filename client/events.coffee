@@ -92,7 +92,8 @@ Template.event_info.info = ->
 
 Template.search.found_events = ->
   q = Session.get("q")
-  Events.find(name: q).fetch()
+  re = new RegExp("#{q}.*")
+  Events.find(name: re).fetch()
 
 Meteor.Router.add
   '/': 'events'
