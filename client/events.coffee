@@ -13,6 +13,10 @@ $.fn.serializeObject = ->
 
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
+  'submit .search': (e) ->
+    e.preventDefault()
+    q = $('#searchbox').val()
+    Meteor.Router.to "/search/#{encodeURIComponent(q)}"
 
 Template.login.events
   'submit #login-form': (e) ->
@@ -41,12 +45,6 @@ Template.login.events
           Meteor.call "follow_user", Meteor.userId()
           Meteor.Router.to '/'
       )
-
-Template.events.events
-  'submit .search-form': (e) ->
-    e.preventDefault()
-    q = $('#search-term').val()
-    console.log q
 
 Template.new.events
   'submit .create-event': (e) ->
@@ -92,6 +90,10 @@ Template.user.following = ->
 Template.event_info.info = ->
   Events.findOne(Session.get("event_id")) or {}
 
+Template.search.found_events = ->
+  q = Session.get("q")
+  Events.find(name: q).fetch()
+
 Meteor.Router.add
   '/': 'events'
   '/all': 'all'
@@ -103,3 +105,6 @@ Meteor.Router.add
   '/user/:user_id': (user_id) ->
     Session.set("user_id", user_id)
     return 'user'
+  '/search/:q': (q) ->
+    Session.set("q", decodeURIComponent(q))
+    return 'search'
