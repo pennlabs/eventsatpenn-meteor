@@ -76,7 +76,7 @@ Template.events.event_queue = ->
   else
     event_ids = []
     not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
-    event_ids.concat.apply(event_ids, not_flat)
+    event_ids = event_ids.concat.apply(event_ids, not_flat)
   Events.find(_id: {$in: event_ids}).fetch()
 
 # user template
