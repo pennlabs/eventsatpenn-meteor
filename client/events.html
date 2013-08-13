@@ -1,5 +1,8 @@
 <head>
   <title>events@penn</title>
+  <link href="http://fonts.googleapis.com/css?family=Merriweather:400,700" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=News+Cycle:400,700" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 
@@ -133,52 +136,50 @@ No upcoming events.
 </template>
 
 <template name='login'>
-<div class="view-login">
-  <div class="row">
-    <div class="large-4 columns">
-      <div class="large-12 prompt">
-        <p>already have an account?</p>
-      </div>
-      <form id="login-form" class="login large-12" method="post" action="login">
-        <h3>Login</h3>
-        <input name="email" type="text" placeholder="Email" />
-        <input name="password" type="password" placeholder="Password" />
-        <input class="button" type="submit" id="login-button" value="Login">
-      </form>
+<div class="row view-login">
+  <div class="large-4 columns">
+    <div class="large-12 prompt">
+      <p>already have an account?</p>
     </div>
-    
-    <div class="large-8 columns">
-      <div class="large-12 prompt">
-        <p>need a new account?</p>
-      </div>
-      <form id="register-form" class="signup large-12" method="post" action="api/users/">
-        <h3>Sign Up</h3>
-        <label>Name</label>
-        <div class="row">
-          <div class="large-6 columns">
-            <input name="first_name" type="text" placeholder="First Name" />
-          </div>
-          <div class="large-6 columns">
-            <input name="last_name" type="text" placeholder="Last Name" />
-          </div>
-        </div>
-        <label>UPenn Email</label>
-        <input name="email" type="text" placeholder="" />
-        <label>Password</label>
-        <div class="row">
-          <div class="large-6 columns">
-            <input name="password" type="password" placeholder="Enter Password" />
-          </div>
-          <div class="large-6 columns">
-            <input name="confirm" type="password" placeholder="Confirm Password" />
-          </div>
-        </div>
-        <label>Description</label>
-        <textarea name="description" placeholder=""></textarea>
-        
-        <input class="button" type="submit" id="register-button" value="Register">
-      </form>
+    <form id="login-form" class="login large-12" method="post" action="login">
+      <h3>Login</h3>
+      <input name="email" type="text" placeholder="Email" />
+      <input name="password" type="password" placeholder="Password" />
+      <input class="button" type="submit" id="login-button" value="Login">
+    </form>
+  </div>
+  
+  <div class="large-8 columns">
+    <div class="large-12 prompt">
+      <p>need a new account?</p>
     </div>
+    <form id="register-form" class="signup large-12" method="post" action="api/users/">
+      <h3>Sign Up</h3>
+      <label>Name</label>
+      <div class="row">
+        <div class="large-6 columns">
+          <input name="first_name" type="text" placeholder="First Name" />
+        </div>
+        <div class="large-6 columns">
+          <input name="last_name" type="text" placeholder="Last Name" />
+        </div>
+      </div>
+      <label>UPenn Email</label>
+      <input name="email" type="text" placeholder="" />
+      <label>Password</label>
+      <div class="row">
+        <div class="large-6 columns">
+          <input name="password" type="password" placeholder="Enter Password" />
+        </div>
+        <div class="large-6 columns">
+          <input name="confirm" type="password" placeholder="Confirm Password" />
+        </div>
+      </div>
+      <label>Description</label>
+      <textarea name="description" placeholder=""></textarea>
+      
+      <input class="button" type="submit" id="register-button" value="Register">
+    </form>
   </div>
 </div>
 </template>
