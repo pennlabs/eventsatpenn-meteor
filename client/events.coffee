@@ -73,9 +73,9 @@ Template.all.all_events = -> Events.find().fetch()
 Template.events.event_queue = ->
   if Meteor.user()
     event_ids = Meteor.user().profile.event_queue or []
-    return Events.find(_id: {$in: event_ids}).fetch()
   else
-    return []
+    event_ids = Meteor.users.find("profile.admin": true)?.profile?.events or []
+  Events.find(_id: {$in: event_ids}).fetch()
 
 # user template
 Template.user.info = ->
