@@ -18,7 +18,9 @@ Template.login.events
   'submit #login-form': (e) ->
     e.preventDefault()
     creds = $('#login-form').serializeObject()
-    Meteor.loginWithPassword(creds.email, creds.password)
+    Meteor.loginWithPassword creds.email, creds.password, (err) ->
+      if not err
+        Meteor.Router.to '/'
   'submit #register-form': (e) ->
     e.preventDefault()
     user = $('#register-form').serializeObject()
@@ -49,10 +51,14 @@ Template.new.events
   'submit .create-event': (e) ->
     e.preventDefault()
     event = $('.create-event').serializeObject()
-    event.created_by = Meteor.userId()
+
+    user = Meteor.user()
+    event.creator = user._id
+    event.creator_name = user.profile.first_name + " " + user.profile.last_name
 
     event_id = Events.insert(event)
     Meteor.call('create_event', event_id)
+    Meteor.Router.to "/event/#{event_id}"
 
 Template.user.events
   'click .follow': (e) ->

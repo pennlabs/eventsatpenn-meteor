@@ -88,8 +88,27 @@ No upcoming events.
 </template>
 
 <template name='event'>
-<div>
-  <a href='/event/{{ _id }}'>{{ name }}</a>
+<div class='row'>
+  <div class="large-3 columns image">
+    <img src="http://placehold.it/240x240&amp;text=img">
+  </div>
+  <div class="large-9 columns info">
+    <h4 class="title"><a class='event' href="/event/{{ _id }}">{{ name }}</a></h4>
+    <span class="subtitle">by <a class='creator' href="/user/{{ creator }}">{{ creator_name }}</a></span>
+
+    <div class="detail-row">
+      <div class="large-6 columns item">
+        <span class="icon icon-calendar"></span>{{ date }}
+      </div>
+      <div class="large-6 columns item">
+        <span class="icon icon-clock"></span>{{ time_start }} to {{ time_end }}
+      </div>
+      <div class="large-12 columns item">
+        <span class="icon icon-location"></span><a href="http://maps.google.com/?q=Kings Court English House"  target="_blank">{{ location }}</a>
+      </div>
+    </div>
+    <p>{{ description }}</p>
+  </div>
 </div>
 </template>
 
