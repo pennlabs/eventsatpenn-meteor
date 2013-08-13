@@ -9,6 +9,13 @@ Meteor.methods
     Meteor.users.update(Meteor.userId(), {$push: {"profile.following": user_id}})
     Meteor.users.update(user_id, {$push: {"profile.followers": Meteor.userId()}})
     event_ids = Meteor.users.findOne(user_id).profile.events or []
-    console.log event_ids
     if event_ids.length
       Meteor.users.update(Meteor.userId(), {$pushAll: {"profile.event_queue": event_ids}})
+
+  # only push and pull are different
+  unfollow_user: (user_id) ->
+    Meteor.users.update(Meteor.userId(), {$pull: {"profile.following": user_id}})
+    Meteor.users.update(user_id, {$pull: {"profile.followers": Meteor.userId()}})
+    event_ids = Meteor.users.findOne(user_id).profile.events or []
+    if event_ids.length
+      Meteor.users.update(Meteor.userId(), {$pullAll: {"profile.event_queue": event_ids}})

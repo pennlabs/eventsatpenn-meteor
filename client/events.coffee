@@ -67,7 +67,7 @@ Template.user.events
     Meteor.call("follow_user", Session.get("user_id"))
   'click .unfollow': (e) ->
     e.preventDefault()
-    console.log "unfollowed"
+    Meteor.call("unfollow_user", Session.get("user_id"))
 
 Template.all.all_events = -> Events.find().fetch()
 
