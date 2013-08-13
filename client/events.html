@@ -5,7 +5,9 @@
 
 <body>
   {{> topbar }}
-  {{renderPage}}
+  <div class='row' id='container'>
+    {{renderPage}}
+  </div>
 </body>
 
 <template name='topbar'>
@@ -45,7 +47,27 @@
             </ul>
           </li>
           {{else}}
-          {{loginButtons}}
+          <li class="has-dropdown"><a class='login' href='#'>Login/Register</a>
+            <ul class='dropdown'>
+              {{#if login}}
+              <form class='login-form'>
+                <li><a href='#' class='register'>Register</a></li>
+                <li><input type='text' name='email' placeholder='Email'></li>
+                <li><input type='password' name='password' placeholder='Password'></li>
+                <li><input type='submit' value='Login'></li>
+              </form>
+              {{else}}
+              <form class='register-form'>
+                <li><a href='#' class='login'>Login</a></li>
+                <li><input type='text' name='name' placeholder='Name'></li>
+                <li><input type='email' name='email' placeholder='Email'></li>
+                <li><input type='password' name='password' placeholder='Password'></li>
+                <li><input type='password' name='confirm' placeholder='Confirm Password'></li>
+                <li><input type='submit' value='Register'></li>
+              </form>
+              {{/if}}
+            </ul>
+          </li>
           {{/if}}
         </ul>
       </section>
@@ -72,6 +94,11 @@ No upcoming events.
 <template name='new'>
   <form class='create-event'>
     <input name='name' type='text' placeholder='Name of Event'>
+    <input name='date' type='text' placeholder='Date'>
+    <input name='start_time' type='text' placeholder='Start'>
+    <input name='end_time' type='text' placeholder='End'>
+    <input name='location' type='text' placeholder='Location'>
+    <input name='description' type='text' placeholder='Description'>
     <input type='submit' value='Submit'>
   </form>
 </template>

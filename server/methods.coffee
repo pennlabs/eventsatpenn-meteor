@@ -6,3 +6,5 @@ Meteor.methods
 
   follow_user: (user_id) ->
     Meteor.users.update(Meteor.userId(), {$push: {following: user_id}})
+    event_ids = Meteor.users.findOne(user_id)
+    Meteor.users.update(Meteor.userId(), {$push: {event_queue: event_ids}})

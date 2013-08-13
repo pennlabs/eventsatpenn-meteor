@@ -11,6 +11,22 @@ $.fn.serializeObject = ->
       o[@name] = @value or ""
   return o
 
+Template.topbar.events
+  'click .logout': (e) -> Meteor.logout()
+  'click .register': (e) ->
+    e.preventDefault()
+    Session.set('login', false)
+  'click .login': (e) ->
+    e.preventDefault()
+    Session.set('login', true)
+  'submit .login-form': (e) ->
+    e.preventDefault()
+    creds = $('.login-form').serializeObject()
+    Meteor.loginWithPassword(creds.email, creds.password)
+  'submit .register-form': (e) ->
+    e.preventDefault()
+    console.log 'registering'
+
 Template.events.events
   'submit .search-form': (e) ->
     e.preventDefault()
@@ -22,7 +38,6 @@ Template.new.events
     e.preventDefault()
     event = $('.create-event').serializeObject()
     event.created_by = Meteor.userId()
-    console.log event
 
     event_id = Events.insert(event)
     Meteor.call('create_event', event_id)
@@ -31,6 +46,8 @@ Template.user.events
   'click .follow': (e) ->
     e.preventDefault()
     Meteor.call("follow_user", Session.get("user_id"))
+
+Template.topbar.login = -> Session.get('login')
 
 Template.all.all_events = -> Events.find().fetch()
 
