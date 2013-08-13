@@ -38,6 +38,7 @@ Template.login.events
           following: []
       , (err) ->
         if not err
+          Meteor.call "follow_user", Meteor.userId()
           Meteor.Router.to '/'
       )
 
@@ -80,7 +81,7 @@ Template.user.info = ->
   Meteor.users.findOne(Session.get("user_id")) or {}
 
 Template.user.user_events = ->
-  Events.find(created_by: Session.get("user_id")).fetch() or []
+  Events.find(creator: Session.get("user_id")).fetch() or []
 
 Template.event_info.info = ->
   Events.findOne(Session.get("event_id")) or {}
