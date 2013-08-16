@@ -5,7 +5,14 @@ Meteor.methods
     if followers.length
       Meteor.users.update(_id: {$in: followers}, {$push: {"profile.event_queue": event_id}})
 
-  # only push and pull are different
+  # pulling events, pulls all occurences of that event out,
+  # so if the user created the event or follows someone who created it,
+  # it will get pulled from his/her event_queue
+  #
+  # when a user destroys a starred event, it still exists in the admins' events
+  # to solve it, pull from everywhere IF you're the creator?
+  # Meteor.users.update({}, {$pull: {"profile.events": event_id}})
+  # alternatively, have a different method to un-star events as opposed to destroy
   destroy_event: (event_id) ->
     Meteor.users.update(Meteor.userId(), {$pull: {"profile.events": event_id}})
     followers = Meteor.user().profile.followers or []
