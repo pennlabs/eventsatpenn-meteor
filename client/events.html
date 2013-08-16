@@ -44,7 +44,7 @@
           <li class="divider"></li>
           {{#if currentUser }}
           <li><a href="/new" class="create"><span class="icon icon-plus"></span>Create Event</a></li>
-          <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.first_name }}</a>
+          <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.full_name }}</a>
             <ul class="dropdown">
               <li><a href="#" class="logout">Logout</a><li>
             </ul>
@@ -165,7 +165,7 @@ No upcoming events.
   <div class="profile row">
     <div class="large-9 columns info">
       {{#with info}}
-      <h2 class="title">{{ profile.first_name }} {{ profile.last_name }}</h2>
+      <h2 class="title">{{ profile.full_name }}</h2>
       <hr/>
       <p>{{ profile.description }}</p>
       {{/with}}
@@ -214,11 +214,8 @@ No upcoming events.
       <h3>Sign Up</h3>
       <label>Name</label>
       <div class="row">
-        <div class="large-6 columns">
-          <input name="first_name" type="text" placeholder="First Name" />
-        </div>
-        <div class="large-6 columns">
-          <input name="last_name" type="text" placeholder="Last Name" />
+        <div class="large-12 columns">
+          <input name="full_name" type="text" placeholder="Full Name" />
         </div>
       </div>
       <label>UPenn Email</label>

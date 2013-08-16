@@ -36,8 +36,7 @@ Template.login.events
         email: user.email
         password: user.password
         profile:
-          first_name: user.first_name
-          last_name: user.last_name
+          full_name: user.full_name
           description: user.description
           events: []
           event_queue: admin_event_ids
@@ -56,7 +55,7 @@ Template.new.events
 
     user = Meteor.user()
     event.creator = user._id
-    event.creator_name = user.profile.first_name + " " + user.profile.last_name
+    event.creator_name = user.profile.full_name
 
     event_id = Events.insert(event)
     Meteor.call('create_event', event_id)

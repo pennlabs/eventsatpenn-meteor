@@ -11,3 +11,6 @@ accounts-base
 accounts-ui
 accounts-password
 less
+standard-app-packages
+page-js-ie-support
+router
