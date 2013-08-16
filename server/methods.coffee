@@ -5,6 +5,13 @@ Meteor.methods
     if followers.length
       Meteor.users.update(_id: {$in: followers}, {$push: {"profile.event_queue": event_id}})
 
+  # only push and pull are different
+  destroy_event: (event_id) ->
+    Meteor.users.update(Meteor.userId(), {$pull: {"profile.events": event_id}})
+    followers = Meteor.user().profile.followers or []
+    if followers.length
+      Meteor.users.update(_id: {$in: followers}, {$pull: {"profile.event_queue": event_id}})
+
   follow_user: (user_id) ->
     Meteor.users.update(Meteor.userId(), {$push: {"profile.following": user_id}})
     Meteor.users.update(user_id, {$push: {"profile.followers": Meteor.userId()}})

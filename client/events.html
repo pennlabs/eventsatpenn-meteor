@@ -138,6 +138,15 @@ No upcoming events.
         <img src="http://placehold.it/240x240&amp;text=img">
       </div>
       <div class="large-9 columns info">
+        {{#if admin}}
+          <div class='right'>
+          {{#if starred _id }}
+            <span data-event_id='{{ _id }}' class='unpromote'>&#9733;</span>
+          {{else}}
+            <span data-event_id='{{ _id }}' class='promote'>&#9733;</span>
+          {{/if}}
+          </div>
+        {{/if}}
         <h4 class="title"><a class='event' href="/event/{{ _id }}">{{ name }}</a></h4>
         <span class="subtitle">by <a class='creator' href="/user/{{ creator }}">{{ creator_name }}</a></span>
 

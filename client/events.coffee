@@ -69,30 +69,46 @@ Template.user.events
     e.preventDefault()
     Meteor.call("unfollow_user", Session.get("user_id"))
 
-Template.all.all_events = -> Events.find().fetch()
+Template.event.events
+  'click .promote': (e) ->
+    event_id = $(e.currentTarget).data('event_id')
+    Meteor.call "create_event", event_id
+  'click .unpromote': (e) ->
+    event_id = $(e.currentTarget).data('event_id')
+    Meteor.call "destroy_event", event_id
+
+Template.event.helpers
+  'admin': -> Meteor.user()?.profile?.admin
+  'starred': (event_id) ->
+    console.log event_id
+    Meteor.user()?.profile?.events.indexOf(event_id) > -1
+
+Template.all.helpers
+  'all_events': -> Events.find().fetch()
 
 # events template
-Template.events.event_queue = ->
-  if Meteor.user()
-    event_ids = Meteor.user().profile.event_queue or []
-  else
-    event_ids = []
-    not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
-    event_ids = event_ids.concat.apply(event_ids, not_flat)
-  Events.find(_id: {$in: event_ids}).fetch()
+Template.events.helpers
+  'event_queue': ->
+    if Meteor.user()
+      event_ids = Meteor.user().profile.event_queue or []
+    else
+      event_ids = []
+      not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
+      event_ids = event_ids.concat.apply(event_ids, not_flat)
+    Events.find(_id: {$in: event_ids}).fetch()
 
 # user template
-Template.user.info = ->
-  Meteor.users.findOne(Session.get("user_id")) or {}
+Template.user.helpers
+  'info': ->
+    Meteor.users.findOne(Session.get("user_id")) or {}
+  'user_events': ->
+    Events.find(creator: Session.get("user_id")).fetch() or []
+  'following': ->
+    Meteor.user()?.profile?.following.indexOf(Session.get("user_id")) > -1
 
-Template.user.user_events = ->
-  Events.find(creator: Session.get("user_id")).fetch() or []
-
-Template.user.following = ->
-  Meteor.user()?.profile?.following.indexOf(Session.get("user_id")) > -1
-
-Template.event_info.info = ->
-  Events.findOne(Session.get("event_id")) or {}
+Template.event_info.helpers
+  'info': ->
+    Events.findOne(Session.get("event_id")) or {}
 
 Template.search.found_events = ->
   q = Session.get("q")
