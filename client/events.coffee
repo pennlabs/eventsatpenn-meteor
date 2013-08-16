@@ -80,7 +80,6 @@ Template.event.events
 Template.event.helpers
   'admin': -> Meteor.user()?.profile?.admin
   'starred': (event_id) ->
-    console.log event_id
     Meteor.user()?.profile?.events.indexOf(event_id) > -1
 
 Template.all.helpers
