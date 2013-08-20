@@ -94,7 +94,7 @@ Template.events.helpers
       event_ids = []
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
-    Events.find(_id: {$in: event_ids}).fetch()
+    Events.find({_id: {$in: event_ids}}, {sort: {date: 1, time_start: 1}}).fetch()
 
 # user template
 Template.user.helpers
