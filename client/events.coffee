@@ -47,6 +47,11 @@ Template.login.events
           Meteor.call "follow_user", Meteor.userId()
           Meteor.Router.to '/'
       )
+    else
+      alert "Passwords do not match"
+
+Template.new.helpers
+  'empty_object': {}
 
 Template.new.events
   'submit .create-event': (e) ->
@@ -78,9 +83,28 @@ Template.event.events
     Meteor.call "destroy_event", event_id
 
 Template.event.helpers
+  'editing': (event_id) -> Session.equals('editing', event_id)
+
+Template.show_event.events
+  'click .edit': (e) ->
+    e.preventDefault()
+    event_id = $(e.currentTarget).data('event_id')
+    Session.set('editing', event_id)
+
+Template.edit_event.events
+  'submit .create-event': (e) ->
+    e.preventDefault()
+    event = $('.create-event').serializeObject()
+    Events.update(event.id, $set: event)
+    Session.set('editing', null)
+
+Template.show_event.helpers
   'admin': -> Meteor.user()?.profile?.admin
   'starred': (event_id) ->
     Meteor.user()?.profile?.events.indexOf(event_id) > -1
+  'mine': (event_id) ->
+    Meteor.user()?.profile?.events.indexOf(event_id) > -1
+
 
 Template.all.helpers
   'all_events': -> Events.find().fetch()

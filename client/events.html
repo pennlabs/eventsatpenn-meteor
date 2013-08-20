@@ -82,6 +82,34 @@ No upcoming events.
 {{/each}}
 </template>
 
+<template name='event_form'>
+<form class="left box large-12 small-12 create-event" method="post" action="/new">
+  <label>Name</label>
+  <input name="name" type="text" value='{{ name }}' placeholder="Event Name" />
+  <div class="row">
+    <div class="large-6 columns">
+      <label>Date</label>
+      <input name="date" type="date" value='{{ date }}' placeholder="mm/dd/yyyy" />
+    </div>
+    <div class="large-3 small-6 columns">
+      <label>Start Time</label>
+      <input name="time_start" type="time" value='{{ time_start }}' placeholder="hh:mm" />
+    </div>
+    <div class="large-3 small-6 columns">
+      <label>End Time</label>
+      <input name="time_end" type="time" value='{{ time_end }}' placeholder="hh:mm" />
+    </div>
+  </div>
+  <label>Location</label>
+  <input name="location" type="text" value='{{ location }}' placeholder="Location" />
+  <label>Description</label>
+  <textarea name="description" placeholder="Describe your event to make it more easily searchable">{{ description }}</textarea>
+
+  <input type='hidden' value='{{ _id }}' name='id'>
+  <input class="button" type="submit" id="submit-button" value="Submit">
+</form>
+</template>
+
 <template name='new'>
 <div class="view-create">
   <div class="row">
@@ -97,30 +125,7 @@ No upcoming events.
       </div>
     </div>
     <div class="large-8 columns">
-      <form class="left box large-12 small-12 create-event" method="post" action="/new">
-        <label>Name</label>
-        <input name="name" type="text" placeholder="Event Name" />
-        <div class="row">
-          <div class="large-6 columns">
-            <label>Date</label>
-            <input name="date" type="date" placeholder="mm/dd/yyyy" />
-          </div>
-          <div class="large-3 small-6 columns">
-            <label>Start Time</label>
-            <input name="time_start" type="time" placeholder="hh:mm" />
-          </div>
-          <div class="large-3 small-6 columns">
-            <label>End Time</label>
-            <input name="time_end" type="time" placeholder="hh:mm" />
-          </div>
-        </div>
-        <label>Location</label>
-        <input name="location" type="text" placeholder="Location" />
-        <label>Description</label>
-        <textarea name="description" placeholder="Describe your event to make it more easily searchable"></textarea>
-
-        <input class="button" type="submit" id="submit-button" value="Submit">
-      </form>
+      {{> event_form empty_object }}
     </div>
   </div>
 </div>
@@ -133,37 +138,62 @@ No upcoming events.
 <template name='event'>
 <div class='row'>
   <div class='large-12 columns card'>
-    <div class='row'>
-      <div class="large-3 columns image">
-        <img src="http://placehold.it/240x240&amp;text=img">
-      </div>
-      <div class="large-9 columns info">
-        {{#if admin}}
-          <div class='right'>
-          {{#if starred _id }}
-            <span data-event_id='{{ _id }}' class='unpromote'>&#9733;</span>
-          {{else}}
-            <span data-event_id='{{ _id }}' class='promote'>&#9733;</span>
-          {{/if}}
-          </div>
-        {{/if}}
-        <h4 class="title"><a class='event' href="/event/{{ _id }}">{{ name }}</a></h4>
-        <span class="subtitle">by <a class='creator' href="/user/{{ creator }}">{{ creator_name }}</a></span>
+  {{# if editing _id }}
+    {{> edit_event }}
+  {{else}}
+    {{> show_event }}
+  {{/if}}
+  </div>
+</div>
+</template>
 
-        <div class="detail-row">
-          <div class="large-6 columns item">
-            <span class="icon icon-calendar"></span>{{ date }}
-          </div>
-          <div class="large-6 columns item">
-            <span class="icon icon-clock"></span>{{ time_start }} to {{ time_end }}
-          </div>
-          <div class="large-12 columns item">
-            <span class="icon icon-location"></span><a href="http://maps.google.com/?q={{ location }}" target="_blank">{{ location }}</a>
-          </div>
-        </div>
-        <p>{{ description }}</p>
+<template name='edit_event'>
+<div class='row'>
+  <div class="large-3 columns image">
+    <img src="http://placehold.it/240x240&amp;text=img">
+  </div>
+  <div class="large-9 columns info">
+    {{> event_form }}
+  </div>
+</div>
+</template>
+
+<template name='show_event'>
+<div class='row'>
+  <div class="large-3 columns image">
+    <img src="http://placehold.it/240x240&amp;text=img">
+  </div>
+  <div class="large-9 columns info">
+    {{#if admin}}
+      <div class='right'>
+      {{#if starred _id }}
+        <span data-event_id='{{ _id }}' class='unpromote'>&#9733;</span>
+      {{else}}
+        <span data-event_id='{{ _id }}' class='promote'>&#9733;</span>
+      {{/if}}
+      </div>
+    {{/if}}
+    {{#if mine _id }}
+      <div class='right'>
+        <a data-event_id='{{ _id }}' href='#' class='edit'>Edit</a>
+      </div>
+    {{/if}}
+    <h4 class="title"><a class='event' href="/event/{{ _id }}">{{ name }}</a></h4>
+
+    <span class="subtitle">by <a class='creator' href="/user/{{ creator }}">{{ creator_name }}</a></span>
+
+    <div class="detail-row">
+      <div class="large-6 columns item">
+        <span class="icon icon-calendar"></span>{{ date }}
+      </div>
+      <div class="large-6 columns item">
+        <span class="icon icon-clock"></span>{{ time_start }} to {{ time_end }}
+      </div>
+      <div class="large-12 columns item">
+        <span class="icon icon-location"></span><a href="http://maps.google.com/?q={{ location }}" target="_blank">{{ location }}</a>
       </div>
     </div>
+    <p>{{ description }}</p>
   </div>
 </div>
 </template>
