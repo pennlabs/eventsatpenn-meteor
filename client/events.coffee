@@ -11,6 +11,17 @@ $.fn.serializeObject = ->
       o[@name] = @value or ""
   return o
 
+moment.lang('en', {
+    calendar : {
+        lastWeek : '[last] dddd [at] LT',
+        lastDay : '[Yesterday,] LT',
+        sameDay : '[Today,] LT',
+        nextDay : '[Tomorrow,] LT',
+        nextWeek : 'dddd, LT',
+        sameElse : 'dddd, L[,] LT'
+    }
+});
+
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
   'submit .search': (e) ->
@@ -95,6 +106,15 @@ Template.events.helpers
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
     Events.find(_id: {$in: event_ids}).fetch()
+
+Template.event.when = ->
+  dateStart = moment(@date, "YYYY-MM-DD")#.format("dddd, MMMM D")
+  timeStart = moment(@time_start, "hh-mm")#.format("h:mm")
+  timeEnd = moment(@time_end, "hh-mm")#.format("h:mm")
+  start = dateStart
+  start.hour(timeStart.hour())
+  return start.calendar() + " - " + timeEnd.format("h:mm A")
+
 
 # user template
 Template.user.helpers
