@@ -58,6 +58,11 @@ Template.login.events
           Meteor.call "follow_user", Meteor.userId()
           Meteor.Router.to '/'
       )
+    else
+      alert "Passwords do not match"
+
+Template.new.helpers
+  'empty_object': {}
 
 Template.new.events
   'submit .create-event': (e) ->
@@ -89,9 +94,34 @@ Template.event.events
     Meteor.call "destroy_event", event_id
 
 Template.event.helpers
+  'editing': (event_id) -> Session.equals('editing', event_id)
+
+Template.show_event.events
+  'click .edit': (e) ->
+    e.preventDefault()
+    event_id = $(e.currentTarget).data('event_id')
+    Session.set('editing', event_id)
+
+Template.edit_event.events
+  'submit .create-event': (e) ->
+    e.preventDefault()
+    event = $('.create-event').serializeObject()
+    Events.update(event.id, $set: event)
+    Session.set('editing', null)
+
+Template.show_event.helpers
   'admin': -> Meteor.user()?.profile?.admin
   'starred': (event_id) ->
     Meteor.user()?.profile?.events.indexOf(event_id) > -1
+  'mine': (event_id) ->
+    Meteor.user()?.profile?.events.indexOf(event_id) > -1
+  'when': ->
+    dateStart = moment(@date, "YYYY-MM-DD")
+    timeStart = moment(@time_start, "hh-mm")
+    timeEnd = moment(@time_end, "hh-mm")
+    start = dateStart
+    start.hour(timeStart.hour())
+    start.calendar() + " - " + timeEnd.format("h:mm A")
 
 Template.all.helpers
   'all_events': -> Events.find().fetch()
@@ -106,15 +136,6 @@ Template.events.helpers
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
     Events.find(_id: {$in: event_ids}).fetch()
-
-Template.event.when = ->
-  dateStart = moment(@date, "YYYY-MM-DD")#.format("dddd, MMMM D")
-  timeStart = moment(@time_start, "hh-mm")#.format("h:mm")
-  timeEnd = moment(@time_end, "hh-mm")#.format("h:mm")
-  start = dateStart
-  start.hour(timeStart.hour())
-  return start.calendar() + " - " + timeEnd.format("h:mm A")
-
 
 # user template
 Template.user.helpers
