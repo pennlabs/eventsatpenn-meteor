@@ -12,3 +12,6 @@ Meteor.Router.add
   '/search/:q': (q) ->
     Session.set("q", decodeURIComponent(q))
     return 'search'
+  '/category/:category': (category) ->
+    Session.set("category", decodeURIComponent(category))
+    return 'category'

@@ -66,6 +66,14 @@ No upcoming events.
 {{/each}}
 </template>
 
+<template name="category">
+{{#each events}}
+{{> event }}
+{{else}}
+There are no events in this category.
+{{/each}}
+</template>
+
 <template name="search">
 {{#each found_events}}
 {{> event }}
@@ -107,7 +115,11 @@ No upcoming events.
   <div class='row'>
     <div class='small-8 columns'>
       <label>Categories</label>
-      <textarea></textarea>
+      <select name='categories' data-placeholder="Categorize the event" multiple="" class="categories-chooser chosen-select-width">
+        {{#each cats }}
+        <option value='{{ . }}'>{{ . }}</option>
+        {{/each}}
+      </select>
     </div>
     <div class='small-4 columns'>
       <label class='filename'>Event Photo</label>
@@ -177,14 +189,14 @@ No upcoming events.
   <div class="large-9 columns info">
     {{#if admin}}
       <div class='right'>
-      {{#if starred _id }}
-        <span data-event_id='{{ _id }}' class='unpromote'>&#9733;</span>
+      {{#if starred }}
+        <span data-event_id='{{ _id }}' class='unstar'>&#9733;</span>
       {{else}}
-        <span data-event_id='{{ _id }}' class='promote'>&#9733;</span>
+        <span data-event_id='{{ _id }}' class='star'>&#9733;</span>
       {{/if}}
       </div>
     {{/if}}
-    {{#if mine _id }}
+    {{#if mine }}
       <div class='right'>
         <a data-event_id='{{ _id }}' href='#' class='edit'>Edit</a>
       </div>
@@ -202,6 +214,14 @@ No upcoming events.
       </div>
     </div>
     <p>{{ description }}</p>
+    <label>Categories</label>
+    <ul class='categories'>
+      {{#each categories }}
+      <li class='category'><a href='/category/{{ escape_category . }}'>#{{ . }}</a></li>
+      {{else}}
+      <li>None</li>
+      {{/each}}
+    </ul>
   </div>
 </div>
 </template>

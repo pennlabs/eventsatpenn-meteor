@@ -5,7 +5,7 @@ $.fn.serializeObject = ->
   a = @serializeArray()
   $.each a, ->
     if o[@name] isnt undefined
-      o[@name] = [o[@name]]  unless o[@name].push
+      o[@name] = [o[@name]] unless o[@name].push
       o[@name].push @value or ""
     else
       o[@name] = @value or ""
@@ -21,6 +21,15 @@ moment.lang('en', {
         sameElse : 'dddd, L[,] LT'
     }
 })
+
+# convert undefined, single category to array
+fix_categories = (categories) ->
+  if not _.isArray(categories)
+    if categories?
+      return [categories]
+    else
+      return []
+  return categories
 
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
@@ -68,6 +77,7 @@ Template.new.events
   'submit .create-event': (e) ->
     e.preventDefault()
     event = $('.create-event').serializeObject()
+    event.categories = fix_categories(event.categories)
 
     user = Meteor.user()
     event.creator = user._id
@@ -86,10 +96,10 @@ Template.user.events
     Meteor.call("unfollow_user", Session.get("user_id"))
 
 Template.event.events
-  'click .promote': (e) ->
+  'click .star': (e) ->
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "create_event", event_id
-  'click .unpromote': (e) ->
+  'click .unstar': (e) ->
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "destroy_event", event_id
 
@@ -106,15 +116,17 @@ Template.edit_event.events
   'submit .create-event': (e) ->
     e.preventDefault()
     event = $('.create-event').serializeObject()
+    event.categories = fix_categories(event.categories)
     Events.update(event.id, $set: event)
     Session.set('editing', null)
 
 Template.show_event.helpers
   'admin': -> Meteor.user()?.profile?.admin
-  'starred': (event_id) ->
-    Meteor.user()?.profile?.events.indexOf(event_id) > -1
-  'mine': (event_id) ->
-    Meteor.user()?.profile?.events.indexOf(event_id) > -1
+  'escape_category': encodeURIComponent
+  'starred': ->
+    Meteor.user()?.profile?.events.indexOf(@_id) > -1
+  'mine': ->
+    Meteor.user()?.profile?.events.indexOf(@_id) > -1
   'when': ->
     dateStart = moment(@date, "YYYY-MM-DD")
     timeStart = moment(@time_start, "hh-mm")
@@ -159,6 +171,20 @@ Template.event_form.events
     on_error = (error) -> console.log error
     filepicker.setKey("AA_3IkmAOQX2Drld5QS9qz")
     filepicker.pickAndStore mimetype: 'image/*', location: 'S3', on_error, on_success
+
+Template.event_form.helpers
+  'cats': Categories
+  'is_selected': (category, categories) ->
+    if categories?.indexOf(category) > -1
+      return "selected"
+    else
+      return ""
+
+Template.event_form.rendered = ->
+  $(".categories-chooser").chosen()
+
+Template.category.helpers
+  'events': -> Events.find(categories: Session.get "category").fetch()
 
 Template.search.found_events = ->
   q = Session.get("q")

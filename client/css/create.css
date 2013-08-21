@@ -24,6 +24,11 @@
       color: #b54536;
       margin: 0 0 15px 0; }
 
+/* fuck the haters */
+.chzn-container * {
+  box-sizing: content-box !important;
+}
+
 @media only screen and (min-width: 768px) {
   .view-create {
     padding-top: 15px; } }
