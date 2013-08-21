@@ -195,7 +195,8 @@ Template.event_form.rendered = ->
 Template.category.helpers
   'events': -> Events.find(categories: Session.get "category").fetch()
 
-Template.search.found_events = ->
-  q = Session.get("q")
-  re = new RegExp("#{q}.*")
-  Events.find(name: re).fetch()
+Template.search.helpers
+  'found_events': ->
+    q = Session.get("q")
+    re = new RegExp("#{q}.*", 'i')
+    Events.find(name: re).fetch()
