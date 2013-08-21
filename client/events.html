@@ -199,20 +199,18 @@ No upcoming events.
     <!--<img src="http://placehold.it/240x240&amp;text=img">-->
   </div>
   <div class="large-9 columns info">
-    {{#if admin}}
-      <div class='right'>
+    <div class='right'>
+    {{#if admin }}
       {{#if starred }}
-        <span data-event_id='{{ _id }}' class='unstar'>&#9733;</span>
+        <span data-event_id='{{ _id }}' class='unstar top-right'>Unstar</span>
       {{else}}
-        <span data-event_id='{{ _id }}' class='star'>&#9733;</span>
+        <span data-event_id='{{ _id }}' class='star top-right'>Star</span>
       {{/if}}
-      </div>
     {{/if}}
     {{#if mine }}
-      <div class='right'>
-        <a data-event_id='{{ _id }}' href='#' class='edit'>Edit</a>
-      </div>
+      <a data-event_id='{{ _id }}' href='#' class='edit top-right'>Edit</a>
     {{/if}}
+    </div>
     <h4 class="title"><a class='event' href="/event/{{ _id }}">{{ name }}</a></h4>
 
     <span class="subtitle">Hosted by <a class='creator' href="/user/{{ creator }}">{{ creator_name }}</a></span>
@@ -226,12 +224,9 @@ No upcoming events.
       </div>
     </div>
     <p>{{ description }}</p>
-    <label>Categories</label>
     <ul class='categories'>
       {{#each categories }}
       <li class='category'><a href='/category/{{ escape_category . }}'>#{{ . }}</a></li>
-      {{else}}
-      <li>None</li>
       {{/each}}
     </ul>
   </div>
@@ -240,7 +235,6 @@ No upcoming events.
 
 <template name='user'>
 <div class="view-user">
-  <!-- Profile -->
   <div class="profile row">
     <div class="large-9 columns info">
       {{#with info}}

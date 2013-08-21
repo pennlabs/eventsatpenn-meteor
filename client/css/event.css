@@ -30,6 +30,16 @@
   margin-left: 0;
 }
 
+.card .top-right:before {
+  content: '-';
+  color: #444;
+  margin: 0 8px 0 4px;
+}
+.card .top-right:first-child:before {
+  content: '';
+  margin: 0;
+}
+
 
 
 
