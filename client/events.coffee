@@ -161,8 +161,15 @@ Template.show_event.helpers
   'when': ->
     "#{moment(@from).calendar()} - #{moment(@to).calendar()}"
 
+getEvents = (criteria, projection) ->
+  if not criteria?
+    criteria = {}
+  if not projection?
+    projection = {sort: {from: 1}} 
+  Events.find(criteria, projection).fetch()
+
 Template.all.helpers
-  'all_events': -> Events.find().fetch()
+  'all_events': -> getEvents()
 
 # events template
 Template.events.helpers
@@ -173,15 +180,14 @@ Template.events.helpers
       event_ids = []
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
-    # TODO: Add sorting to EVERY Events.find, especially the category search and normal search
-    Events.find({_id: {$in: event_ids}}, {sort: {from: 1}}).fetch()
+    getEvents({_id: {$in: event_ids}})
 
 # user template
 Template.user.helpers
   'info': ->
     Meteor.users.findOne(Session.get("user_id")) or {}
   'user_events': ->
-    Events.find(creator: Session.get("user_id")).fetch() or []
+    getEvents(creator: Session.get("user_id")) or []
   'following': ->
     Meteor.user()?.profile?.following.indexOf(Session.get("user_id")) > -1
 
@@ -222,7 +228,7 @@ Template.event_form.rendered = ->
   $(".categories-chooser").chosen()
 
 Template.category.helpers
-  'events': -> Events.find(categories: Session.get "category").fetch()
+  'events': -> getEvents(categories: Session.get "category").fetch()
 
 Template.search.helpers
   'found_events': ->
