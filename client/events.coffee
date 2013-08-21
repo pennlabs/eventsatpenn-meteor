@@ -11,6 +11,17 @@ $.fn.serializeObject = ->
       o[@name] = @value or ""
   return o
 
+moment.lang('en', {
+    calendar : {
+        lastWeek : '[last] dddd [at] LT',
+        lastDay : '[Yesterday,] LT',
+        sameDay : '[Today,] LT',
+        nextDay : '[Tomorrow,] LT',
+        nextWeek : 'dddd, LT',
+        sameElse : 'dddd, L[,] LT'
+    }
+});
+
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
   'submit .search': (e) ->
@@ -104,7 +115,13 @@ Template.show_event.helpers
     Meteor.user()?.profile?.events.indexOf(event_id) > -1
   'mine': (event_id) ->
     Meteor.user()?.profile?.events.indexOf(event_id) > -1
-
+  'when': ->
+    dateStart = moment(@date, "YYYY-MM-DD")
+    timeStart = moment(@time_start, "hh-mm")
+    timeEnd = moment(@time_end, "hh-mm")
+    start = dateStart
+    start.hour(timeStart.hour())
+    start.calendar() + " - " + timeEnd.format("h:mm A")
 
 Template.all.helpers
   'all_events': -> Events.find().fetch()
@@ -118,7 +135,7 @@ Template.events.helpers
       event_ids = []
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
-    Events.find(_id: {$in: event_ids}).fetch()
+    Events.find({_id: {$in: event_ids}}, {sort: {date: 1, time_start: 1}}).fetch()
 
 # user template
 Template.user.helpers
