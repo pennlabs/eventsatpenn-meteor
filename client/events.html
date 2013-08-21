@@ -114,15 +114,15 @@ No upcoming events.
 <template name='event_form'>
 <form class="left box large-12 small-12 create-event" method="post" action="/new">
   <label>Name</label>
-  <input name="name" type="text" value='{{ name }}' placeholder="Event Name" />
+  <input required name="name" type="text" value='{{ name }}' placeholder="Event Name" />
   <div class="from">
     <label>From</label>
     <div class="row">
       <div class="large-4 columns">
-        <input name="date_start" type="date" value='{{ date_start }}' placeholder="mm/dd/yyyy" />
+        <input required name="date_start" type="date" value='{{ date_start }}' placeholder="mm/dd/yyyy" />
       </div>
       <div class="large-4 columns">
-        <input name="time_start" type="time" value='{{ time_start }}' placeholder="hh:mm" />
+        <input required name="time_start" type="time" value='{{ time_start }}' placeholder="hh:mm" />
       </div>
       <div class="large-4 columns">
       </div>
@@ -132,10 +132,10 @@ No upcoming events.
     <label>To</label>
     <div class="row">
       <div class="large-4 columns">
-        <input name="date_end" type="date" value='{{ date_end }}' placeholder="mm/dd/yyyy" />
+        <input required name="date_end" type="date" value='{{ date_end }}' placeholder="mm/dd/yyyy" />
       </div>
       <div class="large-4 columns">
-        <input name="time_end" type="time" value='{{ time_end }}' placeholder="hh:mm" />
+        <input required name="time_end" type="time" value='{{ time_end }}' placeholder="hh:mm" />
       </div>
       <div class="large-4 columns">
       </div>
@@ -144,7 +144,7 @@ No upcoming events.
   <label>Location</label>
   <input required name="location" type="text" value='{{ location }}' placeholder="Location" />
   <label>Description of event to make it more easily searchable</label>
-  <textarea name="description" placeholder="Make sure to note ticket prices, whether or not free food or stuff is available, and any other relevant info.">{{ description }}</textarea>
+  <textarea required name="description" placeholder="Make sure to note ticket prices, whether or not free food or stuff is available, and any other relevant info.">{{ description }}</textarea>
   <div class='row'>
     <div class='small-8 columns'>
       <label>Categories</label>
