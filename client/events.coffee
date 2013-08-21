@@ -165,7 +165,9 @@ getEvents = (criteria, projection) ->
   if not criteria?
     criteria = {}
   if not projection?
-    projection = {sort: {from: 1}} 
+    projection = {}
+  _.extend(criteria, {to: {$gte: new Date()}})
+  _.extend(projection, {sort: {from: 1}})
   Events.find(criteria, projection).fetch()
 
 Template.all.helpers
