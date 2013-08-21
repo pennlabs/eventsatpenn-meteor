@@ -173,12 +173,12 @@ Template.event_form.events
     filepicker.pickAndStore mimetype: 'image/*', location: 'S3', on_error, on_success
 
 Template.event_form.helpers
-  'cats': Categories
-  'is_selected': (category, categories) ->
-    if categories?.indexOf(category) > -1
+  'cats': (categories) ->
+    Categories.map (category) -> {name: category, categories}
+  'selected': ({name, categories}) ->
+    if _.contains categories, name
       return "selected"
-    else
-      return ""
+    else return ""
 
 Template.event_form.rendered = ->
   $(".categories-chooser").chosen()

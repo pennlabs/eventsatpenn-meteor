@@ -116,8 +116,8 @@ No upcoming events.
     <div class='small-8 columns'>
       <label>Categories</label>
       <select name='categories' data-placeholder="Categorize the event" multiple="" class="categories-chooser chosen-select-width">
-        {{#each cats }}
-        <option value='{{ . }}'>{{ . }}</option>
+        {{#each cats categories }}
+        <option value='{{ name }}' {{ selected . }}>{{ name }}</option>
         {{/each}}
       </select>
     </div>
