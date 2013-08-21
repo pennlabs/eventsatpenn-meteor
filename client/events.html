@@ -122,12 +122,12 @@ No upcoming events.
    </div>
   <label>Location</label>
   <input required name="location" type="text" value='{{ location }}' placeholder="Location" />
-  <label>Description</label>
-  <textarea name="description" placeholder="Describe your event to make it more easily searchable">{{ description }}</textarea>
+  <label>Description of event to make it more easily searchable</label>
+  <textarea name="description" placeholder="Make sure to note ticket prices, whether or not free food or stuff is available, and any other relevant info.">{{ description }}</textarea>
   <div class='row'>
     <div class='small-8 columns'>
       <label>Categories</label>
-      <select name='categories' data-placeholder="Categorize the event" multiple="" class="categories-chooser chosen-select-width">
+      <select name='categories' data-placeholder="Categorize your event" multiple="" class="categories-chooser chosen-select-width">
         {{#each cats categories }}
         <option value='{{ name }}' {{ selected . }}>{{ name }}</option>
         {{/each}}
@@ -150,11 +150,11 @@ No upcoming events.
     <div class="large-4 columns">
       <div class="right box large-12 small-12">
         <h3>Create New Event</h3>
-        <p>Your event will be publicly available. Please respect the following rules. Any posts that violate these rules will be moderated and removed.</p>
+        <p>Your event will be publicly available. Please respect the following rules. The Daily Pennsylvanian is not liable for the content of the events posted on events@penn and may remove them at its sole discretion.</p>
         <ol>
-          <li>No obscene pictures or languages.</li>
-          <li>Shirts and shoes required.</li>
-          <li>Don't be an asshole.</li>
+          <li>No obscene pictures or language.</li>
+          <li>No promotion of illegal activities.</li>
+          <li>Shirt and shoes required.</li>
         </ol>
       </div>
     </div>

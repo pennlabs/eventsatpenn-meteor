@@ -29,6 +29,10 @@
   box-sizing: content-box !important;
 }
 
+.chzn-container input {
+  font-family: 'News Cycle', sans-serif !important;
+}
+
 @media only screen and (min-width: 768px) {
   .view-create {
     padding-top: 15px; } }
