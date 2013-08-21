@@ -64,10 +64,24 @@ Template.login.events
 Template.new.helpers
   'empty_object': {}
 
+parseEventFromForm = (form) ->
+  event = form.serializeObject()
+
+  dateStart = moment(event.date_start, "YYYY-MM-DD")
+  timeStart = moment(event.time_start, "hh-mm")
+
+  dateEnd = moment(event.date_end, "YYYY-MM-DD")
+  timeEnd = moment(event.time_end, "hh-mm")
+
+  event.from = dateStart.hour(timeStart.hour()).minute(timeStart.minute())
+  event.to   = dateEnd.hour(timeEnd.hour()).minute(timeEnd.minute())
+
+  return event
+
 Template.new.events
   'submit .create-event': (e) ->
     e.preventDefault()
-    event = $('.create-event').serializeObject()
+    event = parseEventFromForm($('.create-event'))
 
     user = Meteor.user()
     event.creator = user._id
@@ -105,7 +119,7 @@ Template.show_event.events
 Template.edit_event.events
   'submit .create-event': (e) ->
     e.preventDefault()
-    event = $('.create-event').serializeObject()
+    event = parseEventFromForm($('.create-event'))
     Events.update(event.id, $set: event)
     Session.set('editing', null)
 
@@ -116,12 +130,8 @@ Template.show_event.helpers
   'mine': (event_id) ->
     Meteor.user()?.profile?.events.indexOf(event_id) > -1
   'when': ->
-    dateStart = moment(@date, "YYYY-MM-DD")
-    timeStart = moment(@time_start, "hh-mm")
     timeEnd = moment(@time_end, "hh-mm")
-    start = dateStart
-    start.hour(timeStart.hour())
-    start.calendar() + " - " + timeEnd.format("h:mm A")
+    moment(@start).calendar() + " - " + timeEnd.format("h:mm A")
 
 Template.all.helpers
   'all_events': -> Events.find().fetch()
@@ -135,7 +145,7 @@ Template.events.helpers
       event_ids = []
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
-    Events.find({_id: {$in: event_ids}}, {sort: {date: 1, time_start: 1}}).fetch()
+    Events.find({_id: {$in: event_ids}, start: {$gte: new Date()}}, {sort: {start: 1}}).fetch()
 
 # user template
 Template.user.helpers
