@@ -154,6 +154,7 @@ Template.events.helpers
       event_ids = []
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
+    # TODO: Add sorting to EVERY Events.find, especially the category search and normal search
     Events.find({_id: {$in: event_ids}}, {sort: {date_start: 1, time_start: 1}}).fetch()
 
 # user template
@@ -199,4 +200,4 @@ Template.search.helpers
   'found_events': ->
     q = Session.get("q")
     re = new RegExp("#{q}.*", 'i')
-    Events.find(name: re).fetch()
+    Events.find($or: [{name: re}, {description: re}, {categories: re}, {location: re}]).fetch()
