@@ -44,6 +44,11 @@
   .sidebar input[type=checkbox] {
     margin: 3px 3px 3px 0px; }
 
+.logo {
+  margin-bottom: -5px;
+  height: 18px;
+}
+
 @media only screen and (min-width: 940px) {
   .sidebar.stick {
     position: fixed;
