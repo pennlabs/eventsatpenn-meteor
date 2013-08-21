@@ -104,8 +104,10 @@ No upcoming events.
   <input name="location" type="text" value='{{ location }}' placeholder="Location" />
   <label>Description</label>
   <textarea name="description" placeholder="Describe your event to make it more easily searchable">{{ description }}</textarea>
-
+  <label class='filename'></label>
+  <input type='button' name='image' value='Upload image' class='filepicker button'>
   <input type='hidden' value='{{ _id }}' name='id'>
+  <input type='hidden' value='{{ image_url }}' name='image_url'>
   <input class="button" type="submit" id="submit-button" value="Submit">
 </form>
 </template>
@@ -150,7 +152,7 @@ No upcoming events.
 <template name='edit_event'>
 <div class='row'>
   <div class="large-3 columns image">
-    <img src="http://placehold.it/240x240&amp;text=img">
+    <img src="{{ image_url }}">
   </div>
   <div class="large-9 columns info">
     {{> event_form }}
@@ -161,7 +163,8 @@ No upcoming events.
 <template name='show_event'>
 <div class='row'>
   <div class="large-3 columns image">
-    <img src="http://placehold.it/240x240&amp;text=img">
+    <img src='{{ image_url }}'>
+    <!--<img src="http://placehold.it/240x240&amp;text=img">-->
   </div>
   <div class="large-9 columns info">
     {{#if admin}}

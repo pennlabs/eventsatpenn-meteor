@@ -133,6 +133,16 @@ Template.event_info.helpers
   'info': ->
     Events.findOne(Session.get("event_id")) or {}
 
+Template.event_form.events
+  'click .filepicker': (e) ->
+    on_success = (blobs) ->
+      image = if blobs.length then blobs[0] else {}
+      $('.create-event label.filename').text image.filename
+      $('.create-event input[name=image_url]').val image.url
+    on_error = (error) -> console.log error
+    filepicker.setKey("AA_3IkmAOQX2Drld5QS9qz")
+    filepicker.pickAndStore mimetype: 'image/*', location: 'S3', on_error, on_success
+
 Template.search.found_events = ->
   q = Session.get("q")
   re = new RegExp("#{q}.*")
