@@ -73,11 +73,15 @@ Template.login.events
 Template.new.helpers
   'empty_object': {}
 
+parseEventFromForm = (form) ->
+  event = form.serializeObject()
+  event.categories = fix_categories(event.categories)
+  return event
+
 Template.new.events
   'submit .create-event': (e) ->
     e.preventDefault()
-    event = $('.create-event').serializeObject()
-    event.categories = fix_categories(event.categories)
+    event = parseEventFromForm($('.create-event'))
 
     user = Meteor.user()
     event.creator = user._id
@@ -115,8 +119,7 @@ Template.show_event.events
 Template.edit_event.events
   'submit .create-event': (e) ->
     e.preventDefault()
-    event = $('.create-event').serializeObject()
-    event.categories = fix_categories(event.categories)
+    event = parseEventFromForm($('.create-event'))
     Events.update(event.id, $set: event)
     Session.set('editing', null)
 
@@ -128,12 +131,16 @@ Template.show_event.helpers
   'mine': ->
     Meteor.user()?.profile?.events.indexOf(@_id) > -1
   'when': ->
-    dateStart = moment(@date, "YYYY-MM-DD")
+    dateStart = moment(@date_start, "YYYY-MM-DD")
     timeStart = moment(@time_start, "hh-mm")
+
+    dateEnd = moment(@date_end, "YYYY-MM-DD")
     timeEnd = moment(@time_end, "hh-mm")
-    start = dateStart
-    start.hour(timeStart.hour())
-    start.calendar() + " - " + timeEnd.format("h:mm A")
+
+    from = dateStart.hour(timeStart.hour()).minute(timeStart.minute())
+    to = dateEnd.hour(timeEnd.hour()).minute(timeEnd.minute())
+
+    "#{from.format('lll')} - #{to.format('lll')}"
 
 Template.all.helpers
   'all_events': -> Events.find().fetch()
@@ -147,7 +154,7 @@ Template.events.helpers
       event_ids = []
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
-    Events.find({_id: {$in: event_ids}}, {sort: {date: 1, time_start: 1}}).fetch()
+    Events.find({_id: {$in: event_ids}}, {sort: {date_start: 1, time_start: 1}}).fetch()
 
 # user template
 Template.user.helpers
@@ -169,8 +176,10 @@ Template.event_form.events
       $('.create-event label.filename').text image.filename
       $('.create-event input[name=image_url]').val image.url
     on_error = (error) -> console.log error
+    services = ["COMPUTER", "DROPBOX", "FACEBOOK", "FLICKR", "GOOGLE_DRIVE", "SKYDRIVE", "IMAGE_SEARCH", "INSTAGRAM", "URL", "WEBCAM"]
     filepicker.setKey("AA_3IkmAOQX2Drld5QS9qz")
-    filepicker.pickAndStore mimetype: 'image/*', location: 'S3', on_error, on_success
+    filepicker.pickAndStore {mimetype: 'image/*', services: services},
+      {location: 'S3'}, on_success, on_error
 
 Template.event_form.helpers
   'cats': (categories) ->
