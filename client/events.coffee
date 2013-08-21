@@ -206,7 +206,7 @@ Template.event_form.events
     on_error = (error) -> console.log error
     services = ["COMPUTER", "DROPBOX", "FACEBOOK", "FLICKR", "GOOGLE_DRIVE", "SKYDRIVE", "IMAGE_SEARCH", "INSTAGRAM", "URL", "WEBCAM"]
     filepicker.setKey("AA_3IkmAOQX2Drld5QS9qz")
-    filepicker.pickAndStore {mimetype: 'image/*', services: services},
+    filepicker.pickAndStore {mimetype: 'image/*', services: services, extensions: [".png", ".jpg", ".jpeg"]},
       {location: 'S3'}, on_success, on_error
 
 Template.event_form.helpers
