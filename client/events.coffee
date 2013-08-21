@@ -22,6 +22,9 @@ moment.lang('en', {
     }
 })
 
+DATE_FORMAT = "YYYY-MM-DD"
+TIME_FORMAT = "HH:mm"
+
 # convert undefined, single category to array
 fix_categories = (categories) ->
   if not _.isArray(categories)
@@ -76,6 +79,31 @@ Template.new.helpers
 parseEventFromForm = (form) ->
   event = form.serializeObject()
   event.categories = fix_categories(event.categories)
+
+  dateStart = moment(event.date_start, DATE_FORMAT)
+  timeStart = moment(event.time_start, TIME_FORMAT)
+
+  delete event['date_start']
+  delete event['time_start']
+
+  event.from = dateStart
+    .hour(timeStart.hour())
+    .minute(timeStart.minute())
+    .toDate()
+
+  dateEnd = moment(event.date_end, DATE_FORMAT)
+  timeEnd = moment(event.time_end, TIME_FORMAT)
+
+  delete event['date_end']
+  delete event['time_end']
+
+  event.to = dateEnd
+    .hour(timeEnd.hour())
+    .minute(timeEnd.minute())
+    .toDate()
+
+  console.log event.from, event.to
+
   return event
 
 Template.new.events
@@ -131,16 +159,7 @@ Template.show_event.helpers
   'mine': ->
     Meteor.user()?.profile?.events.indexOf(@_id) > -1
   'when': ->
-    dateStart = moment(@date_start, "YYYY-MM-DD")
-    timeStart = moment(@time_start, "hh-mm")
-
-    dateEnd = moment(@date_end, "YYYY-MM-DD")
-    timeEnd = moment(@time_end, "hh-mm")
-
-    from = dateStart.hour(timeStart.hour()).minute(timeStart.minute())
-    to = dateEnd.hour(timeEnd.hour()).minute(timeEnd.minute())
-
-    "#{from.format('lll')} - #{to.format('lll')}"
+    "#{moment(@from).calendar()} - #{moment(@to).calendar()}"
 
 Template.all.helpers
   'all_events': -> Events.find().fetch()
@@ -155,7 +174,7 @@ Template.events.helpers
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
     # TODO: Add sorting to EVERY Events.find, especially the category search and normal search
-    Events.find({_id: {$in: event_ids}}, {sort: {date_start: 1, time_start: 1}}).fetch()
+    Events.find({_id: {$in: event_ids}}, {sort: {from: 1}}).fetch()
 
 # user template
 Template.user.helpers
@@ -189,6 +208,15 @@ Template.event_form.helpers
     if _.contains categories, name
       return "selected"
     else return ""
+  'date_start': ->
+    return moment(@from).format(DATE_FORMAT)
+  'date_end': ->
+    return moment(@to).format(DATE_FORMAT)
+  'time_start': ->
+    return moment(@from).format(TIME_FORMAT)
+  'time_end': ->
+    return moment(@to).format(TIME_FORMAT)
+
 
 Template.event_form.rendered = ->
   $(".categories-chooser").chosen()
