@@ -20,7 +20,7 @@ moment.lang('en', {
         nextWeek : 'dddd, LT',
         sameElse : 'dddd, L[,] LT'
     }
-});
+})
 
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
