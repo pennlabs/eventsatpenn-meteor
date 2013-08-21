@@ -230,10 +230,10 @@ Template.event_form.rendered = ->
   $(".categories-chooser").chosen()
 
 Template.category.helpers
-  'events': -> getEvents(categories: Session.get "category").fetch()
+  'events': -> getEvents(categories: Session.get "category")
 
 Template.search.helpers
   'found_events': ->
     q = Session.get("q")
     re = new RegExp("#{q}.*", 'i')
-    Events.find($or: [{name: re}, {description: re}, {categories: re}, {location: re}]).fetch()
+    getEvents($or: [{name: re}, {description: re}, {categories: re}, {location: re}])
