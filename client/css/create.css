@@ -24,6 +24,11 @@
       color: #b54536;
       margin: 0 0 15px 0; }
 
+.filepicker.button {
+  background: #526378;
+  border: 1px solid #29313b;
+}
+
 /* fuck the haters */
 .chzn-container * {
   box-sizing: content-box !important;
