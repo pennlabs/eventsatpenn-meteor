@@ -148,6 +148,10 @@ Template.show_event.events
     e.preventDefault()
     event_id = $(e.currentTarget).data('event_id')
     Session.set('editing', event_id)
+  'click .delete': (e) ->
+    e.preventDefault()
+    event_id = $(e.currentTarget).data('event_id')
+    Meteor.call "destroy_event", event_id
 
 Template.edit_event.events
   'submit .create-event': (e) ->

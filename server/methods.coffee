@@ -14,6 +14,7 @@ Meteor.methods
   # Meteor.users.update({}, {$pull: {"profile.events": event_id}})
   # alternatively, have a different method to un-star events as opposed to destroy
   destroy_event: (event_id) ->
+    Events.remove(event_id)
     Meteor.users.update(Meteor.userId(), {$pull: {"profile.events": event_id}})
     followers = Meteor.user().profile.followers or []
     if followers.length
