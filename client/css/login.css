@@ -26,3 +26,15 @@
   .view-login .signup h1, .view-login .signup h2, .view-login .signup h3, .view-login .signup h4, .view-login .signup h5, .view-login .signup h6 {
     color: #b54536;
     margin: 0 0 15px 0; }
+
+.fb.button {
+  margin: 0;
+}
+.or {
+  text-align: center;
+  margin: 10px 0 15px 0;
+}
+.or:before, .or:after {
+  content: '-';
+  margin: 0 4px;
+}

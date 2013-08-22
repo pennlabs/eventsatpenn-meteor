@@ -65,7 +65,7 @@
           <li class="divider"></li>
           {{#if currentUser }}
           <li><a href="/new" class="create"><span class="icon icon-plus"></span>Create Event</a></li>
-          <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.full_name }}</a>
+          <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.name }}</a>
             <ul class="dropdown">
               <li><a href="#" class="logout">Logout</a><li>
             </ul>
@@ -260,7 +260,7 @@ No upcoming events.
   <div class="profile row">
     <div class="large-9 columns info">
       {{#with info}}
-      <h2 class="title">{{ profile.full_name }}</h2>
+      <h2 class="title">{{ profile.name }}</h2>
       <hr/>
       <p>{{ profile.description }}</p>
       {{/with}}
@@ -295,6 +295,8 @@ No upcoming events.
     </div>
     <form id="login-form" class="login large-12" method="post" action="login">
       <h3>Login</h3>
+      <input type='button' class='fb button' value='Login with Facebook'>
+      <div class='or'>or</div>
       <input name="email" type="text" placeholder="Email" />
       <input name="password" type="password" placeholder="Password" />
       <input class="button" type="submit" id="login-button" value="{{ login_error }}">
@@ -310,7 +312,7 @@ No upcoming events.
       <label>Name</label>
       <div class="row">
         <div class="large-12 columns">
-          <input name="full_name" type="text" placeholder="Full Name" />
+          <input name="name" type="text" placeholder="Full Name" />
         </div>
       </div>
       <label>UPenn Email</label>

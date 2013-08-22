@@ -99,7 +99,7 @@ Template.login.events
         email: user.email
         password: user.password
         profile:
-          full_name: user.full_name
+          name: user.name
           description: user.description
           events: []
           event_queue: admin_event_ids
@@ -112,6 +112,8 @@ Template.login.events
       )
     else
       alert "Passwords do not match"
+  'click .fb': (e) ->
+    Meteor.loginWithFacebook()
 
 Template.login.helpers
   'login_error': -> Session.get("login_error") or "Login"
@@ -126,7 +128,7 @@ Template.new.events
 
     user = Meteor.user()
     event.creator = user._id
-    event.creator_name = user.profile.full_name
+    event.creator_name = user.profile.name
 
     event_id = Events.insert(event)
     Meteor.call('create_event', event_id)
