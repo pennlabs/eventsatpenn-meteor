@@ -83,9 +83,7 @@ Template.login.events
     Meteor.loginWithPassword creds.email, creds.password, (err) ->
       if err
         Session.set("login_error", "(#{err.reason})")
-        setTimeout ->
-          Session.set("login_error")
-        , 2000
+        setTimeout (-> Session.set "login_error"), 2000
       else
         Meteor.Router.to '/'
   'submit #register-form': (e) ->
@@ -113,7 +111,20 @@ Template.login.events
     else
       alert "Passwords do not match"
   'click .fb': (e) ->
-    Meteor.loginWithFacebook()
+    # need to add default profile.events and profile.event_queue and everything
+    Meteor.loginWithFacebook {}, (err) ->
+      if not err
+        # only if not set
+        ###
+        Meteor.users.update(Meteor.userId(), {$set: {
+          events: []
+          event_queue: []
+          followers: []
+          following: []}
+        })
+        ###
+        Meteor.Router.to '/'
+
 
 Template.login.helpers
   'login_error': -> Session.get("login_error") or "Login"
