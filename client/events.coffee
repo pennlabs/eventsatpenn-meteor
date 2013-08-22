@@ -11,16 +11,14 @@ $.fn.serializeObject = ->
       o[@name] = @value or ""
   return o
 
-moment.lang('en', {
-    calendar : {
-        lastWeek : '[last] dddd [at] LT',
-        lastDay : '[Yesterday,] LT',
-        sameDay : '[Today,] LT',
-        nextDay : '[Tomorrow,] LT',
-        nextWeek : 'dddd, LT',
-        sameElse : 'dddd, L[,] LT'
-    }
-})
+moment.lang 'en',
+  calendar:
+    lastWeek: '[last] dddd [at] LT',
+    lastDay: '[Yesterday,] LT',
+    sameDay: '[Today,] LT',
+    nextDay: '[Tomorrow,] LT',
+    nextWeek: 'dddd, LT',
+    sameElse: 'dddd, L[,] LT'
 
 DATE_FORMAT = "YYYY-MM-DD"
 TIME_FORMAT = "HH:mm"
@@ -33,6 +31,43 @@ fix_categories = (categories) ->
     else
       return []
   return categories
+
+parse_event_from_form = (form) ->
+  event = form.serializeObject()
+  event.categories = fix_categories(event.categories)
+
+  date_start = moment(event.date_start, DATE_FORMAT)
+  time_start = moment(event.time_start, TIME_FORMAT)
+
+  delete event['date_start']
+  delete event['time_start']
+
+  event.from = date_start
+    .hour(time_start.hour())
+    .minute(time_start.minute())
+    .toDate()
+
+  date_end = moment(event.date_end, DATE_FORMAT)
+  time_end = moment(event.time_end, TIME_FORMAT)
+
+  delete event['date_end']
+  delete event['time_end']
+
+  event.to = date_end
+    .hour(time_end.hour())
+    .minute(time_end.minute())
+    .toDate()
+
+  return event
+
+get_events = (criteria, projection) ->
+  if not criteria?
+    criteria = {}
+  if not projection?
+    projection = {}
+  _.extend(criteria, {to: {$gte: new Date()}})
+  _.extend(projection, {sort: {from: 1}})
+  Events.find(criteria, projection).fetch()
 
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
@@ -76,40 +111,10 @@ Template.login.events
 Template.new.helpers
   'empty_object': {}
 
-parseEventFromForm = (form) ->
-  event = form.serializeObject()
-  event.categories = fix_categories(event.categories)
-
-  dateStart = moment(event.date_start, DATE_FORMAT)
-  timeStart = moment(event.time_start, TIME_FORMAT)
-
-  delete event['date_start']
-  delete event['time_start']
-
-  event.from = dateStart
-    .hour(timeStart.hour())
-    .minute(timeStart.minute())
-    .toDate()
-
-  dateEnd = moment(event.date_end, DATE_FORMAT)
-  timeEnd = moment(event.time_end, TIME_FORMAT)
-
-  delete event['date_end']
-  delete event['time_end']
-
-  event.to = dateEnd
-    .hour(timeEnd.hour())
-    .minute(timeEnd.minute())
-    .toDate()
-
-  console.log event.from, event.to
-
-  return event
-
 Template.new.events
   'submit .create-event': (e) ->
     e.preventDefault()
-    event = parseEventFromForm($('.create-event'))
+    event = parse_event_from_form $('.create-event')
 
     user = Meteor.user()
     event.creator = user._id
@@ -147,7 +152,7 @@ Template.show_event.events
 Template.edit_event.events
   'submit .create-event': (e) ->
     e.preventDefault()
-    event = parseEventFromForm($('.create-event'))
+    event = parse_event_from_form $('.create-event')
     Events.update(event.id, $set: event)
     Session.set('editing', null)
 
@@ -161,17 +166,8 @@ Template.show_event.helpers
   'when': ->
     "#{moment(@from).calendar()} - #{moment(@to).calendar()}"
 
-getEvents = (criteria, projection) ->
-  if not criteria?
-    criteria = {}
-  if not projection?
-    projection = {}
-  _.extend(criteria, {to: {$gte: new Date()}})
-  _.extend(projection, {sort: {from: 1}})
-  Events.find(criteria, projection).fetch()
-
 Template.all.helpers
-  'all_events': -> getEvents()
+  'all_events': -> get_events()
 
 # events template
 Template.events.helpers
@@ -182,14 +178,14 @@ Template.events.helpers
       event_ids = []
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
-    getEvents({_id: {$in: event_ids}})
+    get_events({_id: {$in: event_ids}})
 
 # user template
 Template.user.helpers
   'info': ->
     Meteor.users.findOne(Session.get("user_id")) or {}
   'user_events': ->
-    getEvents(creator: Session.get("user_id")) or []
+    get_events(creator: Session.get("user_id")) or []
   'following': ->
     Meteor.user()?.profile?.following.indexOf(Session.get("user_id")) > -1
 
@@ -230,10 +226,10 @@ Template.event_form.rendered = ->
   $(".categories-chooser").chosen()
 
 Template.category.helpers
-  'events': -> getEvents(categories: Session.get "category")
+  'events': -> get_events(categories: Session.get "category")
 
 Template.search.helpers
   'found_events': ->
     q = Session.get("q")
     re = new RegExp("#{q}.*", 'i')
-    getEvents($or: [{name: re}, {description: re}, {categories: re}, {location: re}])
+    get_events($or: [{name: re}, {description: re}, {categories: re}, {location: re}])
