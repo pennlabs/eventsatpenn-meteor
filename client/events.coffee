@@ -81,7 +81,12 @@ Template.login.events
     e.preventDefault()
     creds = $('#login-form').serializeObject()
     Meteor.loginWithPassword creds.email, creds.password, (err) ->
-      if not err
+      if err
+        Session.set("login_error", "(#{err.reason})")
+        setTimeout ->
+          Session.set("login_error")
+        , 2000
+      else
         Meteor.Router.to '/'
   'submit #register-form': (e) ->
     e.preventDefault()
@@ -107,6 +112,9 @@ Template.login.events
       )
     else
       alert "Passwords do not match"
+
+Template.login.helpers
+  'login_error': -> Session.get("login_error") or "Login"
 
 Template.new.helpers
   'empty_object': {}
