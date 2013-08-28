@@ -77,7 +77,9 @@ Template.topbar.events
     Meteor.Router.to "/search/#{encodeURIComponent(q)}"
 
 Template.topbar.rendered = ->
-  $(document).foundation()
+  if !window.foundation?
+    $(document).foundation -> window.foundation = true
+
   if !window._gaq?
     window._gaq = []
     _gaq.push(['_setAccount', 'UA-32638163-1'])
