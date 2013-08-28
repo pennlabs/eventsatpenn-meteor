@@ -1,6 +1,6 @@
 Meteor.Router.add
-  '/': 'events'
-  '/all': 'all'
+  '/': 'all'
+  '/feed': 'events'
   '/new': 'new'
   '/login': 'login'
   '/event/:event_id': (event_id) ->
