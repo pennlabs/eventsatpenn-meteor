@@ -114,15 +114,8 @@ Template.login.events
     # need to add default profile.events and profile.event_queue and everything
     Meteor.loginWithFacebook {}, (err) ->
       if not err
-        # only if not set
-        ###
-        Meteor.users.update(Meteor.userId(), {$set: {
-          events: []
-          event_queue: []
-          followers: []
-          following: []}
-        })
-        ###
+        console.log "creating fb user"
+        Meteor.call "create_fb_user", Meteor.userId()
         Meteor.Router.to '/'
 
 

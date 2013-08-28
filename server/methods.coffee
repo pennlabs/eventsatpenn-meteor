@@ -40,3 +40,21 @@ Meteor.methods
     event_ids = Meteor.users.findOne(user_id).profile.events or []
     if event_ids.length
       Meteor.users.update(Meteor.userId(), {$pullAll: {"profile.event_queue": event_ids}})
+
+  create_fb_user: (user_id) ->
+    exists = {$exists: false}
+    admin_ids = Meteor.users.find("profile.admin": true).map (admin) -> admin._id
+    admin_event_ids = Events.find(creator: {$in: admin_ids}).map (event) -> event._id
+
+    Meteor.users.update({
+      _id: user_id
+      "profile.events": exists
+      "profile.event_queue": exists
+      "profile.followers": exists
+      "profile.following": exists
+    }, {$set: {
+      "profile.events": []
+      "profile.event_queue": admin_event_ids
+      "profile.followers": []
+      "profile.following": admin_ids.concat(user_id)
+    }})
