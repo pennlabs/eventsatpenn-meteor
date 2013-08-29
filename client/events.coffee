@@ -67,7 +67,6 @@ get_events = (criteria, projection) ->
     projection = {}
   _.extend(criteria, {to: {$gte: new Date()}}) if not criteria.to
   _.extend(projection, {sort: {from: 1}})
-  console.log criteria
   Events.find(criteria, projection).fetch()
 
 Template.sidebar.helpers

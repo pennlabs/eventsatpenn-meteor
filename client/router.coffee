@@ -1,5 +1,7 @@
 Meteor.Router.add
-  '/': 'all'
+  '/': ->
+    Session.set('after_date')  # clear
+    return 'all'
   '/feed': 'events'
   '/new': 'new'
   '/login': 'login'
