@@ -88,27 +88,81 @@ No upcoming events.
 </template>
 
 <template name="category">
-{{#each events}}
-{{> event }}
-{{else}}
-There are no events in this category.
-{{/each}}
+<div class='row'>
+  <div class='large-3 columns sidebar'>
+    {{> sidebar }}
+  </div>
+  <div class='large-9 columns'>
+    {{#each events}}
+    {{> event }}
+    {{else}}
+    There are no events in this category.
+    {{/each}}
+  </div>
+</div>
 </template>
 
 <template name="search">
-{{#each found_events}}
-{{> event }}
-{{else}}
-No results found.
-{{/each}}
+<div class='row'>
+  <div class='large-3 columns sidebar'>
+    {{> sidebar }}
+  </div>
+  <div class='large-9 columns'>
+    {{#each found_events}}
+    {{> event }}
+    {{else}}
+    No results found.
+    {{/each}}
+  </div>
+</div>
+</template>
+
+<template name='after_date'>
+<div class='row'>
+  <div class='large-3 columns sidebar'>
+    {{> sidebar }}
+  </div>
+  <div class='large-9 columns'>
+    {{#each events }}
+    {{> event }}
+    {{else}}
+    No events after this date are scheduled.
+    {{/each}}
+  </div>
+</div>
 </template>
 
 <template name='all'>
-{{#each all_events}}
-{{> event }}
-{{else}}
-No upcoming events.
-{{/each}}
+<div class='row'>
+  <div class='large-3 columns sidebar'>
+    {{> sidebar }}
+  </div>
+  <div class='large-9 columns'>
+    {{#each all_events}}
+    {{> event }}
+    {{else}}
+    No upcoming events.
+    {{/each}}
+  </div>
+</div>
+</template>
+
+<template name='sidebar'>
+<div class="large-12 columns sidebar-content">
+  <form>
+    <h5>Date</h5>
+    <input class='date' value="{{ after_date }}" type="date" placeholder="mm/dd/yyyy" />
+    <hr/>
+    <h5>Categories</h5>
+    {{#each categories }}
+    <a href='/category/{{ escape_category . }}'>#{{ . }}</a>
+    {{/each}}
+  </form>
+</div>
+<div class="large-12 columns sidebar-fold">
+  <span class="arrow"></span>
+  <h5>Filters</h5>
+</div>
 </template>
 
 <template name='event_form'>

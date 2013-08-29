@@ -65,9 +65,21 @@ get_events = (criteria, projection) ->
     criteria = {}
   if not projection?
     projection = {}
-  _.extend(criteria, {to: {$gte: new Date()}})
+  _.extend(criteria, {to: {$gte: new Date()}}) if not criteria.to
   _.extend(projection, {sort: {from: 1}})
+  console.log criteria
   Events.find(criteria, projection).fetch()
+
+Template.sidebar.helpers
+  'categories': Categories
+  'escape_category': encodeURIComponent
+  'after_date': -> Session.get("after_date") or new Date().toJSON().slice(0,10)
+
+Template.sidebar.events
+  'change .date': (e) ->
+    date = $(e.currentTarget).val()
+    if date
+      Meteor.Router.to "/after/#{encodeURIComponent date}"
 
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
@@ -266,3 +278,8 @@ Template.search.helpers
     q = Session.get("q")
     re = new RegExp("#{q}.*", 'i')
     get_events($or: [{name: re}, {description: re}, {categories: re}, {location: re}])
+
+Template.after_date.helpers
+  'events': ->
+    date = Session.get("after_date")
+    get_events(to: {$gte: moment(date).toDate()})

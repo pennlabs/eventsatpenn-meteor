@@ -10,8 +10,11 @@ Meteor.Router.add
     Session.set("user_id", user_id)
     return 'user'
   '/search/:q': (q) ->
-    Session.set("q", decodeURIComponent(q))
+    Session.set("q", decodeURIComponent q)
     return 'search'
   '/category/:category': (category) ->
     Session.set("category", decodeURIComponent(category))
     return 'category'
+  '/after/:date': (date) ->
+    Session.set('after_date', decodeURIComponent date)
+    return 'after_date'
