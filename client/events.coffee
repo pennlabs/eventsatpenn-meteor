@@ -208,7 +208,7 @@ Template.show_event.helpers
   'mine': ->
     Meteor.user()?.profile?.events.indexOf(@_id) > -1
   'when': ->
-    "#{moment(@from).calendar()} - #{moment(@to).calendar()}"
+    "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
 
 Template.all.helpers
   'all_events': -> get_events()
