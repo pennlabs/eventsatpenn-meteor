@@ -115,7 +115,7 @@ Template.login.events
   'submit #register-form': (e) ->
     e.preventDefault()
     user = $('#register-form').serializeObject()
-    if user.password == user.confirm
+    if user.password and user.password == user.confirm
       admin_ids = Meteor.users.find("profile.admin": true).map (admin) -> admin._id
       admin_event_ids = Events.find(creator: {$in: admin_ids}).map (event) -> event._id
 
@@ -137,10 +137,8 @@ Template.login.events
     else
       alert "Passwords do not match"
   'click .fb': (e) ->
-    # need to add default profile.events and profile.event_queue and everything
     Meteor.loginWithFacebook {}, (err) ->
       if not err
-        console.log "creating fb user"
         Meteor.call "create_fb_user", Meteor.userId()
         Meteor.Router.to '/'
 
