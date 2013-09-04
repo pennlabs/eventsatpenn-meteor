@@ -63,8 +63,6 @@
       <section class="top-bar-section">
         <ul class="right">
           {{#if currentUser }}
-          <li><a href="/feed">Your Feed</a></li>
-          <li class="divider"></li>
           <li><a href="/new" class="create"><span class="icon icon-plus"></span>Create Event</a></li>
           <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.name }}</a>
             <ul class="dropdown">

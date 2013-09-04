@@ -2,7 +2,6 @@ Meteor.Router.add
   '/': ->
     Session.set('after_date')  # clear
     return 'all'
-  '/feed': 'events'
   '/new': 'new'
   '/login': 'login'
   '/event/:event_id': (event_id) ->
