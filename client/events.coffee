@@ -174,7 +174,6 @@ Template.user.events
 Template.event.events
   'click .star': (e) ->
     event_id = $(e.currentTarget).data('event_id')
-    console.log event_id
     Meteor.call "star_event", event_id
   'click .unstar': (e) ->
     event_id = $(e.currentTarget).data('event_id')
