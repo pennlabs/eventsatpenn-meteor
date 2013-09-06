@@ -146,6 +146,7 @@ Template.login.events
 
 Template.login.helpers
   'login_error': -> Session.get("login_error") or "Login"
+  'login_class': -> if Session.get("login_error") then "error" else ""
 
 Template.new.helpers
   'empty_object': {}

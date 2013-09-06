@@ -38,3 +38,8 @@
   content: '-';
   margin: 0 4px;
 }
+
+input[type='submit'].error {
+  background-color: #810814 !important;
+  border-color: #680000 !important;
+}
