@@ -160,8 +160,7 @@ No upcoming events.
 </div>
 <div class="large-12 columns sidebar-fold">
   <!--<span class="arrow"></span>-->
-  <h5>Filters</h5>
-</div>
+  <h5>Filters</h5> </div>
 </template>
 
 <template name='event_form'>
@@ -295,7 +294,7 @@ No upcoming events.
         <span class="icon icon-clock"></span>{{ when }}
       </div>
       <div class="large-12 columns item">
-        <span class="icon icon-location"></span><a href="http://maps.google.com/?q={{ location }}" target="_blank">{{ location }}</a>
+        <span class="icon icon-location"></span><a href='#'>{{ location }}</a>
       </div>
     </div>
     <p>{{ description }}</p>
@@ -380,7 +379,7 @@ No upcoming events.
         </div>
       </div>
       <label>Description</label>
-      <textarea name="description" placeholder=""></textarea>
+      <textarea name="description" placeholder="Your club and position within it, any other relevant information"></textarea>
       
       <input class="button" type="submit" id="register-button" value="Register">
     </form>
