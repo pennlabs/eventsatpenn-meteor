@@ -279,6 +279,10 @@ No upcoming events.
       {{else}}
         <span data-event_id='{{ _id }}' class='star top-right'>Star</span>
       {{/if}}
+    {{else}}
+      {{#if starred }}
+        <span class='top-right'>Starred by <a href='/user/{{ starred.by_id }}'>{{ starred.by }}</a></span>
+      {{/if}}
     {{/if}}
     {{#if mine }}
       <a data-event_id='{{ _id }}' href='#' class='delete top-right'>Delete</a>

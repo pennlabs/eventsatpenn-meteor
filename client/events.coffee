@@ -67,6 +67,7 @@ get_events = (criteria, projection) ->
     projection = {}
   _.extend(criteria, {to: {$gte: new Date()}}) if not criteria.to
   _.extend(projection, {sort: {from: 1}})
+  criteria = {"$or": [criteria, {starred: {$exists: true}}]}
   Events.find(criteria, projection).fetch()
 
 Template.sidebar.helpers
@@ -173,10 +174,11 @@ Template.user.events
 Template.event.events
   'click .star': (e) ->
     event_id = $(e.currentTarget).data('event_id')
-    Meteor.call "create_event", event_id
+    console.log event_id
+    Meteor.call "star_event", event_id
   'click .unstar': (e) ->
     event_id = $(e.currentTarget).data('event_id')
-    Meteor.call "destroy_event", event_id
+    Meteor.call "unstar_event", event_id
 
 Template.event.helpers
   'editing': (event_id) -> Session.equals('editing', event_id)
@@ -201,8 +203,6 @@ Template.edit_event.events
 Template.show_event.helpers
   'admin': -> Meteor.user()?.profile?.admin
   'escape_category': encodeURIComponent
-  'starred': ->
-    Meteor.user()?.profile?.events.indexOf(@_id) > -1
   'mine': ->
     Meteor.user()?.profile?.events.indexOf(@_id) > -1
   'when': ->

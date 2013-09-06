@@ -21,10 +21,10 @@ Meteor.methods
       Meteor.users.update(_id: {$in: followers}, {$pull: {"profile.event_queue": event_id}})
 
   star_event: (event_id) ->
-    Event.update(event_id, {$set: {starred: {by: Meteor.user().profile.full_name, by_id: Meteor.userId()}}})
+    Events.update(event_id, {$set: {starred: {by: Meteor.user().profile.full_name, by_id: Meteor.userId()}}})
 
   unstar_event: (event_id) ->
-    Event.update(event_id, {$unset: {starred: 1}})
+    Events.update(event_id, {$unset: {starred: 1}})
 
   follow_user: (user_id) ->
     Meteor.users.update(Meteor.userId(), {$push: {"profile.following": user_id}})
