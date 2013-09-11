@@ -268,7 +268,7 @@ Template.event_form.rendered = ->
   $(".categories-chooser").chosen()
 
 Template.category.helpers
-  'events': -> get_events(categories: Session.get "category")
+  'events': -> get_events(categories: {$in: Session.get "categories"})
 
 Template.search.helpers
   'found_events': ->
