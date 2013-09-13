@@ -154,7 +154,7 @@ No upcoming events.
     <hr/>
     <h5>Categories</h5>
     {{#each categories }}
-    <a href='/category/{{ escape_category . }}'>{{ . }}</a>
+      <label><input {{ checked . }} class='category-checkbox' type="checkbox" value='{{ escape_category . }}'>{{ . }}</label>
     {{/each}}
   </form>
 </div>

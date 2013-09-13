@@ -73,9 +73,14 @@ get_events = (criteria, projection) ->
 Template.sidebar.helpers
   'categories': Categories
   'escape_category': encodeURIComponent
+  'checked': (category) ->
+    if _.contains Session.get("categories"), category then "checked" else ""
   'after_date': -> Session.get("after_date") or new Date().toJSON().slice(0,10)
 
 Template.sidebar.events
+  'change .category-checkbox': (e) ->
+    categories = $('.category-checkbox:checked').map(-> @value).toArray()
+    Meteor.Router.to "/category/#{categories.join "+"}"
   'change .date': (e) ->
     date = $(e.currentTarget).val()
     if date
