@@ -80,7 +80,11 @@ Template.sidebar.helpers
 Template.sidebar.events
   'change .category-checkbox': (e) ->
     categories = $('.category-checkbox:checked').map(-> @value).toArray()
-    Meteor.Router.to "/category/#{categories.join "+"}"
+    if categories.length
+      Meteor.Router.to "/category/#{categories.join "+"}"
+    else
+      Session.set("categories", [])
+      Meteor.Router.to "/"
   'change .date': (e) ->
     date = $(e.currentTarget).val()
     if date
