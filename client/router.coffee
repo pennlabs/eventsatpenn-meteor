@@ -1,6 +1,7 @@
 Meteor.Router.add
   '/': ->
     Session.set('after_date')  # clear
+    Session.set('categories')  # clear
     return 'all'
   '/new': 'new'
   '/login': 'login'
