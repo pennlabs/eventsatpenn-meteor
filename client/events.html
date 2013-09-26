@@ -138,6 +138,14 @@ No upcoming events.
     {{> sidebar }}
   </div>
   <div class='large-9 columns'>
+    <h4>Featured Events</h4>
+    {{#each featured_events }}
+    {{> event }}
+    {{else}}
+    No featured events.
+    {{/each}}
+
+    <h4>All Events</h4>
     {{#each all_events}}
     {{> event }}
     {{else}}

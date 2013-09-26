@@ -218,7 +218,8 @@ Template.show_event.helpers
     "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
 
 Template.all.helpers
-  'all_events': -> get_events()
+  'all_events': -> get_events(starred: {$exists: false})
+  'featured_events': -> get_events(starred: {$exists: true})
 
 # events template
 Template.events.helpers
