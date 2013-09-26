@@ -78,6 +78,7 @@ Template.sidebar.helpers
   'after_date': -> Session.get("after_date") or new Date().toJSON().slice(0,10)
 
 Template.sidebar.events
+  'click .sidebar-fold': (e) -> $('.sidebar').toggleClass('folded')
   'change .category-checkbox': (e) ->
     categories = $('.category-checkbox:checked').map(-> @value).toArray()
     if categories.length
