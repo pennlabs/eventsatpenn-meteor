@@ -100,6 +100,9 @@ Template.sidebar.events
       params.date = date
       Meteor.Router.to "/search?#{serialize params}"
 
+Template.topbar.helpers
+  'q': -> Session.get("params")?.q
+
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
   'submit .search': (e) ->
