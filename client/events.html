@@ -60,9 +60,9 @@
        </section>
       <section class="top-bar-section">
         <ul class="right">
-          {{#if currentUser }}
           <li><a href="http://thedp.com" target='_blank'><img class="logo" alt="The Daily Pennsylvanian" src="https://s3.amazonaws.com/eventsatpenn/thedp.png"></a></li>
           <li class='divider'></li>
+          {{#if currentUser }}
           <li><a href="/new" class="create"><span class="icon icon-plus"></span>Create Event</a></li>
           <li class='divider'></li>
           <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.name }}</a>
