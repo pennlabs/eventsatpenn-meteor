@@ -315,7 +315,7 @@ No upcoming events.
     <p>{{ description }}</p>
     <ul class='categories'>
       {{#each categories }}
-      <li class='category'><a href='/category/{{ escape_category . }}'>{{ . }}</a></li>
+      <li class='category'><a href='/search?categories={{ escape_category . }}'>{{ . }}</a></li>
       {{/each}}
     </ul>
   </div>
