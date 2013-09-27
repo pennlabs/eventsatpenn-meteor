@@ -23,6 +23,10 @@ moment.lang 'en',
 DATE_FORMAT = "YYYY-MM-DD"
 TIME_FORMAT = "HH:mm"
 
+serialize = (params) ->
+  e = encodeURIComponent
+  ("#{e k}=#{e v}" for k, v of params when k and v).join '&'
+
 # convert undefined, single category to array
 fix_categories = (categories) ->
   if not _.isArray(categories)
@@ -74,29 +78,35 @@ Template.sidebar.helpers
   'categories': Categories
   'escape_category': encodeURIComponent
   'checked': (category) ->
-    if _.contains Session.get("categories"), category then "checked" else ""
-  'after_date': -> Session.get("after_date") or new Date().toJSON().slice(0,10)
+    categories = Session.get("params")?.categories?.split("+").map decodeURIComponent
+    if _.contains categories, category then "checked" else ""
+  'after_date': -> Session.get("params")?.date or new Date().toJSON().slice(0,10)
 
 Template.sidebar.events
   'click .sidebar-fold': (e) -> $('.sidebar').toggleClass('folded')
   'change .category-checkbox': (e) ->
     categories = $('.category-checkbox:checked').map(-> @value).toArray()
     if categories.length
-      Meteor.Router.to "/category/#{categories.join "+"}"
+      params = Session.get("params") or {}
+      params.categories = categories.join('+')
+      Meteor.Router.to "/search?#{serialize params}"
     else
-      Session.set("categories", [])
+      # Session.set("params")
       Meteor.Router.to "/"
   'change .date': (e) ->
     date = $(e.currentTarget).val()
     if date
-      Meteor.Router.to "/after/#{encodeURIComponent date}"
+      params = Session.get("params") or {}
+      params.date = date
+      Meteor.Router.to "/search?#{serialize params}"
 
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
   'submit .search': (e) ->
     e.preventDefault()
-    q = $('#searchbox').val()
-    Meteor.Router.to "/search/#{encodeURIComponent(q)}"
+    params = Session.get("params") or {}
+    params.q = $('#searchbox').val()
+    Meteor.Router.to "/search?#{serialize params}"
 
 Template.topbar.rendered = ->
   if !window.foundation?
@@ -262,9 +272,7 @@ Template.event_form.helpers
   'cats': (categories) ->
     Categories.map (category) -> {name: category, categories}
   'selected': ({name, categories}) ->
-    if _.contains categories, name
-      return "selected"
-    else return ""
+    if _.contains categories, name then "selected" else ""
   'date_start': ->
     return moment(@from).format(DATE_FORMAT)
   'date_end': ->
@@ -275,19 +283,26 @@ Template.event_form.helpers
     return moment(@to).format(TIME_FORMAT)
 
 
-Template.event_form.rendered = ->
-  $(".categories-chooser").chosen()
-
-Template.category.helpers
-  'events': -> get_events(categories: {$in: Session.get "categories"})
+Template.event_form.rendered = -> $(".categories-chooser").chosen()
 
 Template.search.helpers
-  'found_events': ->
-    q = Session.get("q")
-    re = new RegExp("#{q}.*", 'i')
-    get_events($or: [{name: re}, {description: re}, {categories: re}, {location: re}])
-
-Template.after_date.helpers
   'events': ->
-    date = Session.get("after_date")
-    get_events(to: {$gte: moment(date).toDate()})
+    params = Session.get("params") or {}
+    q = params.q
+    date = params.date
+    categories = params.categories?.split('+').map decodeURIComponent
+
+    opts = {$and: []}
+    if q
+      re = new RegExp("#{q}.*", 'i')
+      q_query = {$or: [{name: re}, {description: re}, {categories: re}, {location: re}]}
+      opts["$and"].push q_query
+    if date
+      date_query = {to: {$gte: moment(date).toDate()}}
+      opts["$and"].push date_query
+    if categories
+      categories_query = {categories: {$in: categories}}
+      opts["$and"].push categories_query
+
+    opts = if opts["$and"].length then opts else {}
+    get_events(opts)

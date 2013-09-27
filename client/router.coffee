@@ -1,7 +1,6 @@
 Meteor.Router.add
   '/': ->
-    Session.set('after_date')  # clear
-    Session.set('categories')  # clear
+    Session.set('params')  # clear
     return 'all'
   '/new': 'new'
   '/login': 'login'
@@ -11,13 +10,11 @@ Meteor.Router.add
   '/user/:user_id': (user_id) ->
     Session.set("user_id", user_id)
     return 'user'
-  '/search/:q': (q) ->
-    Session.set("q", decodeURIComponent q)
+  '/search': (q) ->
+    params = {}
+    querystring = @querystring.split('&')
+    for qs in querystring
+      pair = qs.split('=')
+      params[decodeURIComponent pair[0]] = decodeURIComponent pair[1]
+    Session.set('params', params)
     return 'search'
-  '/category/:categories': (categories) ->
-    categories = decodeURIComponent(categories)
-    Session.set("categories", categories.split('+'))
-    return 'category'
-  '/after/:date': (date) ->
-    Session.set('after_date', decodeURIComponent date)
-    return 'after_date'
