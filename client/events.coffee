@@ -117,7 +117,7 @@ Template.topbar.rendered = ->
 
   if !window._gaq?
     window._gaq = []
-    _gaq.push(['_setAccount', 'UA-32638163-1'])
+    _gaq.push(['_setAccount', 'UA-12991053-1'])
     _gaq.push(['_trackPageview'])
     (->
       ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true
