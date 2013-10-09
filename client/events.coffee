@@ -70,8 +70,10 @@ get_events = (criteria, projection) ->
   if not projection?
     projection = {}
   _.extend(criteria, {to: {$gte: new Date()}}) if not criteria.to
-  _.extend(projection, {sort: {from: 1}, limit: 10, skip: parseInt(Session.get("params")?.start) or 0})
-  # criteria = {"$or": [criteria, {starred: {$exists: true}}]}
+
+  skip = projection.skip or parseInt(Session.get("params")?.start) or 0
+  limit = projection.limit or 10
+  _.extend(projection, {sort: {from: 1}, limit: limit, skip: skip})
   Events.find(criteria, projection)
 
 Template.sidebar.helpers
@@ -245,7 +247,7 @@ Template.show_event.helpers
 
 Template.all.helpers
   'all_events': -> get_events(starred: {$exists: false})
-  'featured_events': -> get_events(starred: {$exists: true})
+  'featured_events': -> get_events(starred: {$exists: true}, {skip: 0, limit: 10})
 
 # events template
 Template.events.helpers
