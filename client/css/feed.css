@@ -51,3 +51,8 @@
     padding: 15px; }
   .card .item:not(:first-child) {
     border-top: none; } }
+
+.pagination a.disabled {
+  pointer-events: none;
+  color: #999;
+}

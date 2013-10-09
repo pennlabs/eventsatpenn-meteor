@@ -70,9 +70,9 @@ get_events = (criteria, projection) ->
   if not projection?
     projection = {}
   _.extend(criteria, {to: {$gte: new Date()}}) if not criteria.to
-  _.extend(projection, {sort: {from: 1}})
+  _.extend(projection, {sort: {from: 1}, limit: 10, skip: parseInt(Session.get("params")?.start) or 0})
   # criteria = {"$or": [criteria, {starred: {$exists: true}}]}
-  Events.find(criteria, projection).fetch()
+  Events.find(criteria, projection)
 
 Template.sidebar.helpers
   'categories': Categories
@@ -194,6 +194,18 @@ Template.user.events
   'click .unfollow': (e) ->
     e.preventDefault()
     Meteor.call("unfollow_user", Session.get("user_id"))
+
+Template.pagination.helpers
+  'prev_disabled': ->
+    "disabled" unless Session.get("params")?.start
+  'prev': ->
+    params = Session.get("params")
+    params.start = Math.max (parseInt params?.start or 0) - 10, 0
+    "?#{serialize params}"
+  'next': ->
+    params = Session.get("params")
+    params.start = (parseInt params?.start or 0) + 10
+    "?#{serialize params}"
 
 Template.event.events
   'click .star': (e) ->

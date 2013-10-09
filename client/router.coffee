@@ -1,6 +1,15 @@
+parse_pararms = (querystring) ->
+  params = {}
+  querystring = querystring.split('&')
+  for qs in querystring
+    continue if not qs
+    pair = qs.split('=')
+    params[decodeURIComponent pair[0]] = decodeURIComponent pair[1]
+  params
+
 Meteor.Router.add
   '/': ->
-    Session.set('params')  # clear
+    Session.set('params', parse_pararms @querystring)
     return 'all'
   '/new': 'new'
   '/login': 'login'
@@ -11,10 +20,5 @@ Meteor.Router.add
     Session.set("user_id", user_id)
     return 'user'
   '/search': (q) ->
-    params = {}
-    querystring = @querystring.split('&')
-    for qs in querystring
-      pair = qs.split('=')
-      params[decodeURIComponent pair[0]] = decodeURIComponent pair[1]
-    Session.set('params', params)
+    Session.set('params', parse_pararms @querystring)
     return 'search'

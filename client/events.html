@@ -87,21 +87,6 @@ No upcoming events.
 {{/each}}
 </template>
 
-<template name="category">
-<div class='row'>
-  <div class='large-3 columns sidebar'>
-    {{> sidebar }}
-  </div>
-  <div class='large-9 columns'>
-    {{#each events}}
-    {{> event }}
-    {{else}}
-    There are no events in this category.
-    {{/each}}
-  </div>
-</div>
-</template>
-
 <template name="search">
 <div class='row'>
   <div class='large-3 columns sidebar'>
@@ -113,21 +98,7 @@ No upcoming events.
     {{else}}
     No results found.
     {{/each}}
-  </div>
-</div>
-</template>
-
-<template name='after_date'>
-<div class='row'>
-  <div class='large-3 columns sidebar'>
-    {{> sidebar }}
-  </div>
-  <div class='large-9 columns'>
-    {{#each events }}
-    {{> event }}
-    {{else}}
-    No events after this date are scheduled.
-    {{/each}}
+    {{> pagination }}
   </div>
 </div>
 </template>
@@ -151,7 +122,14 @@ No upcoming events.
     {{else}}
     No upcoming events.
     {{/each}}
+    {{> pagination }}
   </div>
+</div>
+</template>
+
+<template name='pagination'>
+<div class='pagination'>
+  <a class='{{ prev_disabled }}' href='{{ prev }}'>Previous</a><a class='right' href='{{ next }}'>Next</a>
 </div>
 </template>
 
