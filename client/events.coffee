@@ -64,16 +64,12 @@ parse_event_from_form = (form) ->
 
   return event
 
-get_events = (criteria, projection) ->
-  if not criteria?
-    criteria = {}
-  if not projection?
-    projection = {}
-  _.extend(criteria, {to: {$gte: new Date()}}) if not criteria.to
+get_events = (criteria = {}, projection = {}) ->
+  criteria = _.extend({to: {$gte: new Date()}}, criteria)
 
-  skip = projection.skip or parseInt(Session.get("params")?.start) or 0
-  limit = projection.limit or 10
-  _.extend(projection, {sort: {from: 1}, limit: limit, skip: skip})
+  skip = parseInt(Session.get("params")?.start) or 0
+  projection = _.extend({sort: {from: 1}, limit: 10, skip: skip}, projection)
+
   Events.find(criteria, projection)
 
 Template.sidebar.helpers
@@ -247,7 +243,7 @@ Template.show_event.helpers
 
 Template.all.helpers
   'all_events': -> get_events(starred: {$exists: false})
-  'featured_events': -> get_events(starred: {$exists: true}, {skip: 0, limit: 10})
+  'featured_events': -> get_events({starred: {$exists: true}}, {skip: 0, limit: 10})
 
 # events template
 Template.events.helpers
