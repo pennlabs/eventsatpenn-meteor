@@ -240,6 +240,20 @@ Template.show_event.helpers
     Meteor.user()?.profile?.events.indexOf(@_id) > -1
   'when': ->
     "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
+  'parse': (d) ->
+    console.log d
+    regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
+    d = d.replace regex, (value) ->
+      value = value.toLowerCase()
+      m = value.match /^([a-z]+:\/\/)/
+      if m
+        nice = value.replace m[1], ""
+        url = value
+      else
+        nice = value
+        url = "http://#{nice}"
+      return "<a target='_blank' href='#{url}'>#{nice}</a>"
+    return new Handlebars.SafeString(d)
 
 Template.all.helpers
   'all_events': -> get_events(starred: {$exists: false})
