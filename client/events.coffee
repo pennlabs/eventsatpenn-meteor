@@ -252,6 +252,8 @@ Template.show_event.helpers
       else
         nice = value
         url = "http://#{nice}"
+      # remove trailing . or ; from url
+      url = url.replace /(\.|;)$/, ""
       return "<a target='_blank' href='#{url}'>#{nice}</a>"
     return new Handlebars.SafeString(d)
 
