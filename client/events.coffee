@@ -241,7 +241,6 @@ Template.show_event.helpers
   'when': ->
     "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
   'parse': (d) ->
-    console.log d
     regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
     d = d.replace regex, (value) ->
       value = value.toLowerCase()
