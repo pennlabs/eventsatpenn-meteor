@@ -290,7 +290,10 @@ No upcoming events.
         <span class="icon icon-location"></span><a href='#'>{{ location }}</a>
       </div>
     </div>
-    <p>{{ parse description }}</p>
+    <div class="event-description">
+        <p>{{ parse description }}</p>
+        <a href="/event/{{_id}}" class="read-more">Read more</a>
+    </div>
     <ul class='categories'>
       {{#each categories }}
       <li class='category'><a href='/search?categories={{ escape_category . }}'>{{ . }}</a></li>
