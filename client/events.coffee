@@ -226,6 +226,24 @@ Template.show_event.events
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "destroy_event", event_id
 
+# aiming for four lines
+MAX_EVENT_DESCRIPTION_HEIGHT = 120
+
+Template.show_event.rendered = (y) ->
+  $description = $(@find('.event-description'))
+  if (Meteor.Router.page() is "all" and $description.height() > MAX_EVENT_DESCRIPTION_HEIGHT)
+    $description.dotdotdot(
+      wrap: 'word',
+      fallbackToLetter: true,
+      after: 'a.read-more',
+      watch: true,
+      height: MAX_EVENT_DESCRIPTION_HEIGHT,
+    )
+  else
+    $read_more = $(@find('a.read-more'))
+    $read_more.hide()
+  
+
 Template.edit_event.events
   'submit .create-event': (e) ->
     e.preventDefault()
