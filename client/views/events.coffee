@@ -2,8 +2,6 @@ window.events_at_penn ?= {}
 
 serialize = window.events_at_penn.serialize
 
-Meteor.subscribe("userData")
-
 $.fn.serializeObject = ->
   o = {}
   a = @serializeArray()
