@@ -11,7 +11,7 @@ Meteor.Router.add
   '/': ->
     Session.set('params', parse_pararms @querystring)
     return 'all'
-  '/new': 'new'
+  '/new': 'new_event'
   '/login': 'login'
   '/event/:event_id': (event_id) ->
     Session.set("event_id", event_id)

@@ -81,7 +81,7 @@
 
 <template name="events">
 {{#each event_queue}}
-{{> event }}
+{{> show_or_edit_event }}
 {{else}}
 No upcoming events.
 {{/each}}
@@ -94,7 +94,7 @@ No upcoming events.
   </div>
   <div class='large-9 columns'>
     {{#each events}}
-    {{> event }}
+    {{> show_or_edit_event }}
     {{else}}
     No results found.
     {{/each}}
@@ -111,14 +111,14 @@ No upcoming events.
   <div class='large-9 columns'>
     <h4>Featured Events</h4>
     {{#each featured_events }}
-    {{> event }}
+    {{> show_or_edit_event }}
     {{else}}
     No featured events.
     {{/each}}
 
     <h4>All Events</h4>
     {{#each all_events}}
-    {{> event }}
+    {{> show_or_edit_event }}
     {{else}}
     No upcoming events.
     {{/each}}

@@ -1,5 +1,6 @@
 
-<template name='new'>
+<!-- Template for creating an Event. -->
+<template name='new_event'>
 <div class="view-create">
   <div class="row">
     <div class="large-4 columns">
@@ -20,6 +21,7 @@
 </div>
 </template>
 
+<!-- Template for showing an Event. -->
 <template name='show_event'>
 <div class='row'>
   <div class="large-3 columns image">
@@ -69,22 +71,7 @@
 </div>
 </template>
 
-<template name='event_info'>
-  {{> event info }}
-</template>
-
-<template name='event'>
-<div class='row'>
-  <div class='large-12 columns card'>
-  {{# if editing _id }}
-    {{> edit_event }}
-  {{else}}
-    {{> show_event }}
-  {{/if}}
-  </div>
-</div>
-</template>
-
+<!-- Template for editing an Event. -->
 <template name='edit_event'>
 <div class='row'>
   <div class="large-3 columns image">
@@ -96,6 +83,25 @@
 </div>
 </template>
 
+<!-- Template for showing an Event or for editing an Event. -->
+<template name='show_or_edit_event'>
+<div class='row'>
+  <div class='large-12 columns card'>
+  {{# if editing _id }}
+    {{> edit_event }}
+  {{else}}
+    {{> show_event }}
+  {{/if}}
+  </div>
+</div>
+</template>
+
+<!-- Template for a single Event. -->
+<template name='event_info'>
+  {{> show_or_edit_event info }}
+</template>
+
+<!-- Form for creating or editing an Event. -->
 <template name='event_form'>
 <form class="left box large-12 small-12 create-event" method="post" action="/new">
   <label>Name</label>
