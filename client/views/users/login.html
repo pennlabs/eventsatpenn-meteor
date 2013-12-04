@@ -1,37 +1,3 @@
-
-<!-- Template for showing a User. -->
-<template name='show_user'>
-<div class="view-user">
-  <div class="profile row">
-    <div class="large-9 columns info">
-      {{#with info}}
-      <h2 class="title">{{ profile.name }}</h2>
-      <hr/>
-      <p>{{ profile.description }}</p>
-      {{/with}}
-    </div>
-    <div class="large-3 columns actions">
-      {{#if following }}
-      <a class="unfollow item" href="#"><span class="icon icon-mail-2"></span>Unfollow</a>
-      {{else}}
-      <a class="follow item" href="#"><span class="icon icon-mail-2"></span>Follow</a>
-      {{/if}}
-      <a class="item" href="#">
-        <span class="icon icon-facebook-2"></span>Facebook Page
-      </a>
-      <a class="item" href="#">
-        <span class="icon icon-calendar-2"></span>Google Calendar
-      </a>
-    </div>
-  </div>
-  {{#each user_events }}
-  {{> show_or_edit_event }}
-  {{else}}
-  This user has not created any events.
-  {{/each}}
-</div>
-</template>
-
 <!-- Facade for authenticating users. -->
 <template name='login'>
 <div class="row view-login">
