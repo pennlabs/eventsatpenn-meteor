@@ -1,3 +1,7 @@
+window.events_at_penn ?= {}
+
+serialize = window.events_at_penn.serialize
+
 Meteor.subscribe("userData")
 
 $.fn.serializeObject = ->
@@ -19,58 +23,6 @@ moment.lang 'en',
     nextDay: '[Tomorrow,] LT',
     nextWeek: 'dddd, LT',
     sameElse: 'dddd, L[,] LT'
-
-DATE_FORMAT = "YYYY-MM-DD"
-TIME_FORMAT = "HH:mm"
-
-serialize = (params) ->
-  e = encodeURIComponent
-  ("#{e k}=#{e v}" for k, v of params when k and v).join '&'
-
-# convert undefined, single category to array
-fix_categories = (categories) ->
-  if not _.isArray(categories)
-    if categories?
-      return [categories]
-    else
-      return []
-  return categories
-
-parse_event_from_form = (form) ->
-  event = form.serializeObject()
-  event.categories = fix_categories(event.categories)
-
-  date_start = moment(event.date_start, DATE_FORMAT)
-  time_start = moment(event.time_start, TIME_FORMAT)
-
-  delete event['date_start']
-  delete event['time_start']
-
-  event.from = date_start
-    .hour(time_start.hour())
-    .minute(time_start.minute())
-    .toDate()
-
-  date_end = moment(event.date_end, DATE_FORMAT)
-  time_end = moment(event.time_end, TIME_FORMAT)
-
-  delete event['date_end']
-  delete event['time_end']
-
-  event.to = date_end
-    .hour(time_end.hour())
-    .minute(time_end.minute())
-    .toDate()
-
-  return event
-
-get_events = (criteria = {}, projection = {}) ->
-  criteria = _.extend({to: {$gte: new Date()}}, criteria)
-
-  skip = parseInt(Session.get("params")?.start) or 0
-  projection = _.extend({sort: {from: 1}, limit: 10, skip: skip}, projection)
-
-  Events.find(criteria, projection)
 
 Template.sidebar.helpers
   'categories': Categories
@@ -169,43 +121,7 @@ Template.login.helpers
   'login_error': -> Session.get("login_error") or "Login"
   'login_class': -> if Session.get("login_error") then "error" else ""
 
-Template.new.helpers
-  'empty_object': {}
-
-Template.new.events
-  'submit .create-event': (e) ->
-    e.preventDefault()
-    event = parse_event_from_form $('.create-event')
-
-    user = Meteor.user()
-    event.creator = user._id
-    event.creator_name = user.profile.name
-
-    event_id = Events.insert(event)
-    Meteor.call('create_event', event_id)
-    Meteor.Router.to "/event/#{event_id}"
-
-Template.user.events
-  'click .follow': (e) ->
-    e.preventDefault()
-    Meteor.call("follow_user", Session.get("user_id"))
-  'click .unfollow': (e) ->
-    e.preventDefault()
-    Meteor.call("unfollow_user", Session.get("user_id"))
-
-Template.pagination.helpers
-  'prev_disabled': ->
-    "disabled" unless Session.get("params")?.start
-  'prev': ->
-    params = Session.get("params")
-    params.start = Math.max (parseInt params?.start or 0) - 10, 0
-    "?#{serialize params}"
-  'next': ->
-    params = Session.get("params")
-    params.start = (parseInt params?.start or 0) + 10
-    "?#{serialize params}"
-
-Template.event.events
+Template.show_or_edit_event.events
   'click .star': (e) ->
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "star_event", event_id
@@ -213,70 +129,12 @@ Template.event.events
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "unstar_event", event_id
 
-Template.event.helpers
+Template.show_or_edit_event.helpers
   'editing': (event_id) -> Session.equals('editing', event_id)
 
-Template.show_event.events
-  'click .edit': (e) ->
-    e.preventDefault()
-    event_id = $(e.currentTarget).data('event_id')
-    Session.set('editing', event_id)
-  'click .delete': (e) ->
-    e.preventDefault()
-    event_id = $(e.currentTarget).data('event_id')
-    Meteor.call "destroy_event", event_id
-
-# aiming for four lines
-MAX_EVENT_DESCRIPTION_HEIGHT = 120
-
-Template.show_event.rendered = (y) ->
-  $description = $(@find('.event-description'))
-  if (Meteor.Router.page() is "all" and $description.height() > MAX_EVENT_DESCRIPTION_HEIGHT)
-    $description.dotdotdot(
-      wrap: 'word',
-      fallbackToLetter: true,
-      after: 'a.read-more',
-      watch: true,
-      height: MAX_EVENT_DESCRIPTION_HEIGHT,
-    )
-  else
-    $read_more = $(@find('a.read-more'))
-    $read_more.hide()
-  
-
-Template.edit_event.events
-  'submit .create-event': (e) ->
-    e.preventDefault()
-    event = parse_event_from_form $('.create-event')
-    Events.update(event.id, $set: event)
-    Session.set('editing', null)
-
-Template.show_event.helpers
-  'admin': -> Meteor.user()?.profile?.admin
-  'escape_category': encodeURIComponent
-  'mine': ->
-    Meteor.user()?.profile?.events.indexOf(@_id) > -1
-  'when': ->
-    "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
-  'parse': (d) ->
-    regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
-    d = d.replace regex, (value) ->
-      value = value.toLowerCase()
-      m = value.match /^([a-z]+:\/\/)/
-      if m
-        nice = value.replace m[1], ""
-        url = value
-      else
-        nice = value
-        url = "http://#{nice}"
-      # remove trailing . or ; from url
-      url = url.replace /(\.|;)$/, ""
-      return "<a target='_blank' href='#{url}'>#{nice}</a>"
-    return new Handlebars.SafeString(d)
-
 Template.all.helpers
-  'all_events': -> get_events(starred: {$exists: false})
-  'featured_events': -> get_events({starred: {$exists: true}}, {skip: 0, limit: 10})
+  'all_events': -> window.events_at_penn.get_events(starred: {$exists: false})
+  'featured_events': -> window.events_at_penn.get_events({starred: {$exists: true}}, {skip: 0, limit: 10})
 
 # events template
 Template.events.helpers
@@ -287,49 +145,11 @@ Template.events.helpers
       event_ids = []
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
-    get_events({_id: {$in: event_ids}})
-
-# user template
-Template.user.helpers
-  'info': ->
-    Meteor.users.findOne(Session.get("user_id")) or {}
-  'user_events': ->
-    get_events(creator: Session.get("user_id")) or []
-  'following': ->
-    Meteor.user()?.profile?.following.indexOf(Session.get("user_id")) > -1
+    window.events_at_penn.get_events({_id: {$in: event_ids}})
 
 Template.event_info.helpers
   'info': ->
     Events.findOne(Session.get("event_id")) or {}
-
-Template.event_form.events
-  'click .filepicker': (e) ->
-    on_success = (blobs) ->
-      image = if blobs.length then blobs[0] else {}
-      $('.create-event label.filename').text image.filename
-      $('.create-event input[name=image_url]').val image.url
-    on_error = (error) -> console.log error
-    services = ["COMPUTER", "DROPBOX", "FACEBOOK", "FLICKR", "GOOGLE_DRIVE", "SKYDRIVE", "IMAGE_SEARCH", "INSTAGRAM", "URL", "WEBCAM"]
-    filepicker.setKey("AA_3IkmAOQX2Drld5QS9qz")
-    filepicker.pickAndStore {services: services, extensions: [".png", ".jpg", ".jpeg"]},
-      {location: 'S3'}, on_success, on_error
-
-Template.event_form.helpers
-  'cats': (categories) ->
-    Categories.map (category) -> {name: category, categories}
-  'selected': ({name, categories}) ->
-    if _.contains categories, name then "selected" else ""
-  'date_start': ->
-    return moment(@from).format(DATE_FORMAT)
-  'date_end': ->
-    return moment(@to).format(DATE_FORMAT)
-  'time_start': ->
-    return moment(@from).format(TIME_FORMAT)
-  'time_end': ->
-    return moment(@to).format(TIME_FORMAT)
-
-
-Template.event_form.rendered = -> $(".categories-chooser").chosen()
 
 Template.search.helpers
   'events': ->
@@ -351,4 +171,4 @@ Template.search.helpers
       opts["$and"].push categories_query
 
     opts = if opts["$and"].length then opts else {}
-    get_events(opts)
+    window.events_at_penn.get_events(opts)
