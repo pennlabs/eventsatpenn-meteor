@@ -16,6 +16,9 @@ Meteor.Router.add
   '/event/:event_id': (event_id) ->
     Session.set("event_id", event_id)
     return 'event_info'
+  '/user/:user_id': (user_id) ->
+    Session.set("user_id", user_id)
+    return 'show_user'
   '/search': (q) ->
     Session.set('params', parse_pararms @querystring)
     return 'search'

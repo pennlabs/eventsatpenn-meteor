@@ -1,10 +1,5 @@
 
 
-Meteor.Router.add
-  '/user/:user_id': (user_id) ->
-    Session.set("user_id", user_id)
-    return 'show_user'
-
 Template.show_user.events
   'click .follow': (e) ->
     e.preventDefault()
