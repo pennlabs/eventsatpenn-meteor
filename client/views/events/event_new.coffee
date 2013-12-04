@@ -23,8 +23,8 @@ Template.pagination.helpers
   'prev': ->
     params = Session.get("params")
     params.start = Math.max (parseInt params?.start or 0) - 10, 0
-    "?#{serialize params}"
+    "?#{window.events_at_penn.serialize params}"
   'next': ->
     params = Session.get("params")
     params.start = (parseInt params?.start or 0) + 10
-    "?#{serialize params}"
+    "?#{window.events_at_penn.serialize params}"

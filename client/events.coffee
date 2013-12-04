@@ -1,3 +1,7 @@
+window.events_at_penn ?= {}
+
+serialize = window.events_at_penn.serialize
+
 Meteor.subscribe("userData")
 
 $.fn.serializeObject = ->
@@ -19,11 +23,6 @@ moment.lang 'en',
     nextDay: '[Tomorrow,] LT',
     nextWeek: 'dddd, LT',
     sameElse: 'dddd, L[,] LT'
-
-serialize = (params) ->
-  e = encodeURIComponent
-  ("#{e k}=#{e v}" for k, v of params when k and v).join '&'
-
 
 Template.sidebar.helpers
   'categories': Categories
