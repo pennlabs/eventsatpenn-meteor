@@ -5,14 +5,25 @@
     <div class="large-12 prompt">
       <p>already have an account?</p>
     </div>
-    <form id="login-form" class="login large-12" method="post" action="login">
+    <div class='login large-12 columns'>
       <h3>Login</h3>
       <input type='button' class='fb button' value='Login with Facebook'>
       <div class='or'>or</div>
-      <input name="email" type="text" placeholder="Email" />
-      <input name="password" type="password" placeholder="Password" />
-      <input class="{{ login_class }} button" type="submit" id="login-button" value="{{ login_error }}">
-    </form>
+      {{#if forgot}}
+      <form id='forgot-pass-form'>
+        <input type='email' name='email' placeholder='Email'>
+        <input type='submit' id='forgot-button' value='{{ button-msg }}' class='button {{ button-class }}'>
+        <p class='forgot-pass'>Cancel</p>
+      </form>
+      {{else}}
+      <form id="login-form" method="post" action="login">
+        <input name="email" type="text" placeholder="Email" />
+        <input name="password" type="password" placeholder="Password" />
+        <input class="{{ button-class }} button" type="submit" id="login-button" value="{{ button-msg }}">
+        <p class='forgot-pass'>Forgot Password?</p>
+      </form>
+      {{/if}}
+    </div>
   </div>
   
   <div class="large-8 columns">
