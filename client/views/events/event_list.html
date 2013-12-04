@@ -1,0 +1,7 @@
+<template name="events">
+{{#each event_queue}}
+{{> show_or_edit_event }}
+{{else}}
+No upcoming events.
+{{/each}}
+</template>
