@@ -1,0 +1,151 @@
+
+<template name='new'>
+<div class="view-create">
+  <div class="row">
+    <div class="large-4 columns">
+      <div class="right box large-12 small-12">
+        <h3>Create New Event</h3>
+        <p>Your event will be publicly available. Please respect the following rules. The Daily Pennsylvanian is not liable for the content of the events posted on events@penn and may remove them at its sole discretion.</p>
+        <ol>
+          <li>No obscene pictures or language.</li>
+          <li>No promotion of illegal activities.</li>
+          <li>Shirt and shoes required.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="large-8 columns">
+      {{> event_form empty_object }}
+    </div>
+  </div>
+</div>
+</template>
+
+<template name='show_event'>
+<div class='row'>
+  <div class="large-3 columns image">
+    <img src='{{ image_url }}'>
+    <!--<img src="http://placehold.it/240x240&amp;text=img">-->
+  </div>
+  <div class="large-9 columns info">
+    <div class='right'>
+    {{#if admin }}
+      {{#if starred }}
+        <span data-event_id='{{ _id }}' class='unstar top-right'>Unstar</span>
+      {{else}}
+        <span data-event_id='{{ _id }}' class='star top-right'>Star</span>
+      {{/if}}
+    {{else}}
+      {{#if starred }}
+        <span class='top-right'>Featured by <a href='/user/{{ starred.by_id }}'>{{ starred.by }}</a></span>
+      {{/if}}
+    {{/if}}
+    {{#if mine }}
+      <a data-event_id='{{ _id }}' href='#' class='delete top-right'>Delete</a>
+      <a data-event_id='{{ _id }}' href='#' class='edit top-right'>Edit</a>
+    {{/if}}
+    </div>
+    <h4 class="title"><a class='event' href="/event/{{ _id }}">{{ name }}</a></h4>
+
+    <span class="subtitle">Posted by <a class='creator' href="/user/{{ creator }}">{{ creator_name }}</a></span>
+
+    <div class="detail-row">
+      <div class="large-12 columns item">
+        <span class="icon icon-clock"></span>{{ when }}
+      </div>
+      <div class="large-12 columns item">
+        <span class="icon icon-location"></span><a href='#'>{{ location }}</a>
+      </div>
+    </div>
+    <div class="event-description">
+        <p>{{ parse description }}</p>
+        <a href="/event/{{_id}}" class="read-more">Read more</a>
+    </div>
+    <ul class='categories'>
+      {{#each categories }}
+      <li class='category'><a href='/search?categories={{ escape_category . }}'>{{ . }}</a></li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+</template>
+
+<template name='event_info'>
+  {{> event info }}
+</template>
+
+<template name='event'>
+<div class='row'>
+  <div class='large-12 columns card'>
+  {{# if editing _id }}
+    {{> edit_event }}
+  {{else}}
+    {{> show_event }}
+  {{/if}}
+  </div>
+</div>
+</template>
+
+<template name='edit_event'>
+<div class='row'>
+  <div class="large-3 columns image">
+    <img src="{{ image_url }}">
+  </div>
+  <div class="large-9 columns info">
+    {{> event_form }}
+  </div>
+</div>
+</template>
+
+<template name='event_form'>
+<form class="left box large-12 small-12 create-event" method="post" action="/new">
+  <label>Name</label>
+  <input required name="name" type="text" value='{{ name }}' placeholder="Event Name" />
+  <div class="from">
+    <label>From</label>
+    <div class="row">
+      <div class="large-4 columns">
+        <input required name="date_start" type="date" value='{{ date_start }}' placeholder="mm/dd/yyyy" />
+      </div>
+      <div class="large-4 columns">
+        <input required name="time_start" type="time" value='{{ time_start }}' placeholder="hh:mm" />
+      </div>
+      <div class="large-4 columns">
+      </div>
+    </div>
+  </div>
+  <div class="to">
+    <label>To</label>
+    <div class="row">
+      <div class="large-4 columns">
+        <input required name="date_end" type="date" value='{{ date_end }}' placeholder="mm/dd/yyyy" />
+      </div>
+      <div class="large-4 columns">
+        <input required name="time_end" type="time" value='{{ time_end }}' placeholder="hh:mm" />
+      </div>
+      <div class="large-4 columns">
+      </div>
+    </div>
+   </div>
+  <label>Location</label>
+  <input required name="location" type="text" value='{{ location }}' placeholder="Location" />
+  <label>Description of event to make it more easily searchable</label>
+  <textarea required name="description" placeholder="Make sure to note ticket prices, whether or not free food or stuff is available, and any other relevant info.">{{ description }}</textarea>
+  <div class='row'>
+    <div class='small-8 columns'>
+      <label>Categories</label>
+      <select name='categories' data-placeholder="Categorize your event" multiple="" class="categories-chooser chosen-select-width">
+        {{#each cats categories }}
+        <option value='{{ name }}' {{ selected . }}>{{ name }}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class='small-4 columns'>
+      <label class='filename'>Event Photo</label>
+      <input type='button' name='image' value='Pick photo' class='expand filepicker button'>
+    </div>
+  </div>
+  <input type='hidden' value='{{ _id }}' name='id'>
+  <input type='hidden' value='{{ image_url }}' name='image_url'>
+  <input class="button" type="submit" id="submit-button" value="Submit">
+</form>
+</template>
