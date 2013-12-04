@@ -169,10 +169,10 @@ Template.login.helpers
   'login_error': -> Session.get("login_error") or "Login"
   'login_class': -> if Session.get("login_error") then "error" else ""
 
-Template.new.helpers
+Template.new_event.helpers
   'empty_object': {}
 
-Template.new.events
+Template.new_event.events
   'submit .create-event': (e) ->
     e.preventDefault()
     event = parse_event_from_form $('.create-event')
@@ -205,7 +205,7 @@ Template.pagination.helpers
     params.start = (parseInt params?.start or 0) + 10
     "?#{serialize params}"
 
-Template.event.events
+Template.show_or_edit_event.events
   'click .star': (e) ->
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "star_event", event_id
@@ -213,7 +213,7 @@ Template.event.events
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "unstar_event", event_id
 
-Template.event.helpers
+Template.show_or_edit_event.helpers
   'editing': (event_id) -> Session.equals('editing', event_id)
 
 Template.show_event.events
