@@ -43,3 +43,16 @@ input[type='submit'].error {
   background-color: #810814 !important;
   border-color: #680000 !important;
 }
+
+/* should float right and clear */
+.forgot-pass {
+  text-align: right;
+  cursor: pointer;
+}
+.forgot-pass:hover {
+  color: rgb(240, 240, 240);
+}
+
+#login-button, #forgot-button {
+  margin-bottom: 2px;
+}
