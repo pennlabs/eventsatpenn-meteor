@@ -1,5 +1,6 @@
 
-<template name='user'>
+<!-- Template for showing a User. -->
+<template name='show_user'>
 <div class="view-user">
   <div class="profile row">
     <div class="large-9 columns info">
@@ -24,13 +25,14 @@
     </div>
   </div>
   {{#each user_events }}
-  {{> event }}
+  {{> show_or_edit_event }}
   {{else}}
   This user has not created any events.
   {{/each}}
 </div>
 </template>
 
+<!-- Facade for authenticating users. -->
 <template name='login'>
 <div class="row view-login">
   <div class="large-4 columns">
