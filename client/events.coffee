@@ -64,14 +64,6 @@ parse_event_from_form = (form) ->
 
   return event
 
-get_events = (criteria = {}, projection = {}) ->
-  criteria = _.extend({to: {$gte: new Date()}}, criteria)
-
-  skip = parseInt(Session.get("params")?.start) or 0
-  projection = _.extend({sort: {from: 1}, limit: 10, skip: skip}, projection)
-
-  Events.find(criteria, projection)
-
 Template.sidebar.helpers
   'categories': Categories
   'escape_category': encodeURIComponent
@@ -185,14 +177,6 @@ Template.new_event.events
     Meteor.call('create_event', event_id)
     Meteor.Router.to "/event/#{event_id}"
 
-Template.user.events
-  'click .follow': (e) ->
-    e.preventDefault()
-    Meteor.call("follow_user", Session.get("user_id"))
-  'click .unfollow': (e) ->
-    e.preventDefault()
-    Meteor.call("unfollow_user", Session.get("user_id"))
-
 Template.pagination.helpers
   'prev_disabled': ->
     "disabled" unless Session.get("params")?.start
@@ -275,8 +259,8 @@ Template.show_event.helpers
     return new Handlebars.SafeString(d)
 
 Template.all.helpers
-  'all_events': -> get_events(starred: {$exists: false})
-  'featured_events': -> get_events({starred: {$exists: true}}, {skip: 0, limit: 10})
+  'all_events': -> window.events_at_penn.get_events(starred: {$exists: false})
+  'featured_events': -> window.events_at_penn.get_events({starred: {$exists: true}}, {skip: 0, limit: 10})
 
 # events template
 Template.events.helpers
@@ -287,16 +271,7 @@ Template.events.helpers
       event_ids = []
       not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
       event_ids = event_ids.concat.apply(event_ids, not_flat)
-    get_events({_id: {$in: event_ids}})
-
-# user template
-Template.user.helpers
-  'info': ->
-    Meteor.users.findOne(Session.get("user_id")) or {}
-  'user_events': ->
-    get_events(creator: Session.get("user_id")) or []
-  'following': ->
-    Meteor.user()?.profile?.following.indexOf(Session.get("user_id")) > -1
+    window.events_at_penn.get_events({_id: {$in: event_ids}})
 
 Template.event_info.helpers
   'info': ->
@@ -351,4 +326,4 @@ Template.search.helpers
       opts["$and"].push categories_query
 
     opts = if opts["$and"].length then opts else {}
-    get_events(opts)
+    window.events_at_penn.get_events(opts)
