@@ -51,7 +51,7 @@
         <li class='divider'></li>
         <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.name }}</a>
           <ul class="dropdown">
-            <li><a href="#" class="logout">Logout</a><li>
+            <li>{{> logout }}<li>
           </ul>
         </li>
         {{else}}
