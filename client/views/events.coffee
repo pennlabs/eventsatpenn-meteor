@@ -2,8 +2,6 @@ window.events_at_penn ?= {}
 
 serialize = window.events_at_penn.serialize
 
-Meteor.subscribe("userData")
-
 $.fn.serializeObject = ->
   o = {}
   a = @serializeArray()
@@ -90,17 +88,6 @@ Template.show_or_edit_event.helpers
 Template.all.helpers
   'all_events': -> window.events_at_penn.get_events(starred: {$exists: false})
   'featured_events': -> window.events_at_penn.get_events({starred: {$exists: true}}, {skip: 0, limit: 10})
-
-# events template
-Template.events.helpers
-  'event_queue': ->
-    if Meteor.user()
-      event_ids = Meteor.user().profile.event_queue or []
-    else
-      event_ids = []
-      not_flat = Meteor.users.find("profile.admin": true).map (admin) -> admin?.profile?.events or []
-      event_ids = event_ids.concat.apply(event_ids, not_flat)
-    window.events_at_penn.get_events({_id: {$in: event_ids}})
 
 Template.event_info.helpers
   'info': ->
