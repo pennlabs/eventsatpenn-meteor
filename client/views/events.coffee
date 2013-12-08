@@ -12,8 +12,8 @@ window.events_at_penn.serialize = (params) ->
   e = encodeURIComponent
   ("#{e k}=#{e v}" for k, v of params when k and v).join '&'
 
-DATE_FORMAT = "YYYY-MM-DD"
-TIME_FORMAT = "HH:mm"
+window.events_at_penn.DATE_FORMAT = "YYYY-MM-DD"
+window.events_at_penn.TIME_FORMAT = "HH:mm"
 
 # convert undefined, single category to array
 fix_categories = (categories) ->
@@ -38,8 +38,8 @@ window.events_at_penn.parse_event_from_form = (form) ->
   event = form.serializeObject()
   event.categories = fix_categories(event.categories)
 
-  date_start = moment(event.date_start, DATE_FORMAT)
-  time_start = moment(event.time_start, TIME_FORMAT)
+  date_start = moment(event.date_start, events_at_penn.DATE_FORMAT)
+  time_start = moment(event.time_start, events_at_penn.TIME_FORMAT)
 
   delete event['date_start']
   delete event['time_start']
@@ -49,8 +49,8 @@ window.events_at_penn.parse_event_from_form = (form) ->
     .minute(time_start.minute())
     .toDate()
 
-  date_end = moment(event.date_end, DATE_FORMAT)
-  time_end = moment(event.time_end, TIME_FORMAT)
+  date_end = moment(event.date_end, events_at_penn.DATE_FORMAT)
+  time_end = moment(event.time_end, events_at_penn.TIME_FORMAT)
 
   delete event['date_end']
   delete event['time_end']
@@ -150,8 +150,7 @@ Template.all.helpers
   'featured_events': -> window.events_at_penn.get_events({starred: {$exists: true}}, {skip: 0, limit: 10})
 
 Template.event_info.helpers
-  'info': ->
-    Events.findOne(Session.get("event_id")) or {}
+  'info': -> Events.findOne(Session.get("event_id")) or {}
 
 Template.search.helpers
   'events': ->

@@ -1,8 +1,5 @@
 window.events_at_penn ?= {}
 
-DATE_FORMAT = "YYYY-MM-DD"
-TIME_FORMAT = "HH:mm"
-
 Template.event_form.events
   'click .filepicker': (e) ->
     on_success = (blobs) ->
@@ -21,12 +18,12 @@ Template.event_form.helpers
   'selected': ({name, categories}) ->
     if _.contains categories, name then "selected" else ""
   'date_start': ->
-    return moment(@from).format(DATE_FORMAT)
+    return moment(@from).format(events_at_penn.DATE_FORMAT)
   'date_end': ->
-    return moment(@to).format(DATE_FORMAT)
+    return moment(@to).format(events_at_penn.DATE_FORMAT)
   'time_start': ->
-    return moment(@from).format(TIME_FORMAT)
+    return moment(@from).format(events_at_penn.TIME_FORMAT)
   'time_end': ->
-    return moment(@to).format(TIME_FORMAT)
+    return moment(@to).format(events_at_penn.TIME_FORMAT)
 
 Template.event_form.rendered = -> $(".categories-chooser").chosen()
