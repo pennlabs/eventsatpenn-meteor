@@ -1,6 +1,5 @@
 window.events_at_penn ?= {}
 
-
 Template.new_event.helpers
   'empty_object': {}
 
