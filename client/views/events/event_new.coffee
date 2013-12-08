@@ -15,15 +15,3 @@ Template.new_event.events
     event_id = Events.insert(event)
     Meteor.call('create_event', event_id)
     Meteor.Router.to "/event/#{event_id}"
-
-Template.pagination.helpers
-  'prev_disabled': ->
-    "disabled" unless Session.get("params")?.start
-  'prev': ->
-    params = Session.get("params")
-    params.start = Math.max (parseInt params?.start or 0) - 10, 0
-    "?#{window.events_at_penn.serialize params}"
-  'next': ->
-    params = Session.get("params")
-    params.start = (parseInt params?.start or 0) + 10
-    "?#{window.events_at_penn.serialize params}"
