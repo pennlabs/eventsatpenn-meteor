@@ -112,7 +112,6 @@ Template.topbar.helpers
   'q': -> Session.get("params")?.q
 
 Template.topbar.events
-  'click .logout': (e) -> Meteor.logout()
   'submit .search': (e) ->
     e.preventDefault()
     params = Session.get("params") or {}
