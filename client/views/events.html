@@ -17,6 +17,10 @@
 </div>
 </template>
 
+<template name="settingsButton">
+<a href="#" class="settings">Settings</a>
+</template>
+
 <template name='topbar'>
 <div class="fixed contain-to-grid">
   <nav class="top-bar">
@@ -49,8 +53,10 @@
         {{#if currentUser }}
         <li><a href="/new" class="create"><span class="icon icon-plus"></span>Create Event</a></li>
         <li class='divider'></li>
-        <li class="has-dropdown"><a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.name }}</a>
+        <li class="has-dropdown">
+          <a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.name }}</a>
           <ul class="dropdown">
+            <li>{{> settingsButton }}</li>
             <li><a href="#" class="logout">Logout</a><li>
           </ul>
         </li>

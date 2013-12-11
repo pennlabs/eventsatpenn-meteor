@@ -185,3 +185,8 @@ Template.pagination.helpers
     params = Session.get("params")
     params.start = (parseInt params?.start or 0) + 10
     "?#{window.events_at_penn.serialize params}"
+
+Template.settingsButton.events
+  'click .settings': (e) ->
+    e.preventDefault()
+    Meteor.Router.to "/settings"
