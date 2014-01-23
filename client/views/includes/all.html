@@ -1,0 +1,23 @@
+<template name='all'>
+<div class='row'>
+  <div class='large-3 columns sidebar'>
+    {{> sidebar }}
+  </div>
+  <div class='large-9 columns'>
+    <h4>Featured Events</h4>
+    {{#each featured_events }}
+    {{> show_or_edit_event }}
+    {{else}}
+    No featured events.
+    {{/each}}
+
+    <h4>All Events</h4>
+    {{#each all_events}}
+    {{> show_or_edit_event }}
+    {{else}}
+    No upcoming events.
+    {{/each}}
+    {{> pagination }}
+  </div>
+</div>
+</template>
