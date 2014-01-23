@@ -1,0 +1,21 @@
+<!-- Template for creating an Event. -->
+<template name='new_event'>
+<div class="view-create">
+  <div class="row">
+    <div class="large-4 columns">
+      <div class="right box large-12 small-12">
+        <h3>Create New Event</h3>
+        <p>Your event will be publicly available. Please respect the following rules. The Daily Pennsylvanian is not liable for the content of the events posted on events@penn and may remove them at its sole discretion.</p>
+        <ol>
+          <li>No obscene pictures or language.</li>
+          <li>No promotion of illegal activities.</li>
+          <li>Shirt and shoes required.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="large-8 columns">
+      {{> event_form empty_object }}
+    </div>
+  </div>
+</div>
+</template>

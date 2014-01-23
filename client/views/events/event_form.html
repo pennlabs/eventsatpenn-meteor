@@ -1,0 +1,54 @@
+<!-- Form for creating or editing an Event. -->
+<template name='event_form'>
+<form class="left box large-12 small-12 create-event" method="post" action="/new">
+  <label>Name</label>
+  <input required name="name" type="text" value='{{ name }}' placeholder="Event Name" />
+  <div class="from">
+    <label>From</label>
+    <div class="row">
+      <div class="large-4 columns">
+        <input required name="date_start" type="date" value='{{ date_start }}' placeholder="mm/dd/yyyy" />
+      </div>
+      <div class="large-4 columns">
+        <input required name="time_start" type="time" value='{{ time_start }}' placeholder="hh:mm" />
+      </div>
+      <div class="large-4 columns">
+      </div>
+    </div>
+  </div>
+  <div class="to">
+    <label>To</label>
+    <div class="row">
+      <div class="large-4 columns">
+        <input required name="date_end" type="date" value='{{ date_end }}' placeholder="mm/dd/yyyy" />
+      </div>
+      <div class="large-4 columns">
+        <input required name="time_end" type="time" value='{{ time_end }}' placeholder="hh:mm" />
+      </div>
+      <div class="large-4 columns">
+      </div>
+    </div>
+   </div>
+  <label>Location</label>
+  <input required name="location" type="text" value='{{ location }}' placeholder="Location" />
+  <label>Description of event to make it more easily searchable</label>
+  <textarea required name="description" placeholder="Make sure to note ticket prices, whether or not free food or stuff is available, and any other relevant info.">{{ description }}</textarea>
+  <div class='row'>
+    <div class='small-8 columns'>
+      <label>Categories</label>
+      <select name='categories' data-placeholder="Categorize your event" multiple="" class="categories-chooser chosen-select-width">
+        {{#each cats categories }}
+        <option value='{{ name }}' {{ selected . }}>{{ name }}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class='small-4 columns'>
+      <label class='filename'>Event Photo</label>
+      <input type='button' name='image' value='Pick photo' class='expand filepicker button'>
+    </div>
+  </div>
+  <input type='hidden' value='{{ _id }}' name='id'>
+  <input type='hidden' value='{{ image_url }}' name='image_url'>
+  <input class="button" type="submit" id="submit-button" value="Submit">
+</form>
+</template>
