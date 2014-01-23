@@ -1,0 +1,15 @@
+<template name="search">
+<div class='row'>
+  <div class='large-3 columns sidebar'>
+    {{> sidebar }}
+  </div>
+  <div class='large-9 columns'>
+    {{#each events}}
+    {{> show_or_edit_event }}
+    {{else}}
+    No results found.
+    {{/each}}
+    {{> pagination }}
+  </div>
+</div>
+</template>
