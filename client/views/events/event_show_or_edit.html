@@ -1,0 +1,12 @@
+<!-- Template for showing an Event or for editing an Event. -->
+<template name='show_or_edit_event'>
+<div class='row'>
+  <div class='large-12 columns card'>
+  {{# if editing _id }}
+    {{> edit_event }}
+  {{else}}
+    {{> show_event }}
+  {{/if}}
+  </div>
+</div>
+</template>

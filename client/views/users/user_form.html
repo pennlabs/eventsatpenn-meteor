@@ -1,0 +1,28 @@
+<!-- Template for showing a User edit form. -->
+<template name='user_form'>
+    <form id="register-form" class="signup large-12" method="post" action="api/users/">
+      <label>Name</label>
+      <div class="row">
+        <div class="large-12 columns">
+            <input name="name" type="text" placeholder="Full Name" value="{{ currentUser.profile.name }}"/>
+        </div>
+      </div>
+      {{# unless currentUser }}
+      <label>UPenn Email</label>
+      <input name="email" pattern='(.*)upenn\.edu$' type="text" placeholder="" />
+      <label>Password</label>
+      <div class="row">
+        <div class="large-6 columns">
+          <input name="password" type="password" placeholder="Enter Password" />
+        </div>
+        <div class="large-6 columns">
+          <input name="confirm" type="password" placeholder="Confirm Password" />
+        </div>
+      </div>
+      {{/unless}}
+      <label>Description</label>
+      <textarea name="description" placeholder="Your club and position within it, any other relevant information">{{ currentUser.profile.description }}</textarea>
+      
+      <input class="button" type="submit" id="register-button" value="{{submitValue}}">
+    </form>
+</template>

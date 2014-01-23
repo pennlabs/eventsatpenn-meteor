@@ -21,6 +21,7 @@ Meteor.Router.add
   '/user/:user_id': (user_id) ->
     Session.set("user_id", user_id)
     return 'show_user'
+  '/settings': () -> if Meteor.user() then 'edit_user' else 'login'
   '/search': (q) ->
     Session.set('params', parse_pararms @querystring)
     return 'search'

@@ -19,30 +19,6 @@ Template.login.events
         setTimeout (-> Session.set "button-msg"), 2000 # should clear old timeout
       else
         Meteor.Router.to '/'
-  'submit #register-form': (e) ->
-    e.preventDefault()
-    user = $('#register-form').serializeObject()
-    if user.password and user.password == user.confirm
-      admin_ids = Meteor.users.find("profile.admin": true).map (admin) -> admin._id
-      admin_event_ids = Events.find(creator: {$in: admin_ids}).map (event) -> event._id
-
-      Accounts.createUser(
-        email: user.email
-        password: user.password
-        profile:
-          name: user.name
-          description: user.description
-          events: []
-          event_queue: admin_event_ids
-          followers: []
-          following: admin_ids
-      , (err) ->
-        if not err
-          Meteor.call "follow_user", Meteor.userId()
-          Meteor.Router.to '/'
-      )
-    else
-      alert "Passwords do not match"
   'click .fb': (e) ->
     Meteor.loginWithFacebook {}, (err) ->
       if not err
