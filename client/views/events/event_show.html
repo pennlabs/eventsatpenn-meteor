@@ -1,0 +1,49 @@
+<!-- Template for showing an Event. -->
+<template name='show_event'>
+<div class='row'>
+  <div class="large-3 columns image">
+    <img src='{{ image_url }}'>
+    <!--<img src="http://placehold.it/240x240&amp;text=img">-->
+  </div>
+  <div class="large-9 columns info">
+    <div class='right'>
+    {{#if admin }}
+      {{#if starred }}
+        <span data-event_id='{{ _id }}' class='unstar top-right'>Unstar</span>
+      {{else}}
+        <span data-event_id='{{ _id }}' class='star top-right'>Star</span>
+      {{/if}}
+    {{else}}
+      {{#if starred }}
+        <span class='top-right'>Featured by <a href='/user/{{ starred.by_id }}'>{{ starred.by }}</a></span>
+      {{/if}}
+    {{/if}}
+    {{#if mine }}
+      <a data-event_id='{{ _id }}' href='#' class='delete top-right'>Delete</a>
+      <a data-event_id='{{ _id }}' href='#' class='edit top-right'>Edit</a>
+    {{/if}}
+    </div>
+    <h4 class="title"><a class='event' href="/event/{{ title_id }}">{{ name }}</a></h4>
+
+    <span class="subtitle">Posted by <a class='creator' href="/user/{{ creator }}">{{ creator_name }}</a></span>
+
+    <div class="detail-row">
+      <div class="large-12 columns item">
+        <span class="icon icon-clock"></span>{{ when }}
+      </div>
+      <div class="large-12 columns item">
+        <span class="icon icon-location"></span><a href='#'>{{ location }}</a>
+      </div>
+    </div>
+    <div class="event-description">
+        <p>{{ parse description }}</p>
+        <a href="/event/{{_id}}" class="read-more">Read more</a>
+    </div>
+    <ul class='categories'>
+      {{#each categories }}
+      <li class='category'><a href='/search?categories={{ escape_category . }}'>{{ . }}</a></li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+</template>

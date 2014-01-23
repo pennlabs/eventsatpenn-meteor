@@ -14,4 +14,4 @@ Template.new_event.events
 
     event_id = Events.insert(event)
     Meteor.call('create_event', event_id)
-    Meteor.Router.to "/event/#{event_id}"
+    Meteor.Router.to "/event/#{event.title_id}"
