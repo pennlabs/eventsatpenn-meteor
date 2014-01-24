@@ -1,11 +1,20 @@
 this.Events = new Meteor.Collection("events")
 
 Meteor.methods
-  create_event: (event_id) ->
+  create_event: (event) ->
+    user = Meteor.user()
+
+    event.creator = user._id
+    event.creator_name = user.profile.name
+
+    event_id = Events.insert(event)
+
     Meteor.users.update(Meteor.userId(), {$push: {"profile.events": event_id}})
     followers = Meteor.user().profile.followers or []
     if followers.length
       Meteor.users.update(_id: {$in: followers}, {$push: {"profile.event_queue": event_id}})
+
+    return event_id
 
   # pulling events, pulls all occurences of that event out,
   # so if the user created the event or follows someone who created it,
