@@ -2,6 +2,10 @@ this.Events = new Meteor.Collection("events")
 
 Meteor.methods
   create_event: (event) ->
+    if event.from > event.to
+      # Note: 422 refers to HTTP 422, unprocessable entity
+      throw new Meteor.Error(422, "Event end time cannot be before its start time.")
+
     user = Meteor.user()
 
     event.creator = user._id
