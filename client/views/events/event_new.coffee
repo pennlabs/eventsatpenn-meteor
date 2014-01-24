@@ -8,5 +8,5 @@ Template.new_event.events
     e.preventDefault()
     event = window.events_at_penn.parse_event_from_form $('.create-event')
     Meteor.call('create_event', event, (error, id) ->
-      Meteor.Router.to "/event/#{id}"
+      Meteor.Router.to "/event/#{title_id}"
     )
