@@ -61,8 +61,11 @@ window.events_at_penn.parse_event_from_form = (form) ->
     .toDate()
 
   # Create unique id for each event (by title) for semantic URL
-  title_id = Events.find(name: event.name).count() + 1
   clean_title = event.name.replace(/\s+/g, '-').toLowerCase()
+  title_id = Events.find(
+    tid:
+      $regex: '^(' + clean_title + '-(\\d+))$')
+    .count() + 1
   event.tid = encodeURIComponent(clean_title + '-' +  title_id)
 
   return event
