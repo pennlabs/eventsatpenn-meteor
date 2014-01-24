@@ -68,6 +68,8 @@ window.events_at_penn.parse_event_from_form = (form) ->
     .count() + 1
   event.tid = encodeURIComponent(clean_title + '-' +  title_id)
 
+  event.timestamp = new Date().getTime()
+
   return event
 
 $.fn.serializeObject = ->
