@@ -60,6 +60,25 @@ window.events_at_penn.parse_event_from_form = (form) ->
     .minute(time_end.minute())
     .toDate()
 
+  # Create unique id for each event (by title) for semantic URL
+  clean_title = event.name.replace(/\s+/g, '-').toLowerCase()
+  newest_tid = Events.find(
+    {tid:
+      $regex: '^(' + clean_title + '-(\\d+))$'}
+    {sort:
+      timestamp: -1
+    limit: 1})
+    .fetch()[0]
+  r = new RegExp '(-(\\d+))$'
+  if newest_tid
+    suffix = r.exec(newest_tid.tid)[0]
+    title_id = parseInt(suffix.substring(1)) + 1
+  else
+    title_id = 1
+  event.tid = encodeURIComponent(clean_title + '-' +  title_id)
+
+  event.timestamp = new Date().getTime()
+
   return event
 
 $.fn.serializeObject = ->
