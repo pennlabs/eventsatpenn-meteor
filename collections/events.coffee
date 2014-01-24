@@ -1,3 +1,5 @@
+this.Events = new Meteor.Collection("events")
+
 Meteor.methods
   create_event: (event_id) ->
     Meteor.users.update(Meteor.userId(), {$push: {"profile.events": event_id}})

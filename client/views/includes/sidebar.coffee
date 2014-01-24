@@ -1,5 +1,5 @@
 Template.sidebar.helpers
-  'categories': Categories
+  'categories': -> Categories
   'escape_category': encodeURIComponent
   'checked': (category) ->
     categories = Session.get("params")?.categories?.split("+").map decodeURIComponent
