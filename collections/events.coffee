@@ -1,10 +1,26 @@
 this.Events = new Meteor.Collection("events")
 
+# Note: 422 refers to HTTP 422, unprocessable entity
+
+ERROR_EVENT_DATES_INCONSISTENT = new Meteor.Error(422,
+  "Event end time cannot be before its start time.")
+
+MIN_EVENT_DURATION_IN_MILLESCONDS = 5 * 60 * 1000
+
+ERROR_EVENT_TOO_SHORT = new Meteor.Error(422,
+  "Event duration cannot be less than five minutes.")
+
 Meteor.methods
   create_event: (event) ->
-    if event.from > event.to
-      # Note: 422 refers to HTTP 422, unprocessable entity
-      throw new Meteor.Error(422, "Event end time cannot be before its start time.")
+
+    from = moment(event.from)
+    to   = moment(event.to)
+
+    if from > to
+      throw ERROR_EVENT_DATES_INCONSISTENT
+
+    if from - to < MIN_EVENT_DURATION_IN_MILLESCONDS
+      throw ERROR_EVENT_TOO_SHORT
 
     user = Meteor.user()
 
