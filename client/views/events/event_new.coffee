@@ -10,5 +10,5 @@ Template.new_event.events
     Meteor.call('create_event', event, (error, id) ->
       if (error)
         return alert(error.reason)
-      Meteor.Router.to "/event/#{id}"
+      Meteor.Router.to "/event/#{event.title_id}"
     )

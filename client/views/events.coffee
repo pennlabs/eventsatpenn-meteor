@@ -60,6 +60,39 @@ window.events_at_penn.parse_event_from_form = (form) ->
     .minute(time_end.minute())
     .toDate()
 
+  # Create unique id for each event (by title) for semantic URL
+  # Simple English: Replaces spaces with dashes, lowercases title
+  clean_title = event.name.replace(/\s+/g, '-').toLowerCase()
+  latest_event = Events.find(
+    {title_id:
+      # Matches on other events with same clean_title but different title number
+      # Ex:
+      # clean_title: 'meeting-at-harnwell'
+      # Matches: 'meeting-at-harnwell-10', 'meeting-at-harnwell-5'
+      # Does not match 'best-meeting-at-harnwell-10', 'meeting-at-harnwell-2-2'
+      # Simple English: match on clean_title-## (whole word)
+      $regex: '^(' + clean_title + '-(\\d+))$'}
+    {sort:
+      timestamp: -1
+    limit: 1})
+    .fetch()[0]
+
+  if latest_event
+    # Find the terminating title number
+    # Ex:
+    # 'meeting-at-harnwell-15' -> '-15'
+    # Simple English: match on -## at the end of a word
+    r = new RegExp '(-(\\d+))$'
+    suffix = r.exec(latest_event.title_id)[0]
+    # Use substring to take dash prefix off
+    title_id = parseInt(suffix.substring(1)) + 1
+  else
+    title_id = 1
+  # Put title_id together from URL encoded clean_title and id (dash separated)
+  event.title_id = encodeURIComponent(clean_title + '-' +  title_id)
+
+  event.timestamp = new Date().getTime()
+
   return event
 
 $.fn.serializeObject = ->

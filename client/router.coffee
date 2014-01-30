@@ -13,7 +13,8 @@ Meteor.Router.add
     return 'all'
   '/new': 'new_event'
   '/login': 'login'
-  '/event/:event_id': (event_id) ->
+  '/event/:title_id': (title_id) ->
+    event_id = Events.findOne(title_id: encodeURIComponent(title_id))
     Session.set("event_id", event_id)
     return 'event_info'
   '/user/:user_id': (user_id) ->
