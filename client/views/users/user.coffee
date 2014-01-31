@@ -12,6 +12,8 @@ Template.show_user.events
 Template.show_user.helpers
   'info': ->
     Meteor.users.findOne(Session.get("user_id")) or {}
+  'mine': ->
+    Meteor.user()._id == Session.get("user_id")
   'user_events': ->
     window.events_at_penn.get_events(creator: Session.get("user_id")) or []
   'following': ->

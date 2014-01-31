@@ -11,11 +11,13 @@
       {{/with}}
     </div>
     <div class="large-3 columns actions">
+      {{#unless mine }}
       {{#if following }}
       <a class="unfollow item" href="#"><span class="icon icon-mail-2"></span>Unfollow</a>
       {{else}}
       <a class="follow item" href="#"><span class="icon icon-mail-2"></span>Follow</a>
       {{/if}}
+      {{/unless}}
       <a class="item" href="#">
         <span class="icon icon-facebook-2"></span>Facebook Page
       </a>
