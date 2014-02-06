@@ -16,9 +16,13 @@
       {{else}}
       <a class="follow item" href="#"><span class="icon icon-mail-2"></span>Follow</a>
       {{/if}}
-      <a class="item" href="#">
+      {{#with info}}
+      {{#if services.facebook }}
+      <a class="item" href="{{ services.facebook.link }}">
         <span class="icon icon-facebook-2"></span>Facebook Page
       </a>
+      {{/if}}
+      {{/with}}
       <a class="item" href="#">
         <span class="icon icon-calendar-2"></span>Google Calendar
       </a>
