@@ -14,6 +14,7 @@ Template.show_event.events
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "destroy_event", event_id
 
+
 Template.show_event.rendered = (y) ->
   $description = $(@find('.event-description'))
   if (Meteor.Router.page() is "all" and $description.height() > MAX_EVENT_DESCRIPTION_HEIGHT)
@@ -38,6 +39,33 @@ Template.show_event.helpers
 
   'when': ->
     "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
+
+  'url': ->
+    text = encodeURIComponent(@name)
+    from = moment(@from)
+      .toISOString()
+      .replace(/[\-\.\:]/g, '')
+      .replace('000Z', 'Z')
+    to = moment(@to)
+      .toISOString()
+      .replace(/[\-\.\:]/g, '')
+      .replace('000Z', 'Z')
+    details = encodeURIComponent(@description)
+    location = encodeURIComponent(@location)
+    url =
+      "http://www.google.com/calendar/event?action=TEMPLATE&text=" +
+      text +
+      "&dates=" +
+      from +
+      "/" +
+      to +
+      "&details=" +
+      details +
+      "&location=" +
+      location +
+      "&trp=true&sprop=events%40penn&sprop=name:eventsatpenn.com"
+    url
+
 
   'parse': (description) ->
     regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
