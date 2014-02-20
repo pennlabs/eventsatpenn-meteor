@@ -42,6 +42,8 @@ Template.show_event.helpers
 
   'url': ->
     text = encodeURIComponent(@name)
+    # Convert ISOStrings to Google Calendar date format
+    # https://support.google.com/calendar/answer/3033039
     from = moment(@from)
       .toISOString()
       .replace(/[\-\.\:]/g, '')
@@ -52,18 +54,7 @@ Template.show_event.helpers
       .replace('000Z', 'Z')
     details = encodeURIComponent(@description)
     location = encodeURIComponent(@location)
-    url =
-      "http://www.google.com/calendar/event?action=TEMPLATE&text=" +
-      text +
-      "&dates=" +
-      from +
-      "/" +
-      to +
-      "&details=" +
-      details +
-      "&location=" +
-      location +
-      "&trp=true&sprop=events%40penn&sprop=name:eventsatpenn.com"
+    url = "http://www.google.com/calendar/event?action=TEMPLATE&text=#{ text }&dates=#{ from }/#{ to }&details=#{ details }&location=#{ location }&trp=true&sprop=events%40penn&sprop=name:eventsatpenn.com"
     url
 
 
