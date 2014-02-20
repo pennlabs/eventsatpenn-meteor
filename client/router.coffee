@@ -20,7 +20,17 @@ Meteor.Router.add
   '/user/:user_id': (user_id) ->
     Session.set("user_id", user_id)
     return 'show_user'
-  '/settings': () -> if Meteor.user() then 'edit_user' else 'login'
+  '/settings': () -> 'edit_user'
   '/search': (q) ->
     Session.set('params', parse_pararms @querystring)
     return 'search'
+
+Meteor.Router.filters 'requireLogin': (page) ->
+  if Meteor.user() then page else 'login'
+
+Meteor.Router.filter 'requireLogin',
+  only:
+    [
+      'new_event',
+      'edit_user'
+    ]
