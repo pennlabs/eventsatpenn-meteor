@@ -1,6 +1,5 @@
 window.events_at_penn ?= {}
 
-
 Template.edit_event.events
   'submit .create-event': (e) ->
     e.preventDefault()
