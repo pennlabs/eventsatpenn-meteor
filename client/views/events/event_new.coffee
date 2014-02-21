@@ -12,3 +12,6 @@ Template.new_event.events
         return alert(error.reason)
       Meteor.Router.to "/event/#{event.title_id}"
     )
+  'click .cancel-event': (e) ->
+    e.preventDefault()
+    Meteor.Router.to '/'
