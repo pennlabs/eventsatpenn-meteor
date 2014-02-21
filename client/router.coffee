@@ -15,7 +15,7 @@ Meteor.Router.add
   '/login': 'login'
   '/event/:title_id': (title_id) ->
     event_id = Events.findOne(title_id: encodeURIComponent(title_id))
-    # Backwards compatible: if title_id does not exist, assume the url is an event_id
+    # Backwards compatible: if title_id is not found, assume the url is an event_id
     if not event_id
       event_id = title_id
     Session.set("event_id", event_id)
