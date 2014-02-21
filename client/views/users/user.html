@@ -22,10 +22,12 @@
         <span class="icon icon-link"></span>Webpage
       </a>
       {{/if}}
-      {{/with}}
-      <a class="item" href="#">
+      {{#if services.facebook }}
+      <a class="item" href="{{ services.facebook.link }}">
         <span class="icon icon-facebook-2"></span>Facebook Page
       </a>
+      {{/if}}
+      {{/with}}
       <a class="item" href="#">
         <span class="icon icon-calendar-2"></span>Google Calendar
       </a>

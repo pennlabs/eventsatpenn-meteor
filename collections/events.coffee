@@ -71,3 +71,10 @@ Meteor.methods
 
   unstar_event: (event_id) ->
     Events.update(event_id, {$unset: {starred: 1}})
+
+ownsPost = (userId, event) ->
+  event and event.creator is userId
+
+Events.allow
+  update: ownsPost,
+  remove: ownsPost
