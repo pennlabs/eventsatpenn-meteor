@@ -30,9 +30,12 @@ Template.show_event.rendered = (y) ->
 
 Template.show_event.helpers
   'admin': -> Meteor.user()?.profile?.admin
+
   'escape_category': encodeURIComponent
+
   'mine': ->
     Meteor.user()?.profile?.events.indexOf(@_id) > -1
+
   'when': ->
     "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
   'maps': ->
@@ -40,7 +43,7 @@ Template.show_event.helpers
     "http://maps.google.com/?q=#{ event_url },+philadelphia"
   'parse': (d) ->
     regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
-    d = d.replace regex, (value) ->
+    description = description.replace regex, (value) ->
       value = value.toLowerCase()
       m = value.match /^([a-z]+:\/\/)/
       if m
@@ -52,4 +55,4 @@ Template.show_event.helpers
       # remove trailing . or ; from url
       url = url.replace /(\.|;)$/, ""
       return "<a target='_blank' href='#{url}'>#{nice}</a>"
-    return new Handlebars.SafeString(d)
+    return new Handlebars.SafeString(description)

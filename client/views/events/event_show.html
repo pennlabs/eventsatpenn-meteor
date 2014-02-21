@@ -34,6 +34,11 @@
       <div class="large-12 columns item">
         <span class="icon icon-location"></span><a href='{{ maps }}' target="_blank" class="location">{{ location }}</a>
       </div>
+      {{#if url }}
+      <div class="large-12 columns item">
+        <span class="icon icon-link"></span><a href='{{ url }}' target='_blank'>{{ url }}</a>
+      </div>
+      {{/if}}
     </div>
     <div class="event-description">
         <p>{{ parse description }}</p>
