@@ -41,7 +41,7 @@ Template.show_event.helpers
   'maps': ->
     event_url = @location.split(' ').join('+').toLowerCase()
     "http://maps.google.com/?q=#{ event_url },+philadelphia"
-  'parse': (d) ->
+  'parse': (description) ->
     regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
     description = description.replace regex, (value) ->
       value = value.toLowerCase()

@@ -8,7 +8,8 @@ Template.user_form.events
       Meteor.users.update({_id: Meteor.userId()},
         $set: {
           'profile.name': user.name,
-          'profile.description': user.description
+          'profile.description': user.description,
+          'profile.url': user.url
         }
       )
       return
@@ -22,6 +23,7 @@ Template.user_form.events
         profile:
           name: user.name
           description: user.description
+          url: user.url
           events: []
           event_queue: admin_event_ids
           followers: []
