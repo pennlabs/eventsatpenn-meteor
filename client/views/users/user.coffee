@@ -16,8 +16,8 @@ Template.show_user.helpers
     window.events_at_penn.get_events(creator: Session.get("user_id")) or []
   'following': ->
     Meteor.user()?.profile?.following.indexOf(Session.get("user_id")) > -1
-  'facebook': ->
-    user = Meteor.users.findOne(Session.get("user_id"))
+  'facebook_url': ->
+    user = Meteor.user()
     if user.services.facebook
       user.services.facebook.link
     else
