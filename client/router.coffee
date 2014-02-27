@@ -15,12 +15,25 @@ Meteor.Router.add
   '/login': 'login'
   '/event/:title_id': (title_id) ->
     event_id = Events.findOne(title_id: encodeURIComponent(title_id))
+    # Backwards compatible: if title_id is not found, assume the url is an event_id
+    if not event_id
+      event_id = title_id
     Session.set("event_id", event_id)
     return 'event_info'
   '/user/:user_id': (user_id) ->
     Session.set("user_id", user_id)
     return 'show_user'
-  '/settings': () -> if Meteor.user() then 'edit_user' else 'login'
+  '/settings': () -> 'edit_user'
   '/search': (q) ->
     Session.set('params', parse_pararms @querystring)
     return 'search'
+
+Meteor.Router.filters 'requireLogin': (page) ->
+  if Meteor.user() then page else 'login'
+
+Meteor.Router.filter 'requireLogin',
+  only:
+    [
+      'new_event',
+      'edit_user'
+    ]

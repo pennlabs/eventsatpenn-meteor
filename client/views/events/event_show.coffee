@@ -56,6 +56,9 @@ Template.show_event.helpers
     url = "http://www.google.com/calendar/event?action=TEMPLATE&text=#{ text }&dates=#{ from }/#{ to }&details=#{ details }&location=#{ location }&trp=true&sprop=events%40penn&sprop=name:eventsatpenn.com"
     url
 
+  'maps': ->
+    event_url = @location.split(' ').join('+').toLowerCase()
+    "http://maps.google.com/?q=#{ event_url },+philadelphia"
 
   'parse': (description) ->
     regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
