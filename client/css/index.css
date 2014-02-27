@@ -60,3 +60,8 @@
   .sidebar {
     position: fixed !important;
     top: 45px; } }
+
+.image .item .icon {
+  margin-right: 5px;
+  color: #8596ab;
+}

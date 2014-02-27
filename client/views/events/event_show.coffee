@@ -1,5 +1,10 @@
 window.events_at_penn ?= {}
 
+iso_to_gcalendar = (moment) ->
+  moment
+    .toISOString()
+    .replace(/[\-\.\:]/g, '')
+    .replace('000Z', 'Z')
 
 # aiming for four lines
 MAX_EVENT_DESCRIPTION_HEIGHT = 120
@@ -13,6 +18,7 @@ Template.show_event.events
     e.preventDefault()
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "destroy_event", event_id
+
 
 Template.show_event.rendered = (y) ->
   $description = $(@find('.event-description'))
@@ -38,9 +44,22 @@ Template.show_event.helpers
 
   'when': ->
     "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
+
+  'url': ->
+    text = encodeURIComponent(@name)
+    # Convert ISOStrings to Google Calendar date format
+    # https://support.google.com/calendar/answer/3033039
+    from = iso_to_gcalendar(moment(@from))
+    to = iso_to_gcalendar(moment(@to))
+    details = encodeURIComponent(@description)
+    location = encodeURIComponent(@location)
+    url = "http://www.google.com/calendar/event?action=TEMPLATE&text=#{ text }&dates=#{ from }/#{ to }&details=#{ details }&location=#{ location }&trp=true&sprop=events%40penn&sprop=name:eventsatpenn.com"
+    url
+
   'maps': ->
     event_url = @location.split(' ').join('+').toLowerCase()
     "http://maps.google.com/?q=#{ event_url },+philadelphia"
+
   'parse': (description) ->
     regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
     description = description.replace regex, (value) ->
