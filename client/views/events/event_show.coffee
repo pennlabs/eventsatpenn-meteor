@@ -45,7 +45,7 @@ Template.show_event.helpers
   'when': ->
     "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
 
-  'url': ->
+  'google-calendar-url': ->
     text = encodeURIComponent(@name)
     # Convert ISOStrings to Google Calendar date format
     # https://support.google.com/calendar/answer/3033039
