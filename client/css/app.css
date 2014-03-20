@@ -343,7 +343,7 @@ body {
   font-size: 16px; }
 
 body {
-  background: #f0f2f2;
+  background: white;
   color: black;
   padding: 0;
   margin: 0;
@@ -2618,6 +2618,7 @@ form.custom {
   .top-bar .name {
     height: 45px;
     margin: 0;
+    padding-left: 60px;
     font-size: 16px; }
     .top-bar .name h1 {
       line-height: 45px;
@@ -2872,7 +2873,7 @@ form.custom {
       width: 0px; }
     .top-bar-section .has-form {
       background: #810814;
-      padding: 0 15px;
+      padding: 0 20px;
       height: 45px; }
     .top-bar-section ul.right li .dropdown {
       left: auto;
@@ -3500,6 +3501,10 @@ kbd {
   .label.secondary {
     background-color: #8596ab;
     color: #fff; }
+  .label.category {
+    background-color: #DCD7E0;
+    font-weight: normal;
+    padding: 0 7px 2px 8px; }
 
 /* Inline Lists */
 .inline-list {
@@ -4153,4 +4158,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .cancel-event {
   padding-left: 20px;
+}
+.dp-logo {
+  top: 5px;
+  left: 10px;
+  float: left;
+  position: absolute;
+  height: 75px;
+  z-index: 9999;
 }

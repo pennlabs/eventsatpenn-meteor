@@ -18,7 +18,7 @@
       {{/if}}
     {{else}}
       {{#if starred }}
-        <span class='top-right'>Featured by <a href='/user/{{ starred.by_id }}'>{{ starred.by }}</a></span>
+        <span class='icon icon-star-3'></span>
       {{/if}}
     {{/if}}
     {{#if mine }}
@@ -28,7 +28,7 @@
     </div>
     <h4 class="title"><a class='event' href="/event/{{ title_id }}">{{ name }}</a></h4>
 
-    <span class="subtitle">Posted by <a class='creator' href="/user/{{ creator }}">{{ creator_name }}</a></span>
+    <span class="subtitle"><a class='creator' href="/user/{{ creator }}">{{ creator_name }}</a></span>
 
     <div class="detail-row">
       <div class="large-12 columns item">
@@ -49,7 +49,7 @@
     </div>
     <ul class='categories'>
       {{#each categories }}
-      <li class='category'><a href='/search?categories={{ escape_category . }}'>{{ . }}</a></li>
+      <li class='category label secondary'><a href='/search?categories={{ escape_category . }}'>{{ . }}</a></li>
       {{/each}}
     </ul>
   </div>
