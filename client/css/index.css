@@ -69,3 +69,10 @@
   margin-right: 5px;
   color: #8596ab;
 }
+
+.social-icons {
+  display: inline !important; }
+  .social-icons img {
+    border-radius: 8px;
+    width: 50px;
+  }

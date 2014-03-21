@@ -466,6 +466,9 @@ select {
     padding-right: 0.9375em;
     float: left; }
 
+  .sidebar-content {
+    padding-bottom: 10px; }
+
   .row .small-1 {
     position: relative;
     width: 8.33333%; }
