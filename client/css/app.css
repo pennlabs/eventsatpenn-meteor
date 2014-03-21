@@ -2594,7 +2594,7 @@ form.custom {
   z-index: 99; }
 
 .top-bar {
-  overflow: hidden;
+  overflow: visible;
   height: 45px;
   line-height: 45px;
   position: relative;
@@ -2726,7 +2726,7 @@ form.custom {
   .top-bar-section ul li.active a {
     background: #a94132; }
   .top-bar-section .has-form {
-    padding: 15px; }
+    padding: 0 15px 5px 70px; }
   .top-bar-section .has-dropdown {
     position: relative; }
     .top-bar-section .has-dropdown > a:after {
@@ -2769,6 +2769,15 @@ form.custom {
       color: white;
       font-weight: bold;
       font-size: 0.625em; }
+
+@media only screen and (max-width: 48em) {
+  .top-bar-section {
+    display: none;
+    .has-form {
+      padding: 0 15px 5px 70px;
+    }
+  }
+}
 
 .top-bar-js-breakpoint {
   width: 48em !important;
@@ -4165,5 +4174,5 @@ h1, h2, h3, h4, h5, h6 {
   float: left;
   position: absolute;
   height: 75px;
-  z-index: 9999;
+  z-index: 99;
 }

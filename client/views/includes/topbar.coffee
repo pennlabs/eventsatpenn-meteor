@@ -3,6 +3,9 @@ Template.topbar.helpers
 
 Template.topbar.events
   'click .logout': (e) -> Meteor.logout()
+  'click .menu-icon': (e) ->
+    e.preventDefault()
+    $('.top-bar-section').toggle()
   'submit .search': (e) ->
     e.preventDefault()
     params = Session.get("params") or {}
