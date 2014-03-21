@@ -36,6 +36,10 @@
     font-family: "News Cycle", sans-serif;
     font-weight: normal;
     margin: 10px 0 10px 0; }
+  .sidebar.folded h5.collapse-shift-right {
+    padding-left: 60px; }
+  .sidebar h5.shift-right {
+    padding-left: 60px; }
   .sidebar label, .sidebar a {
     color: white;
     margin: 4px 0 4px 0;
@@ -65,3 +69,10 @@
   margin-right: 5px;
   color: #8596ab;
 }
+
+.social-icons {
+  display: inline !important; }
+  .social-icons img {
+    border-radius: 8px;
+    width: 50px;
+  }
