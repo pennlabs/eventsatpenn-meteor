@@ -60,6 +60,9 @@ Template.show_event.helpers
     event_url = @location.split(' ').join('+').toLowerCase()
     "http://maps.google.com/?q=#{ event_url },+philadelphia"
 
+  'image_url_scaled': ->
+    @image_url+'/convert?w=228&quality=90'
+
   'parse': (description) ->
     regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
     description = description.replace regex, (value) ->
