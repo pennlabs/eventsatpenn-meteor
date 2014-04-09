@@ -18,6 +18,9 @@ Template.show_event.events
     e.preventDefault()
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "destroy_event", event_id
+  'click .back-button': (e) ->
+    e.preventDefault()
+    window.history.back()
 
 
 Template.show_event.rendered = (y) ->
@@ -33,6 +36,8 @@ Template.show_event.rendered = (y) ->
   else
     $read_more = $(@find('a.read-more'))
     $read_more.hide()
+  if (Meteor.Router.page() is "all")
+    $('.back-button').hide()
 
 Template.show_event.helpers
   'admin': -> Meteor.user()?.profile?.admin
