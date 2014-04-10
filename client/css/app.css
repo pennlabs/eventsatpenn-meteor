@@ -2628,7 +2628,7 @@ form.custom {
       font-size: 1.0625em;
       margin: 0; }
       .top-bar .name h1 a {
-        font-weight: bold;
+        font-weight: 500;
         color: white;
         width: 50%;
         display: block;
