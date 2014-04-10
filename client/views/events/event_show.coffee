@@ -66,7 +66,10 @@ Template.show_event.helpers
     "http://maps.google.com/?q=#{ event_url },+philadelphia"
 
   'image_url_scaled': ->
-    @image_url+'/convert?w=228&quality=90'
+    if @image_url
+      @image_url+'/convert?w=228&quality=90'
+    else
+      "http://placehold.it/228x332/f0f2f2/810814/&text=No+image+available"
 
   'parse': (description) ->
     regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
