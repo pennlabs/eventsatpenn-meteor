@@ -27,11 +27,11 @@ Template.login.events
 
 Template.login.helpers
   'forgot': -> !!Session.get('forgot-pass')
-  'button-msg': ->
+  'button_msg': ->
     if Session.get("button-msg")?
       return Session.get("button-msg")
     else if Session.get("forgot-pass")
       return "Reset Password"
     else
       return "Login"
-  'button-class': -> if Session.get("button-msg") then "error" else ""
+  'button_class': -> if Session.get("button-msg") then "error" else ""
