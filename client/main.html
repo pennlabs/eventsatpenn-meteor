@@ -6,7 +6,7 @@
 <body>
   {{> topbar }}
   <div class='row' id='container'>
-    {{renderPage}}
+    {{> UI.dynamic template=currentPage}}
   </div>
   {{> footer }}
 </body>

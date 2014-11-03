@@ -12,14 +12,14 @@
       {{#if forgot}}
       <form id='forgot-pass-form'>
         <input type='email' name='email' placeholder='Email'>
-        <input type='submit' id='forgot-button' value='{{ button-msg }}' class='button {{ button-class }}'>
+        <input type='submit' id='forgot-button' value='{{ button_msg }}' class='button {{ button_class }}'>
         <p class='forgot-pass'>Cancel</p>
       </form>
       {{else}}
       <form id="login-form" method="post" action="login">
         <input name="email" type="text" placeholder="Email" />
         <input name="password" type="password" placeholder="Password" />
-        <input class="{{ button-class }} button" type="submit" id="login-button" value="{{ button-msg }}">
+        <input class="{{ button_class }} button" type="submit" id="login-button" value="{{ button_msg }}">
         <p class='forgot-pass'>Forgot Password?</p>
       </form>
       {{/if}}
