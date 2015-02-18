@@ -1280,6 +1280,7 @@ you can use the generic selector below, but it's slower:
 }
 .icon-star-3:before {
 	content: "\e19f";
+  color: #810814;
 }
 .icon-heart:before {
 	content: "\e1a0";

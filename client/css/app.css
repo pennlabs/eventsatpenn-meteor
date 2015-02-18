@@ -343,7 +343,7 @@ body {
   font-size: 16px; }
 
 body {
-  background: #f0f2f2;
+  background: white;
   color: black;
   padding: 0;
   margin: 0;
@@ -465,6 +465,9 @@ select {
     padding-left: 0.9375em;
     padding-right: 0.9375em;
     float: left; }
+
+  .sidebar-content {
+    padding-bottom: 10px; }
 
   .row .small-1 {
     position: relative;
@@ -2594,7 +2597,7 @@ form.custom {
   z-index: 99; }
 
 .top-bar {
-  overflow: hidden;
+  overflow: visible;
   height: 45px;
   line-height: 45px;
   position: relative;
@@ -2618,13 +2621,14 @@ form.custom {
   .top-bar .name {
     height: 45px;
     margin: 0;
+    padding-left: 60px;
     font-size: 16px; }
     .top-bar .name h1 {
       line-height: 45px;
       font-size: 1.0625em;
       margin: 0; }
       .top-bar .name h1 a {
-        font-weight: bold;
+        font-weight: 500;
         color: white;
         width: 50%;
         display: block;
@@ -2725,7 +2729,7 @@ form.custom {
   .top-bar-section ul li.active a {
     background: #a94132; }
   .top-bar-section .has-form {
-    padding: 15px; }
+    padding: 0 15px 5px 70px; }
   .top-bar-section .has-dropdown {
     position: relative; }
     .top-bar-section .has-dropdown > a:after {
@@ -2768,6 +2772,13 @@ form.custom {
       color: white;
       font-weight: bold;
       font-size: 0.625em; }
+
+@media only screen and (max-width: 48em) {
+  .top-bar-section {
+    display: none; }
+    .top-bar-section .has-form {
+      padding: 0 15px 5px 70px; }
+}
 
 .top-bar-js-breakpoint {
   width: 48em !important;
@@ -2872,7 +2883,7 @@ form.custom {
       width: 0px; }
     .top-bar-section .has-form {
       background: #810814;
-      padding: 0 15px;
+      padding: 0 20px;
       height: 45px; }
     .top-bar-section ul.right li .dropdown {
       left: auto;
@@ -3500,6 +3511,10 @@ kbd {
   .label.secondary {
     background-color: #8596ab;
     color: #fff; }
+  .label.category {
+    background-color: #DCD7E0;
+    font-weight: normal;
+    padding: 0 7px 2px 8px; }
 
 /* Inline Lists */
 .inline-list {
@@ -4150,3 +4165,15 @@ h1, h2, h3, h4, h5, h6 {
       margin-right: 10px; }
     #footer #footer-nav ul li:first-child:before {
       content: ""; }
+
+.cancel-event {
+  padding-left: 20px;
+}
+.dp-logo {
+  top: 5px;
+  left: 10px;
+  float: left;
+  position: absolute;
+  height: 75px;
+  z-index: 99;
+}

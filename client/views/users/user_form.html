@@ -20,6 +20,8 @@
         </div>
       </div>
       {{/unless}}
+      <label>Webpage (optional)</label>
+      <input name="url" type="text" placeholder="URL (optional)" value="{{ currentUser.profile.url }}" />
       <label>Description</label>
       <textarea name="description" placeholder="Your club and position within it, any other relevant information">{{ currentUser.profile.description }}</textarea>
       

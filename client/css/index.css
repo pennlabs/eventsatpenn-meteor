@@ -1,6 +1,6 @@
 .sidebar {
   margin-bottom: 15px;
-  z-index: 100; }
+  z-index: 10; }
   .sidebar .sidebar-content {
     background-color: #8596ab;
     color: white; }
@@ -36,6 +36,10 @@
     font-family: "News Cycle", sans-serif;
     font-weight: normal;
     margin: 10px 0 10px 0; }
+  .sidebar.folded h5.collapse-shift-right {
+    padding-left: 60px; }
+  .sidebar h5.shift-right {
+    padding-left: 60px; }
   .sidebar label, .sidebar a {
     color: white;
     margin: 4px 0 4px 0;
@@ -60,3 +64,15 @@
   .sidebar {
     position: fixed !important;
     top: 45px; } }
+
+.image .item .icon {
+  margin-right: 5px;
+  color: #8596ab;
+}
+
+.social-icons {
+  display: inline !important; }
+  .social-icons img {
+    border-radius: 8px;
+    width: 50px;
+  }

@@ -1,5 +1,10 @@
 window.events_at_penn ?= {}
 
+iso_to_gcalendar = (moment) ->
+  moment
+    .toISOString()
+    .replace(/[\-\.\:]/g, '')
+    .replace('000Z', 'Z')
 
 # aiming for four lines
 MAX_EVENT_DESCRIPTION_HEIGHT = 120
@@ -13,6 +18,10 @@ Template.show_event.events
     e.preventDefault()
     event_id = $(e.currentTarget).data('event_id')
     Meteor.call "destroy_event", event_id
+  'click .back-button': (e) ->
+    e.preventDefault()
+    window.history.back()
+
 
 Template.show_event.rendered = (y) ->
   $description = $(@find('.event-description'))
@@ -27,17 +36,47 @@ Template.show_event.rendered = (y) ->
   else
     $read_more = $(@find('a.read-more'))
     $read_more.hide()
+  if (Meteor.Router.page() is "all")
+    $('.back-button').hide()
 
 Template.show_event.helpers
   'admin': -> Meteor.user()?.profile?.admin
+
   'escape_category': encodeURIComponent
+
+  'title-url': ->
+    @title_id or @_id
+
   'mine': ->
     Meteor.user()?.profile?.events.indexOf(@_id) > -1
+
   'when': ->
     "#{moment(@from).format('lll')} - #{moment(@to).format('lll')}"
-  'parse': (d) ->
+
+  'google_calendar_url': ->
+    text = encodeURIComponent(@name)
+    # Convert ISOStrings to Google Calendar date format
+    # https://support.google.com/calendar/answer/3033039
+    from = iso_to_gcalendar(moment(@from))
+    to = iso_to_gcalendar(moment(@to))
+    details = encodeURIComponent(@description)
+    location = encodeURIComponent(@location)
+    url = "http://www.google.com/calendar/event?action=TEMPLATE&text=#{ text }&dates=#{ from }/#{ to }&details=#{ details }&location=#{ location }&trp=true&sprop=events%40penn&sprop=name:eventsatpenn.com"
+    url
+
+  'maps': ->
+    event_url = @location.split(' ').join('+').toLowerCase()
+    "http://maps.google.com/?q=#{ event_url },+philadelphia"
+
+  'image_url_scaled': ->
+    if @image_url
+      @image_url+'/convert?w=228&quality=90'
+    else
+      "http://placehold.it/228x332/f0f2f2/810814/&text=No+image+available"
+
+  'parse': (description) ->
     regex = /((http\:\/\/|https\:\/\/)|(www\.))+(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g
-    d = d.replace regex, (value) ->
+    description = description.replace regex, (value) ->
       value = value.toLowerCase()
       m = value.match /^([a-z]+:\/\/)/
       if m
@@ -49,4 +88,4 @@ Template.show_event.helpers
       # remove trailing . or ; from url
       url = url.replace /(\.|;)$/, ""
       return "<a target='_blank' href='#{url}'>#{nice}</a>"
-    return new Handlebars.SafeString(d)
+    return new Handlebars.SafeString(description)

@@ -2,13 +2,16 @@
 <div class="fixed contain-to-grid">
   <nav class="top-bar">
     <ul class="title-area">
+      <a href="http://www.thedp.com/">
+        <img class="dp-logo" src="/final-logo-rsz.png">
+      </a>
       <li class="name">
         <h1><a class="home" href="/">events@penn</a></h1>
       </li>
       <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
     </ul>
     <section class="top-bar-section">
-      <ul class="left">
+      <ul class="right">
         <li class="has-form">
           <form class="search">
             <div class="row collapse">
@@ -21,11 +24,6 @@
             </div>
           </form>
         </li>
-      </ul>
-    </section>
-    <section class="top-bar-section">
-      <ul class="right">
-        <li><a href="http://thedp.com" target='_blank'><img class="logo" alt="The Daily Pennsylvanian" src="https://s3.amazonaws.com/eventsatpenn/thedp.png"></a></li>
         <li class='divider'></li>
         {{#if currentUser }}
         <li><a href="/new" class="create"><span class="icon icon-plus"></span>Create Event</a></li>
@@ -34,7 +32,7 @@
           <a class="user" href="/user/{{ currentUser._id }}">{{ currentUser.profile.name }}</a>
           <ul class="dropdown">
             <li>{{> settingsButton }}</li>
-            <li><a href="#" class="logout">Logout</a><li>
+            <li><a href="#" class="logout">Logout</a></li>
           </ul>
         </li>
         {{else}}

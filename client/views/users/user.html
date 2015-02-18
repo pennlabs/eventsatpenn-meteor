@@ -21,9 +21,18 @@
       <a class="item" href="#">
         <span class="icon icon-facebook-2"></span>Facebook Page
       </a>
-      <a class="item" href="#">
-        <span class="icon icon-calendar-2"></span>Google Calendar
+      {{#with info}}
+      {{#if profile.url }}
+      <a class="item" href='{{ profile.url }}'>
+        <span class="icon icon-link"></span>Webpage
       </a>
+      {{/if}}
+      {{#if services.facebook }}
+      <a class="item" href="{{ services.facebook.link }}">
+        <span class="icon icon-facebook-2"></span>Facebook Page
+      </a>
+      {{/if}}
+      {{/with}}
     </div>
   </div>
   {{#each user_events }}

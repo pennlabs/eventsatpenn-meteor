@@ -1,7 +1,7 @@
 <template name='sidebar'>
 <div class="large-12 columns sidebar-content">
   <form>
-    <h5>Date</h5>
+    <h5 class="shift-right">Date</h5>
     <input class='date' value="{{ after_date }}" type="date" placeholder="mm/dd/yyyy" />
     <hr/>
     <h5>Categories</h5>
@@ -9,11 +9,15 @@
       <label><input {{ checked . }} class='category-checkbox' type="checkbox" value='{{ escape_category . }}'>{{ . }}</label>
     {{/each}}
   </form>
-  <h6><a target='_blank' href='http://twitter.com/@_EventsAtPenn'>Follow @_EventsAtPenn</a></h6>
-  <h6><a target='_blank' href='https://www.facebook.com/eventsatpenn'>Like EventsatPenn</a></h6>
+  <a target='_blank' class='social-icons' href='http://twitter.com/@_EventsAtPenn'>
+    <img alt="Twitter" src='twitter.png'>
+  </a>
+  <a target='_blank' class='social-icons' href='https://www.facebook.com/eventsatpenn'>
+    <img alt="Facebook" src='facebook.png'>
+  </a>
 </div>
 <div class="large-12 columns sidebar-fold">
   <span class="arrow"></span>
-  <h5>Filters</h5>
+  <h5 class="collapse-shift-right">Filters</h5>
 </div>
 </template>
