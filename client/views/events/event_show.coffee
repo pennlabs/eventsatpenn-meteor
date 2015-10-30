@@ -44,7 +44,7 @@ Template.show_event.helpers
 
   'escape_category': encodeURIComponent
 
-  'title-url': ->
+  'title_url': ->
     @title_id or @_id
 
   'mine': ->
