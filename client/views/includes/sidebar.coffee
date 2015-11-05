@@ -13,13 +13,13 @@ Template.sidebar.events
     if categories.length
       params = Session.get("params") or {}
       params.categories = categories.join('+')
-      Meteor.Router.to "/search?#{window.events_at_penn.serialize params}"
+      Router.go "/search?#{window.events_at_penn.serialize params}"
     else
       # Session.set("params")
-      Meteor.Router.to "/"
+      Router.go "/"
   'change .date': (e) ->
     date = $(e.currentTarget).val()
     if date
       params = Session.get("params") or {}
       params.date = date
-      Meteor.Router.to "/search?#{window.events_at_penn.serialize params}"
+      Router.go "/search?#{window.events_at_penn.serialize params}"

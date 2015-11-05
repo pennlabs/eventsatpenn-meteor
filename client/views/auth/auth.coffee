@@ -18,12 +18,12 @@ Template.login.events
         Session.set("button-msg", "(#{err.reason})")
         setTimeout (-> Session.set "button-msg"), 2000 # should clear old timeout
       else
-        Meteor.Router.to '/'
+        Router.go '/'
   'click .fb': (e) ->
     Meteor.loginWithFacebook {}, (err) ->
       if not err
         Meteor.call "create_fb_user", Meteor.userId()
-        Meteor.Router.to '/'
+        Router.go '/'
 
 Template.login.helpers
   'forgot': -> !!Session.get('forgot-pass')

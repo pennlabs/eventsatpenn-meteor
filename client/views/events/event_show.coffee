@@ -25,7 +25,7 @@ Template.show_event.events
 
 Template.show_event.rendered = (y) ->
   $description = $(@find('.event-description'))
-  if (Meteor.Router.page() is "all" and $description.height() > MAX_EVENT_DESCRIPTION_HEIGHT)
+  if (Router.gopage() is "all" and $description.height() > MAX_EVENT_DESCRIPTION_HEIGHT)
     $description.dotdotdot(
       wrap: 'word',
       fallbackToLetter: true,
@@ -36,7 +36,7 @@ Template.show_event.rendered = (y) ->
   else
     $read_more = $(@find('a.read-more'))
     $read_more.hide()
-  if (Meteor.Router.page() is "all")
+  if (Router.gopage() is "all")
     $('.back-button').hide()
 
 Template.show_event.helpers
