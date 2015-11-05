@@ -31,7 +31,7 @@ Template.user_form.events
       , (err) ->
         if not err
           Meteor.call "follow_user", Meteor.userId()
-          Meteor.Router.to '/'
+          Router.go '/'
       )
     else
       alert "Passwords do not match"

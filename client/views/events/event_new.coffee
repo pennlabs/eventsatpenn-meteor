@@ -10,8 +10,8 @@ Template.new_event.events
     Meteor.call('create_event', event, (error, id) ->
       if (error)
         return alert(error.reason)
-      Meteor.Router.to "/event/#{event.title_id}"
+      Router.go "/event/#{event.title_id}"
     )
   'click .cancel-event': (e) ->
     e.preventDefault()
-    Meteor.Router.to '/'
+    Router.go '/'
