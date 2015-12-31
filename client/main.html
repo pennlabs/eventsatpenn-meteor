@@ -1,12 +1,7 @@
-<head>
-  <title>events@penn</title>
-  <link href="http://fonts.googleapis.com/css?family=Merriweather:400,700|News+Cycle:400,700|Lato" rel="stylesheet" type="text/css">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-</head>
-<body>
+<template name="layout">
   {{> topbar }}
   <div class='row' id='container'>
-    {{> UI.dynamic template=currentPage}}
+    {{> yield }}
   </div>
   {{> footer }}
-</body>
+</template>

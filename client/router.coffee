@@ -1,39 +1,46 @@
-parse_pararms = (querystring) ->
+parse_params = (params_object) ->
   params = {}
-  querystring = querystring.split('&')
-  for qs in querystring
-    continue if not qs
-    pair = qs.split('=')
-    params[decodeURIComponent pair[0]] = decodeURIComponent pair[1]
+  keys = Object.keys(params_object)
+  # First key is hash
+  keys.shift()
+  for prp in keys
+    params[prp] = params_object[prp]
   params
 
-Meteor.Router.add
-  '/': ->
-    Session.set('params', parse_pararms @querystring)
-    return 'all'
-  '/new': 'new_event'
-  '/login': 'login'
-  '/event/:title_id': (title_id) ->
-    event_id = Events.findOne(title_id: encodeURIComponent(title_id))
-    # Backwards compatible: if title_id is not found, assume the url is an event_id
-    if not event_id
-      event_id = title_id
-    Session.set("event_id", event_id)
-    return 'event_info'
-  '/user/:user_id': (user_id) ->
-    Session.set("user_id", user_id)
-    return 'show_user'
-  '/settings': () -> 'edit_user'
-  '/search': (q) ->
-    Session.set('params', parse_pararms @querystring)
-    return 'search'
+Router.configure
+  layoutTemplate: 'layout'
 
-Meteor.Router.filters 'requireLogin': (page) ->
-  if Meteor.user() then page else 'login'
+Router.map ->
+  @route 'all',
+    path: '/'
+    onBeforeAction: ->
+      Session.set('params', parse_params @params)
+  @route 'new_event', path: '/new'
+  @route 'login'
+  @route 'event_info',
+    path: '/event/:title_id'
+    onBeforeAction: ->
+      title_id = @params.title_id
+      event_id = Events.findOne(title_id: encodeURIComponent(title_id))
+      # Backwards compatible: if title_id is not found, assume the url is an event_id
+      if not event_id
+        event_id = title_id
+      Session.set("event_id", event_id)
+  @route 'show_user',
+    path: '/user/:user_id'
+    onBeforeAction: ->
+      Session.set('user_id', @params.user_id)
+  @route 'edit_user', path: '/settings'
+  @route 'search',
+    onBeforeAction: ->
+      Session.set('params', parse_params @params)
 
-Meteor.Router.filter 'requireLogin',
-  only:
-    [
-      'new_event',
-      'edit_user'
-    ]
+requireLogin = ->
+  if not Meteor.user()
+    @render 'login'
+    pause()
+
+Router.onBeforeAction requireLogin, only: [
+  'new_event',
+  'edit_user'
+]

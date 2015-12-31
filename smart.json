@@ -1,6 +1,6 @@
 {
   "packages": {
-    "router": {},
-    "chosen-package": {}
+    "chosen-package": {},
+    "iron-router": {}
   }
 }
