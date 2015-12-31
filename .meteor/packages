@@ -13,7 +13,7 @@ accounts-password
 less
 standard-app-packages
 page-js-ie-support
-chosen-package
+mrt:chosen-package@0.11.1
 accounts-facebook
-iron-router
+iron:router@0.8.2
 http
