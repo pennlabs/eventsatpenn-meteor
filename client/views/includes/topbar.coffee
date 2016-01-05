@@ -10,7 +10,7 @@ Template.topbar.events
     e.preventDefault()
     params = Session.get("params") or {}
     params.q = $('#searchbox').val()
-    Meteor.Router.to "/search?#{window.events_at_penn.serialize params}"
+    Router.go "/search?#{window.events_at_penn.serialize params}"
 
 Template.topbar.rendered = ->
   if !window.foundation?

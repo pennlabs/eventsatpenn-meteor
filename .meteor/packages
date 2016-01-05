@@ -12,8 +12,8 @@ accounts-ui
 accounts-password
 less
 standard-app-packages
-page-js-ie-support
-router
-chosen-package
+mrt:chosen-package
 accounts-facebook
+iron:router
 http
+standard-minifiers
