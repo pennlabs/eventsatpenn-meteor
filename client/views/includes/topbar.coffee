@@ -2,7 +2,6 @@ Template.topbar.helpers
   'q': -> Session.get("params")?.q
 
 Template.topbar.events
-  'click .logout': (e) -> Meteor.logout()
   'click .menu-icon': (e) ->
     e.preventDefault()
     $('.top-bar-section').toggle()
