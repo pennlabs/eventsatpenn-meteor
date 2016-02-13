@@ -15,6 +15,7 @@ Router.map ->
     path: '/'
     onBeforeAction: ->
       Session.set('params', parse_params @params)
+      this.next()
   @route 'new_event', path: '/new'
   @route 'login'
   @route 'event_info',
@@ -26,19 +27,23 @@ Router.map ->
       if not event_id
         event_id = title_id
       Session.set("event_id", event_id)
+      this.next()
   @route 'show_user',
     path: '/user/:user_id'
     onBeforeAction: ->
       Session.set('user_id', @params.user_id)
+      this.next()
   @route 'edit_user', path: '/settings'
   @route 'search',
     onBeforeAction: ->
       Session.set('params', parse_params @params)
+      this.next()
 
 requireLogin = ->
   if not Meteor.user()
     @render 'login'
-    pause()
+  else
+    this.next()
 
 Router.onBeforeAction requireLogin, only: [
   'new_event',
