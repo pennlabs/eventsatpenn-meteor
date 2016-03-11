@@ -1,2 +1,4 @@
 *.swp
 tests/*.js
+settings.json
+db/
