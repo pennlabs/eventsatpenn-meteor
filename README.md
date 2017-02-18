@@ -13,8 +13,8 @@ Developing
 ----------
 
 To run
-* On Mac, `$ mrt`
-* On Linux, `$ sudo mrt` (mrt runs into weird privileges issues on Linux)
+
+    $ meteor
 
 Deploying
 ---------
@@ -24,7 +24,7 @@ framework, and is hosted on their servers for ease of deployment. To deploy,
 just run:
 
 ```shell
-$ mrt deploy eventsatpenn.com
+$ meteor deploy eventsatpenn.com
 ```
 
 Testing
