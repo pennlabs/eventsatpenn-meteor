@@ -9,6 +9,7 @@ parse_params = (params_object) ->
 
 Router.configure
   layoutTemplate: 'layout'
+Router.setTemplateNameConverter(_.identity)
 
 Router.map ->
   @route 'all',
