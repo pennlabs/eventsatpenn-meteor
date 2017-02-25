@@ -4144,27 +4144,33 @@ h1, h2, h3, h4, h5, h6 {
   margin-right: 5px; }
 
 #footer {
-  font-size: 0.875em;
+  font-size: 0.75em;
   color: white;
   background-color: #2980b9;
   text-align: center;
-  margin-top: 30px;
-  padding-top: 15px;
-  min-height: 150px; }
-  #footer #footer-nav a, #footer #footer-nav a:hover {
-    color: white; }
-  #footer #footer-nav ul {
-    margin: 0px; }
-    #footer #footer-nav ul li {
-      font-weight: bold;
-      display: inline;
-      margin-right: 10px; }
-    #footer #footer-nav ul li:before {
-      content: "⋅";
-      color: #66271f;
-      margin-right: 10px; }
-    #footer #footer-nav ul li:first-child:before {
-      content: ""; }
+  min-height: 150px; 
+  padding-top: 30px;
+}
+#footer #footer-nav a, #footer #footer-nav a:hover {
+  color: white; 
+}
+#footer #footer-nav ul {
+  margin: 0px;
+}
+#footer #footer-details {
+  padding-top: 10px;
+}
+#footer #footer-nav ul li {
+  font-weight: bold;
+  display: inline;
+}
+#footer #footer-nav ul li:before {
+  content: "⋅";
+  color: #66271f;
+}
+#footer #footer-nav ul li:first-child:before {
+  content: ""; 
+}
 
 .cancel-event {
   padding-left: 20px;
