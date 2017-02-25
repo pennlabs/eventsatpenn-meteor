@@ -2587,7 +2587,7 @@ form.custom {
 /* Wrapped around .top-bar to contain to grid width */
 .contain-to-grid {
   width: 100%;
-  background: #810814; }
+  background: #2980b9; }
 
 .fixed {
   width: 100%;
@@ -2601,7 +2601,7 @@ form.custom {
   height: 45px;
   line-height: 45px;
   position: relative;
-  background: #810814; }
+  background: #2980b9; }
   .top-bar ul {
     margin-bottom: 0;
     list-style: none; }
@@ -2671,7 +2671,7 @@ form.custom {
     height: auto;
     background: transparent; }
     .top-bar.expanded .title-area {
-      background: #810814; }
+      background: #2980b9; }
     .top-bar.expanded .toggle-topbar a {
       color: white; }
       .top-bar.expanded .toggle-topbar a span {
@@ -2689,7 +2689,7 @@ form.custom {
     width: 100%;
     height: auto;
     display: block;
-    background: #810814;
+    background: #2980b9;
     font-size: 16px;
     margin: 0; }
   .top-bar-section .divider {
@@ -2706,11 +2706,11 @@ form.custom {
     padding-left: 15px;
     font-size: 0.875em;
     font-weight: bold;
-    background: #810814; }
+    background: #2980b9; }
     .top-bar-section ul li > a:hover {
       background: #a94132; }
     .top-bar-section ul li > a.button {
-      background: #810814;
+      background: #2980b9;
       font-size: 0.875em; }
       .top-bar-section ul li > a.button:hover {
         background: #680000; }
@@ -2789,7 +2789,7 @@ form.custom {
 
 @media only screen and (min-width: 48em) {
   .top-bar {
-    background: #810814;
+    background: #2980b9;
     *zoom: 1;
     overflow: visible; }
     .top-bar:before, .top-bar:after {
@@ -2812,7 +2812,7 @@ form.custom {
       position: relative;
       top: 8px; }
     .top-bar.expanded {
-      background: #810814; }
+      background: #2980b9; }
 
   .contain-to-grid .top-bar {
     max-width: 62.5em;
@@ -2834,7 +2834,7 @@ form.custom {
     .top-bar-section li a:not(.button) {
       padding: 0 15px;
       line-height: 45px;
-      background: #810814; }
+      background: #2980b9; }
       .top-bar-section li a:not(.button):hover {
         background: #680000; }
     .top-bar-section .has-dropdown > a {
@@ -2882,7 +2882,7 @@ form.custom {
       height: 45px;
       width: 0px; }
     .top-bar-section .has-form {
-      background: #810814;
+      background: #2980b9;
       padding: 0 20px;
       height: 45px; }
     .top-bar-section ul.right li .dropdown {
@@ -3703,7 +3703,7 @@ kbd {
     font-size: 0.875em; }
     .side-nav li a {
       display: block;
-      color: #810814; }
+      color: #2980b9; }
     .side-nav li.active a {
       color: #4d4d4d;
       font-weight: bold; }
@@ -4146,7 +4146,7 @@ h1, h2, h3, h4, h5, h6 {
 #footer {
   font-size: 0.875em;
   color: white;
-  background-color: #810814;
+  background-color: #2980b9;
   text-align: center;
   margin-top: 30px;
   padding-top: 15px;
@@ -4169,11 +4169,7 @@ h1, h2, h3, h4, h5, h6 {
 .cancel-event {
   padding-left: 20px;
 }
-.dp-logo {
-  top: 5px;
-  left: 10px;
-  float: left;
-  position: absolute;
-  height: 75px;
-  z-index: 99;
+.labs-logo {
+  top: 10px;
+  position: relative;
 }
