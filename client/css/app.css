@@ -51,7 +51,7 @@ audio:not([controls]) {
  *    user zoom.
  */
 html {
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   /* 1 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
@@ -132,7 +132,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 1em; }
 
 /**
@@ -347,7 +347,7 @@ body {
   color: black;
   padding: 0;
   margin: 0;
-  font-family: "News Cycle", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-style: normal;
   line-height: 1;
@@ -1311,7 +1311,7 @@ p {
 
 /* Default header styles */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto Slab', serif;
   font-weight: bold;
   font-style: normal;
   color: #222222;
@@ -3477,7 +3477,7 @@ kbd {
   border-style: solid;
   border-width: 1px;
   margin: 0;
-  font-family: "Consolas", "Menlo", "Courier", monospace;
+  font-family: 'Roboto', sans-serif;
   font-size: 0.9375em;
   padding: 0.125em 0.25em 0em;
   -webkit-border-radius: 3px;
@@ -4120,14 +4120,14 @@ input[type="tel"],
 input[type="time"],
 input[type="url"],
 textarea {
-  font-family: "News Cycle", sans-serif; }
-
+  font-family: 'Roboto', sans-serif;
+}
 ol {
   list-style-position: inside; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Merriweather", serif; }
-
+  font-family: 'Roboto Slab', serif;
+}
 .label {
   display: inline-block;
   padding: 2px 4px 2px 4px;
@@ -4136,9 +4136,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold; }
 
 .top-bar h1 {
-  font-family: "Lato", sans-serif; }
+  font-family: 'Roboto', sans-serif;
+}
 .top-bar .top-bar-section .dropdown li.title h5 {
-  font-family: "Lato", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px; }
 .top-bar .icon {
   margin-right: 5px; }
