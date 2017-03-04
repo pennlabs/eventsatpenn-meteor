@@ -20,12 +20,21 @@ Deploying
 ---------
 
 This website was developed in Meteor, a realtime communication Javascript
-framework, and is hosted on their servers for ease of deployment. To deploy,
-just run:
+framework, and is hosted on our local [dokku](http://dokku.viewdocs.io/dokku/)
+instance. To deploy, first add your ssh key to the dokku server, and add dokku
+to your git remotes on the local code repository:
 
 ```shell
-$ meteor deploy eventsatpenn.com
+$ git remote add dokku dokku@apps.pennlabs.org:eventsatpenn
 ```
+
+Then, to actually deploy, simply run:
+
+```shell
+$ git push dokku master
+```
+
+Make sure to deploy only once changes have been reviewed through a pull request.
 
 Testing
 -------
