@@ -1,31 +1,39 @@
 .view-login .prompt {
   margin-top: 30px;
-  margin-bottom: 15px; }
-  .view-login .prompt p {
-    margin: 0; }
+  margin-bottom: 15px; 
+}
+.view-login .prompt p {
+  margin: 0; 
+}
 .view-login form > :last-child {
   margin: 0; }
 .view-login .login {
   background-color: #8596ab;
   color: white;
-  padding: 15px; }
-  .view-login .login h1, .view-login .login h2, .view-login .login h3, .view-login .login h4, .view-login .login h5, .view-login .login h6 {
-    color: white;
-    font-family: "News Cycle", sans-serif;
-    font-weight: normal;
-    margin: 0 0 15px 0; }
-  .view-login .login .button {
-    width: 100%;
-    background: #526378;
-    border: 1px solid #29313b; }
-    .view-login .login .button:hover {
-      background: #3e4a59; }
+  padding: 15px; 
+}
+.view-login .login h1, .view-login .login h2, .view-login .login h3, .view-login .login h4, .view-login .login h5, .view-login .login h6 {
+  color: white;
+  font-family: "News Cycle", sans-serif;
+  font-weight: normal;
+  margin: 0 0 15px 0; 
+}
+.view-login .login .button {
+  width: 100%;
+  background: #526378;
+  border: 1px solid #29313b; 
+}
+.view-login .login .button:hover {
+  background: #3e4a59; 
+}
 .view-login .signup {
   background-color: white;
-  padding: 15px; }
-  .view-login .signup h1, .view-login .signup h2, .view-login .signup h3, .view-login .signup h4, .view-login .signup h5, .view-login .signup h6 {
-    color: #810814;
-    margin: 0 0 15px 0; }
+  padding: 15px; 
+}
+.view-login .signup h1, .view-login .signup h2, .view-login .signup h3, .view-login .signup h4, .view-login .signup h5, .view-login .signup h6 {
+  color: #810814;
+  margin: 0 0 15px 0; 
+}
 
 .fb.button {
   margin: 0;
